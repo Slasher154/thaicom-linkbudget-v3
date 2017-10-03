@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "buefy": "^0.5.2",
-    "nuxt": "^1.0.0-rc11"
+    "buefy": "^0.5.3",
+    "lodash": "^4.17.4",
+    "nuxt": "^1.0.0-rc11",
+    "vue-multiselect": "^2.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

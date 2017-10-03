@@ -1,46 +1,48 @@
 <template>
-  <section class="container">
+
     <div>
-      <logo/>
-      <h1 class="title">
-        thaicom-linkbudget-v3
-      </h1>
-      <h2 class="subtitle">
-        Thaicom Link Budget for Thaicom 4 and Maritime Projects v3
-      </h2>
-      <div class="notification">
-        This container is <strong>centered</strong> on desktop.
-      </div>
-      <div class="posts" v-for="post in posts">
-        <ul>
-          <li><strong>{{post.title}}</strong></li>
-          <li>{{post.body}}</li>
-        </ul>
-        <hr>
-      </div>
+
+      <h1 class="title">Thaicom Link Budget v3</h1>
+      <h2 class="subtitle">The revolution of link budget (hopefully)</h2>
+
+      <article class="message is-warning">
+        <div class="message-body">
+          Fill the following information to request a link budget
+        </div>
+      </article>
+
+      <satellite-selectors-container />
 
     </div>
-  </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+  /* eslint-disable spaced-comment,indent */
 
-export default {
-  components: {
-    Logo
-  },
-  data () {
-    return {
-      posts: {}
+  import SatelliteSelectorsContainer from '@/components/SatelliteSelectorsContainer'
+  import axios from 'axios'
+  export default {
+    components: {
+      SatelliteSelectorsContainer
+    },
+    async fetch ({ store }) {
+      try {
+        // Fill the store with satellite options
+        let satelliteResult = await axios.get('/satellites')
+        store.dispatch('linkcalc/setSatelliteOptions', { satellites: satelliteResult.data.satellites })
+
+        // Fill the store with transponders options
+        let tpResult = await axios.get('allTransponders')
+        store.dispatch('linkcalc/setTransponderOptions', { transponders: tpResult.data.transponders })
+
+        // Fill the store with modem options
+        let modemResult = await axios.get('/modems')
+        store.dispatch('linkcalc/setModemOptions', { modems: modemResult.data.modems })
+      } catch (error) {
+        throw error
+      }
+//
     }
-  },
-  created () {
-    this.$http.get('/posts')
-      .then(({data}) => {
-        this.posts = data
-      })
   }
-}
 </script>
 

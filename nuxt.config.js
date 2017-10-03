@@ -4,19 +4,24 @@ module.exports = {
   */
   dev: (process.env.NODE_ENV !== 'production'), // true when 'npm run dev', false when 'npm run build' then 'npm start'
   head: {
-    title: 'thaicom-linkbudget-v3',
+    title: 'CSD LB',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Thaicom Link Budget for Thaicom 4 and Maritime Projects v3' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' }, // Font Awesome
+      { rel: 'stylesheet', href: 'https://unpkg.com/vue-multiselect@2.0.0/dist/vue-multiselect.min.css' }
+
     ]
   },
   plugins: [
     '~plugins/axios',
-    '~plugins/buefy'
+    '~plugins/buefy',
+    '~plugins/filters',
+    '~plugins/mixins'
   ],
   /*
   ** Customize the progress bar color
