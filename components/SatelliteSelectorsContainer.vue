@@ -33,6 +33,13 @@
                 @transponders-changed="updateTransponders"
               />
             </b-field>
+
+            <div class="field">
+              <b-checkbox
+                :value="findBestTransponders"
+                @input="updateFindBestTransponders"
+              >Find best channel from input remote locations</b-checkbox>
+            </div>
           </div>
           <!--End of transponder field-->
         </div>
@@ -43,7 +50,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapState } from 'vuex'
   import SatelliteSelector from '@/components/SatelliteSelector'
   import SatelliteTransponderSelector from '@/components/SatelliteTranspondersSelector'
   export default {
@@ -60,6 +67,9 @@
       }
     },
     computed: {
+      ...mapState('linkcalc', {
+        findBestTransponders: state => state.findBestTransponders
+      }),
       ...mapGetters('linkcalc', [
         'filteredTransponders'
       ]),
@@ -74,6 +84,9 @@
       },
       updateTransponders ({ transponders }) {
         this.$store.dispatch('linkcalc/setSelectedTransponders', { transponders })
+      },
+      updateFindBestTransponders (value) {
+        this.$store.dispatch('linkcalc/updateFindBestTransponders', value)
       }
     }
   }

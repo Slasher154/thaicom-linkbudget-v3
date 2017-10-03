@@ -61,6 +61,9 @@ export const state = () => ({
   // Max Mode
   isMaxMode: false,
 
+  // Find best transponders from input locations
+  findBestTransponders: false,
+
   // Adjacent Satellite Interferences
   adjacentSatelliteTransponderOptions: [],
   selectedAdjacentSatelliteTransponders: []
@@ -128,6 +131,9 @@ export const mutations = {
   },
   UPDATE_REMOTE_STATIONS (state, { stations }) {
     state.remoteStations = stations
+  },
+  UPDATE_FIND_BEST_TRANSPONDERS (state, status) {
+    state.findBestTransponders = status
   }
 }
 
@@ -162,5 +168,8 @@ export const actions = {
   },
   updateRemoteStations ({ commit }, stations) {
     commit('UPDATE_REMOTE_STATIONS', stations)
+  },
+  updateFindBestTransponders ({ commit }, status) {
+    commit('UPDATE_FIND_BEST_TRANSPONDERS', status)
   }
 }
