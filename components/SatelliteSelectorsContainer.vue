@@ -30,6 +30,7 @@
                 :multiple="true"
                 :transponder-options="transponderOptions"
                 :default-selected-transponders="defaultTransponders"
+                :isDisabled="findBestTransponders"
                 @transponders-changed="updateTransponders"
               />
             </b-field>
@@ -38,7 +39,7 @@
               <b-checkbox
                 :value="findBestTransponders"
                 @input="updateFindBestTransponders"
-              >Find best channel from input remote locations</b-checkbox>
+              >Find best transponders from input remote locations</b-checkbox>
             </div>
           </div>
           <!--End of transponder field-->

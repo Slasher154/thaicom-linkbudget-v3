@@ -15,9 +15,14 @@
   "dependencies": {
     "axios": "^0.16.2",
     "buefy": "^0.5.3",
+    "handsontable": "^0.34.4",
     "lodash": "^4.17.4",
     "nuxt": "^1.0.0-rc11",
-    "vue-multiselect": "^2.0.2"
+    "validator": "^9.0.0",
+    "vue-handsontable-official": "^1.0.0",
+    "vue-multiselect": "^2.0.2",
+    "vue-no-ssr": "^0.2.0",
+    "vue2-google-maps": "^0.8.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

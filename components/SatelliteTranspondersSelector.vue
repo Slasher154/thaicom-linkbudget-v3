@@ -5,6 +5,7 @@
                :close-on-select="false"
                :clear-on-select="false"
                :hide-selected="true"
+               :disabled="isDisabled"
                group-values="transponders"
                group-label="category"
                placeholder="Pick 1 or more transponders"
@@ -34,6 +35,10 @@
       defaultSelectedTransponders: {
         type: Array,
         default: []
+      },
+      isDisabled: {
+        type: Boolean,
+        default: false
       }
     },
     data () {

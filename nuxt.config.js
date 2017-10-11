@@ -21,7 +21,9 @@ module.exports = {
     '~plugins/axios',
     '~plugins/buefy',
     '~plugins/filters',
-    '~plugins/mixins'
+    '~plugins/googlemaps',
+    '~plugins/mixins',
+    { src: '~/plugins/handsontable', ssr: false }
   ],
   /*
   ** Customize the progress bar color

@@ -12,7 +12,24 @@
       </article>
 
       <satellite-selectors-container />
-
+      <br>
+      <div
+        v-if="$store.state.linkcalc.selectedTransponders.length > 0 || $store.state.linkcalc.findBestTransponders"
+        class="columns">
+        <div class="column is-6">
+          <gateway-selectors-container />
+        </div>
+        <div class="column is-6">
+          <remote-selectors-container />
+        </div>
+      </div>
+      <div
+        v-if="$store.state.linkcalc.selectedTransponders.length > 0 || $store.state.linkcalc.findBestTransponders"
+        class="columns">
+        <div class="column">
+          <map-container />
+        </div>
+      </div>
     </div>
 </template>
 
@@ -20,10 +37,17 @@
   /* eslint-disable spaced-comment,indent */
 
   import SatelliteSelectorsContainer from '@/components/SatelliteSelectorsContainer'
+  import GatewaySelectorsContainer from '@/components/GatewaySelectorsContainer'
+  import RemoteSelectorsContainer from '@/components/RemoteSelectorsContainer'
+  import MapContainer from '@/components/MapContainer'
+
   import axios from 'axios'
   export default {
     components: {
-      SatelliteSelectorsContainer
+      SatelliteSelectorsContainer,
+      GatewaySelectorsContainer,
+      RemoteSelectorsContainer,
+      MapContainer
     },
     async fetch ({ store }) {
       try {
@@ -38,6 +62,18 @@
         // Fill the store with modem options
         let modemResult = await axios.get('/modems')
         store.dispatch('linkcalc/setModemOptions', { modems: modemResult.data.modems })
+
+        // Fill the store with location options
+        let locationResult = await axios.get('/locationswithcoords')
+        store.dispatch('linkcalc/setLocationOptions', { locations: locationResult.data.locations })
+
+        // Fill the store with antenna options
+        let antennaResult = await axios.get('/antennas')
+        store.dispatch('linkcalc/setRemoteAntennaOptions', { antennas: antennaResult.data.antennas })
+
+        // Fill the store with buc options
+        let bucResult = await axios.get('/bucs')
+        store.dispatch('linkcalc/setRemoteBucOptions', { bucs: bucResult.data.bucs })
       } catch (error) {
         throw error
       }

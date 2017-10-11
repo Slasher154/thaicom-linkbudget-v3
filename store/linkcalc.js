@@ -66,10 +66,31 @@ export const state = () => ({
 
   // Adjacent Satellite Interferences
   adjacentSatelliteTransponderOptions: [],
-  selectedAdjacentSatelliteTransponders: []
+  selectedAdjacentSatelliteTransponders: [],
+
+  // Defined contours
+  definedContours: ['Peak', '50%', 'EOC', 'EOC-2']
 })
 
 export const getters = {
+  htsSatelliteSelected (state) {
+    return state.selectedSatellites.filter(x => x.type === 'Broadband' || x.type === 'HTS').length > 0
+  },
+  filteredRemoteLocationOptions (state, getters) {
+    let locationOptions = state.remoteLocationOptions
+    // Add Peak, 50%, EOC, and EOC-2 option if selected satellites contains HTS
+    if (getters.htsSatelliteSelected) {
+      // construct an array of defined contours
+      let definedContourOptions = state.definedContours.map(x => {
+        return {
+          name: x,
+          type: 'definedContours'
+        }
+      })
+      locationOptions = _.concat(definedContourOptions, locationOptions)
+    }
+    return locationOptions
+  },
   filteredTransponders (state) {
     let satelliteNames = _.map(state.selectedSatellites, x => x.name)
     let filteredTransponders = state.transponderOptions.filter(tp => _.includes(satelliteNames, tp.satellite))
@@ -97,6 +118,31 @@ export const mutations = {
   },
   SET_MODEM_OPTIONS (state, { modems }) {
     state.modemOptions = modems
+  },
+  SET_LOCATION_OPTIONS (state, { locations }) {
+    state.gatewayLocationOptions = locations
+    state.remoteLocationOptions = locations
+  },
+  SET_SELECTED_REMOTE_LOCATIONS (state, { locations }) {
+    state.selectedRemoteLocations = locations
+  },
+  SET_REMOTE_ANTENNA_OPTIONS (state, { antennas }) {
+    state.remoteAntennaOptions = antennas
+  },
+  SET_SELECTED_REMOTE_ANTENNAS (state, { antennas }) {
+    state.selectedRemoteAntennas = antennas
+  },
+  SET_REMOTE_BUC_OPTIONS (state, { bucs }) {
+    state.remoteBucOptions = bucs
+  },
+  SET_SELECTED_REMOTE_BUCS (state, { bucs }) {
+    state.selectedRemoteBucs = bucs
+  },
+  ADD_SELECTED_BANDWIDTH (state, { bandwidth }) {
+    state.selectedBandwidth.push(bandwidth)
+  },
+  REMOVE_SELECTED_BANDWIDTH (state, id) {
+    _.remove(state.selectedBandwidth, x => x.id === id)
   },
   GENERATE_GATEWAY_STATIONS (state) {
     let stations = []
@@ -153,6 +199,30 @@ export const actions = {
   },
   setModemOptions ({ commit }, modems) {
     commit('SET_MODEM_OPTIONS', modems)
+  },
+  setLocationOptions ({ commit }, locations) {
+    commit('SET_LOCATION_OPTIONS', locations)
+  },
+  setSelectedRemoteLocations ({ commit }, locations) {
+    commit('SET_SELECTED_REMOTE_LOCATIONS', locations)
+  },
+  setRemoteAntennaOptions ({ commit }, antennas) {
+    commit('SET_REMOTE_ANTENNA_OPTIONS', antennas)
+  },
+  setSelectedRemoteAntennas ({ commit }, antennas) {
+    commit('SET_SELECTED_REMOTE_ANTENNAS', antennas)
+  },
+  setRemoteBucOptions ({ commit }, bucs) {
+    commit('SET_REMOTE_BUC_OPTIONS', bucs)
+  },
+  setSelectedRemoteBucs ({ commit }, bucs) {
+    commit('SET_SELECTED_REMOTE_BUCS', bucs)
+  },
+  addSelectedBandwidth ({ commit }, bandwidth) {
+    commit('ADD_SELECTED_BANDWIDTH', bandwidth)
+  },
+  removeSelectedBandwidth ({ commit }, id) {
+    commit('REMOVE_SELECTED_BANDWIDTH', id)
   },
   // setSelectedModems({ commit }, modems) {
   //   commit('SET_SELECTED_MODEMS', modems)

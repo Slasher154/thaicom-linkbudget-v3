@@ -1,19 +1,20 @@
 <template>
   <div>
-    <multiselect v-model="selectedSatellites"
-                 :options="satelliteOptions"
+    <multiselect v-model="selectedLocations"
+                 :options="locationOptions"
                  :multiple="true"
-                 :close-on-select="true"
-                 :clear-on-select="false"
+                 :close-on-select="false"
+                 :clear-on-select="true"
                  :hide-selected="true"
-                 :custom-label="satelliteWithSlot"
-                 placeholder="Pick 1 or more satellites"
+                 placeholder="Pick 1 or more locations"
+                 label="name"
                  track-by="name"
                  @input="onChanged"
     >
       <template
         slot="tag"
-        scope="props">
+        scope="props"
+      >
         <b-tag
           closable
           size="is-medium"
@@ -31,39 +32,36 @@
   export default {
     components: { Multiselect },
     props: {
-      satelliteOptions: {
+      locationOptions: {
         type: Array,
         required: true
       },
       multiple: {
         type: Boolean,
         required: true,
-        default: false
+        default: true
       },
-      defaultSelectedSatellites: {
+      defaultSelectedLocations: {
         type: Array,
         default: []
       }
     },
     data () {
       return {
-        selectedSatellites: []
+        selectedLocations: []
       }
     },
     methods: {
       onChanged () {
-        this.$emit('satellites-changed', { satellites: this.selectedSatellites })
-      },
-      satelliteWithSlot ({ name, orbital_slot }) {
-        return `${name} (${this.$_convertOrbitalSlotToLetter(orbital_slot)})`
+        this.$emit('locations-changed', { locations: this.selectedLocations })
       }
     },
     mounted () {
-      this.selectedSatellites = this.defaultSelectedSatellites || []
+      this.selectedLocations = this.defaultSelectedLocations || []
     },
     watch: {
-      defaultSelectedSatellites (newValue) {
-        this.selectedSatellites = newValue
+      defaultSelectedLocations (newValue) {
+        this.selectedLocations = newValue
       }
     }
   }

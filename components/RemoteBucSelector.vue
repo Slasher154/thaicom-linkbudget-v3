@@ -1,13 +1,13 @@
 <template>
   <div>
-    <multiselect v-model="selectedSatellites"
-                 :options="satelliteOptions"
+    <multiselect v-model="selectedBucs"
+                 :options="bucOptions"
                  :multiple="true"
-                 :close-on-select="true"
-                 :clear-on-select="false"
+                 :close-on-select="false"
+                 :clear-on-select="true"
                  :hide-selected="true"
-                 :custom-label="satelliteWithSlot"
-                 placeholder="Pick 1 or more satellites"
+                 placeholder="Pick 1 or more bucs"
+                 label="name"
                  track-by="name"
                  @input="onChanged"
     >
@@ -31,41 +31,32 @@
   export default {
     components: { Multiselect },
     props: {
-      satelliteOptions: {
+      bucOptions: {
         type: Array,
         required: true
       },
-      multiple: {
-        type: Boolean,
-        required: true,
-        default: false
-      },
-      defaultSelectedSatellites: {
+      defaultSelectedBucs: {
         type: Array,
         default: []
       }
     },
     data () {
       return {
-        selectedSatellites: []
+        selectedBucs: []
       }
     },
     methods: {
       onChanged () {
-        this.$emit('satellites-changed', { satellites: this.selectedSatellites })
-      },
-      satelliteWithSlot ({ name, orbital_slot }) {
-        return `${name} (${this.$_convertOrbitalSlotToLetter(orbital_slot)})`
+        this.$emit('bucs-changed', { bucs: this.selectedBucs })
       }
     },
     mounted () {
-      this.selectedSatellites = this.defaultSelectedSatellites || []
+      this.selectedBucs = this.defaultSelectedBucs || []
     },
     watch: {
-      defaultSelectedSatellites (newValue) {
-        this.selectedSatellites = newValue
+      defaultSelectedBucs (newValue) {
+        this.selectedBucs = newValue
       }
     }
   }
 </script>
-
