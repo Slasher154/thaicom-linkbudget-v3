@@ -45,6 +45,53 @@ Vue.mixin({
       // Concatenate both array and return
       let concatenatedTransponders = _.concat(_.sortBy(transformedHtsTransponders, 'category'), _.sortBy(transformedConventionalTransponders, 'category'))
       return concatenatedTransponders
+    },
+    $_transformExcelTableToObjects (stringData, columnHeaders) {
+      // Source: https://stackoverflow.com/questions/2006468/copy-paste-from-excel-to-a-web-page
+      // StringData is data copied from Excel, columnHeaders are fields
+      let objects = []
+      // split into rows
+      let rows = stringData.split('\n')
+
+      // Note how we start at rowNr = 1, because 0 is the column row
+      for (let rowNr = 0; rowNr < rows.length; rowNr++) {
+        let o = {}
+        let data = rows[rowNr].split('\t')
+
+        // Check if number of columns is equal to column headers, if not, return null
+        if (data.length !== columnHeaders.length) {
+          objects = null
+          break
+        }
+
+        // Loop through all the data
+        for (let cellNr = 0; cellNr < data.length; cellNr++) {
+          o[columnHeaders[cellNr]] = data[cellNr]
+        }
+
+        objects.push(o)
+      }
+      return objects
+    },
+    $_extractCoordinateText (coordsText, latlonMode) {
+      // Regex source: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+      let latlonRegex = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/
+      let lonlatRegex = /^\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?),[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/
+      let coordsObj = {}
+      if (latlonMode && latlonRegex.test(coordsText)) {
+        coordsObj = {
+          lat: coordsText.split(',')[0],
+          lng: coordsText.split(',')[1]
+        }
+      } else if (!latlonMode && lonlatRegex.test(coordsText)) {
+        coordsObj = {
+          lng: coordsText.split(',')[0],
+          lat: coordsText.split(',')[1]
+        }
+      } else {
+        return false
+      }
+      return coordsObj
     }
   }
 })

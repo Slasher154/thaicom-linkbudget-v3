@@ -40,7 +40,7 @@
 
         // Test Regex of bandwidth input
         if (!bandwidthRegex.test(bandwidthText)) {
-          alert('Bandwidth is not valid')
+          this.$toast.open(`${bandwidthText} is not a valid bandwidth value`)
         } else {
           // Split the bandwidth into forward and return
           let splitBandwidth = bandwidthText.split('/')

@@ -164,18 +164,18 @@ export const mutations = {
     let stations = []
     // Loop through selected remote antennas, locations, BUC and bandwidth to form a combination of them
     // Ex. 2 Gateways, 2 Locations and 2 BUCs and 2 Bandwidth will create 2*2*2*2 = 16 Remote Stations
-    state.selectedRemoteAntennas.forEach(gateway => {
+    state.selectedRemoteAntennas.forEach(antenna => {
       state.selectedRemoteLocations.forEach(location => {
         state.selectedRemoteBucs.forEach(hpa => {
           state.selectedBandwidth.forEach(bandwidth => {
-            stations.push({location, gateway, hpa, bandwidth})
+            stations.push({location, antenna, hpa, bandwidth})
           })
         })
       })
     })
-    state.gatewayStations = stations
+    state.remoteStations = stations
   },
-  UPDATE_REMOTE_STATIONS (state, { stations }) {
+  SET_REMOTE_STATIONS (state, { stations }) {
     state.remoteStations = stations
   },
   UPDATE_FIND_BEST_TRANSPONDERS (state, status) {
@@ -205,21 +205,25 @@ export const actions = {
   },
   setSelectedRemoteLocations ({ commit }, locations) {
     commit('SET_SELECTED_REMOTE_LOCATIONS', locations)
+    commit('GENERATE_REMOTE_STATIONS')
   },
   setRemoteAntennaOptions ({ commit }, antennas) {
     commit('SET_REMOTE_ANTENNA_OPTIONS', antennas)
   },
   setSelectedRemoteAntennas ({ commit }, antennas) {
     commit('SET_SELECTED_REMOTE_ANTENNAS', antennas)
+    commit('GENERATE_REMOTE_STATIONS')
   },
   setRemoteBucOptions ({ commit }, bucs) {
     commit('SET_REMOTE_BUC_OPTIONS', bucs)
   },
   setSelectedRemoteBucs ({ commit }, bucs) {
     commit('SET_SELECTED_REMOTE_BUCS', bucs)
+    commit('GENERATE_REMOTE_STATIONS')
   },
   addSelectedBandwidth ({ commit }, bandwidth) {
     commit('ADD_SELECTED_BANDWIDTH', bandwidth)
+    commit('GENERATE_REMOTE_STATIONS')
   },
   removeSelectedBandwidth ({ commit }, id) {
     commit('REMOVE_SELECTED_BANDWIDTH', id)
@@ -236,8 +240,8 @@ export const actions = {
   generateRemoteStations ({ commit }) {
     commit('GENERATE_REMOTE_STATIONS')
   },
-  updateRemoteStations ({ commit }, stations) {
-    commit('UPDATE_REMOTE_STATIONS', stations)
+  setRemoteStations ({ commit }, stations) {
+    commit('SET_REMOTE_STATIONS', stations)
   },
   updateFindBestTransponders ({ commit }, status) {
     commit('UPDATE_FIND_BEST_TRANSPONDERS', status)
