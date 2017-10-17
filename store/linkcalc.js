@@ -166,9 +166,9 @@ export const mutations = {
     // Ex. 2 Gateways, 2 Locations and 2 BUCs and 2 Bandwidth will create 2*2*2*2 = 16 Remote Stations
     state.selectedRemoteAntennas.forEach(antenna => {
       state.selectedRemoteLocations.forEach(location => {
-        state.selectedRemoteBucs.forEach(hpa => {
+        state.selectedRemoteBucs.forEach(buc => {
           state.selectedBandwidth.forEach(bandwidth => {
-            stations.push({location, antenna, hpa, bandwidth})
+            stations.push({location, antenna, buc, bandwidth})
           })
         })
       })

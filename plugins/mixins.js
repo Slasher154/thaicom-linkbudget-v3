@@ -81,17 +81,42 @@ Vue.mixin({
       if (latlonMode && latlonRegex.test(coordsText)) {
         coordsObj = {
           lat: coordsText.split(',')[0],
-          lng: coordsText.split(',')[1]
+          lon: coordsText.split(',')[1]
         }
       } else if (!latlonMode && lonlatRegex.test(coordsText)) {
         coordsObj = {
-          lng: coordsText.split(',')[0],
+          lon: coordsText.split(',')[0],
           lat: coordsText.split(',')[1]
         }
       } else {
         return false
       }
       return coordsObj
+    },
+    $_validateBandwidthText (bandwidthText) {
+      let bandwidthRegex = /^\d{1,5}\/\d{1,5}$/
+      return bandwidthRegex.test(bandwidthText)
+    },
+    $_transformBandwidthTextToObject (bandwidthText, unit) {
+      if (this.$_validateBandwidthText(bandwidthText)) {
+        let splitBandwidthText = bandwidthText.split('/')
+        return {
+          forward: +splitBandwidthText[0],
+          return: +splitBandwidthText[1],
+          unit
+        }
+      }
+      return false
+    },
+    $_findAntennaObjectFromText (antennaText, antennaOptions) {
+      return antennaOptions.find(antenna => {
+        return antenna.name === antennaText || antenna.size === +antennaText
+      })
+    },
+    $_findBucObjectFromText (bucText, bucOptions) {
+      return bucOptions.find(buc => {
+        return buc.name === bucText.toUpperCase() || buc.size === +bucText
+      })
     }
   }
 })

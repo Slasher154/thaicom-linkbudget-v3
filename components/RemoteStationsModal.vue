@@ -2,29 +2,31 @@
   <form action="">
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{title}}</p>
+        <p class="modal-card-title">{{titleWithNumberOfStations}}</p>
       </header>
       <section class="modal-card-body">
         <!-- Example table of desired locations format -->
         <table class="table is-bordered">
           <thead>
           <tr>
+            <th>No.</th>
             <th>Location Name</th>
             <th>Country</th>
-            <th>Coordinates</th>
+            <th>Coordinates (Lat, Lon)</th>
             <th>Antenna</th>
             <th>BUC</th>
             <th>Bandwidth</th>
           </tr>
           </thead>
           <tbody>
-          <tr v-for="station in stations">
-            <td>{{station.locationName}}</td>
-            <td>{{station.country}}</td>
-            <td>{{station.coords.lat}},{{station.coords.lng}}</td>
-            <td>{{station.antenna}}</td>
-            <td>{{station.buc}}</td>
-            <td>{{station.bandwidth}}</td>
+          <tr v-for="(station, index) in stations">
+            <td>{{index+1}}</td>
+            <td>{{station.location.name}}</td>
+            <td>{{station.location.country}}</td>
+            <td>{{station.location.lat}},{{station.location.lon}}</td>
+            <td>{{station.antenna.name}}</td>
+            <td>{{station.buc.name}}</td>
+            <td>{{station.bandwidth | transformToBandwidthText }}</td>
           </tr>
           </tbody>
         </table>
@@ -47,6 +49,11 @@
       stations: {
         type: Array,
         default: []
+      }
+    },
+    computed: {
+      titleWithNumberOfStations () {
+        return `${this.title} (${this.stations.length} Stations)`
       }
     }
   }

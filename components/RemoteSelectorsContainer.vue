@@ -84,7 +84,7 @@
 
         <b-modal :active.sync="isGeneratedRemoteStationsShown" has-modal-card>
           <remote-stations-modal
-            title="Remote Stations"
+            title="Remote Stations Combinations"
             :stations="$store.state.linkcalc.remoteStations"
           />
         </b-modal>

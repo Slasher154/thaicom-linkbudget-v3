@@ -25,15 +25,16 @@
               </thead>
               <tbody>
               <tr v-for="station in stations">
-                <td>{{station.locationName}}</td>
-                <td>{{station.country}}</td>
-                <td>{{station.coords | transformCoords(latLonFormat)}}</td>
-                <td>{{station.antenna}}</td>
-                <td>{{station.buc}}</td>
-                <td>{{station.bandwidth}}</td>
+                <td>{{station.location.name}}</td>
+                <td>{{station.location.country}}</td>
+                <td>{{station.location | transformCoords(latLonFormat)}}</td>
+                <td>{{station.antenna.name}}</td>
+                <td>{{station.buc.name}}</td>
+                <td>{{station.bandwidth | transformToBandwidthText }}</td>
               </tr>
               </tbody>
             </table>
+
 
             <article class="message is-warning">
               <div class="message-body">
@@ -48,6 +49,8 @@
             </article>
           </div>
           <div class="column">
+
+            <!-- Lat,Lon format selector -->
             <div class="block">
               <b-radio
                 v-model="latLonFormat"
@@ -60,7 +63,21 @@
                 Lon,Lat
               </b-radio>
             </div>
-            <b-field :label="coordsText">
+
+            <!-- Bandwidth Unit Selector -->
+            <b-field label="Bandwidth Unit">
+              <b-select placeholder="Unit" v-model="unit">
+                <option value="kbps">kbps</option>
+                <option value="Mbps">Mbps</option>
+                <option value="kHz">kHz</option>
+                <option value="MHz">MHz</option>
+                <option value="ksps">ksps</option>
+                <option value="Msps">Msps</option>
+              </b-select>
+            </b-field>
+
+            <!-- Textarea to receive user input -->
+            <b-field label="Stations copied from Excel">
               <b-input
                 type="textarea"
                 v-model="stationsText"
@@ -68,11 +85,17 @@
                 @input="updateStations"
               ></b-input>
             </b-field>
-            <!--<no-ssr placeholder="loading...">-->
-              <!--<hot-table ref="coordsTable" :root="root" :settings="hotSettings"></hot-table>-->
-            <!--</no-ssr>-->
 
-
+            <!-- Validation Message Notification Box -->
+            <article
+              v-if="validationMessages.length > 0"
+              class="message is-danger">
+              <div class="message-body">
+                <ul>
+                  <li v-for="message in validationMessages">{{message}}</li>
+                </ul>
+              </div>
+            </article>
           </div>
         </div>
 
@@ -96,40 +119,53 @@
     },
     data () {
       return {
-        root: 'test-hot',
-        hotSettings: {
-          data: [['a', 'ab'], ['cd', 'eg']],
-          colHeaders: true
-        },
         latLonFormat: 'latLon',
+        unit: 'Mbps',
         stations: [
           {
-            locationName: 'Bangkok',
-            country: 'Thailand',
-            coords: {
+            location: {
+              name: 'Bangkok',
+              country: 'Thailand',
               lat: 13.826,
-              lng: 100.58
+              lon: 100.58
             },
-            antenna: 1.2,
-            buc: 2,
-            bandwidth: '4/2'
+            antenna: {
+              name: '1.2m'
+            },
+            buc: {
+              name: '2W'
+            },
+            bandwidth: {
+              forward: 4,
+              return: 2,
+              unit: ''
+            }
           },
           {
-            locationName: 'Nonthaburi',
-            country: 'Thailand',
-            coords: {
+            location: {
+              name: 'Nonthaburi',
+              country: 'Thailand',
               lat: 13.861,
-              lng: 100.534
+              lon: 100.534
             },
-            antenna: 1.8,
-            buc: 2,
-            bandwidth: '6/4'
+            antenna: {
+              name: '2.4m'
+            },
+            buc: {
+              name: '4W'
+            },
+            bandwidth: {
+              forward: 6,
+              return: 4,
+              unit: ''
+            }
           }
         ],
         stationsText: '',
         columnHeaders: [
           'locationName', 'country', 'coords', 'antenna', 'buc', 'bandwidth'
-        ]
+        ],
+        validationMessages: []
       }
     },
     computed: {
@@ -144,29 +180,62 @@
       },
       updateStations () {
         if (this.stationsText) {
-          let validationPassed = true
-          let stations = this.$_transformExcelTableToObjects(this.stationsText, this.columnHeaders)
-          // Transform coords text into object
-          if (stations) {
-            stations.forEach(station => {
+          this.validationMessages = []
+          let stations = []
+          let transformedStationObjects = this.$_transformExcelTableToObjects(this.stationsText, this.columnHeaders)
+          // Transform into proper stations object format
+          if (transformedStationObjects) {
+            transformedStationObjects.forEach(station => {
+              this.validationMessages = []
+
+              // Validate the coordinates
               let extractedCoords = this.$_extractCoordinateText(station.coords, this.latLonFormat === 'latLon')
-              if (!extractedCoords && !validationPassed) { // Check validation passed to trigger the toast only 1 time
-                this.$toast.open(`${station.coords} is not a valid ${this.latLonFormat} coordinates`)
-                validationPassed = false
+              if (!extractedCoords) { // Check validation passed to trigger the toast only 1 time
+                this.validationMessages.push(`${station.coords} is not a valid ${this.latLonFormat} coordinates`)
+              }
+              // Validate the bandwidth
+              let bandwidth = this.$_transformBandwidthTextToObject(station.bandwidth, this.unit)
+              if (!bandwidth) {
+                this.validationMessages.push(`${station.bandwidth} is not a valid bandwidth format`)
+              }
+              // TODO: Validate the country
+              // Validate the antenna
+              let antenna = this.$_findAntennaObjectFromText(station.antenna, this.$store.state.linkcalc.remoteAntennaOptions)
+              if (!antenna) {
+                this.validationMessages.push(`${station.antenna} does not match any antenna in our database`)
+              }
+              // Validate the BUC
+              let buc = this.$_findBucObjectFromText(station.buc, this.$store.state.linkcalc.remoteBucOptions)
+              if (!buc) {
+                this.validationMessages.push(`${station.buc} does not match any BUC in our database`)
+              }
+              // If there is no validation messages (all data is valid), generate the location object
+              if (this.validationMessages.length === 0) {
+                stations.push({
+                  location: {
+                    name: station.locationName,
+                    country: station.country,
+                    lat: extractedCoords.lat,
+                    lon: extractedCoords.lon
+                  },
+                  antenna,
+                  buc,
+                  bandwidth
+                })
               } else {
-                station.coords = extractedCoords
+                this.openValidationMessageToast()
               }
             })
-            if (!validationPassed) {
-              this.stationsText = ''
-              this.stations = []
-            } else {
-              this.stations = stations
-            }
+            this.stations = stations
           } else {
-            this.$toast.open('The copied table is in incorrect format')
+            this.validationMessages.push('The copied table is in incorrect format')
+            this.openValidationMessageToast()
+            this.stations = []
           }
         }
+      },
+      openValidationMessageToast () {
+        this.$toast.open(this.validationMessages.join(','))
       }
     },
     props: {

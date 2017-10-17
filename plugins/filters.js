@@ -14,10 +14,14 @@ Vue.filter('wrap', function (value, begin, end) {
 
 Vue.filter('transformCoords', function (value, format) {
   if (format === 'latLon') {
-    return `${value.lat},${value.lng}`
+    return `${value.lat},${value.lon}`
   } else if (format === 'lonLat') {
-    return `${value.lng},${value.lat}`
+    return `${value.lon},${value.lat}`
   } else {
     return 'Invalid format'
   }
+})
+
+Vue.filter('transformToBandwidthText', function (value) {
+  return `${value.forward}/${value.return} ${value.unit}`
 })

@@ -36,10 +36,9 @@
     methods: {
       addBandwidth () {
         let bandwidthText = this.bandwidth
-        let bandwidthRegex = /^\d{1,5}\/\d{1,5}$/
 
         // Test Regex of bandwidth input
-        if (!bandwidthRegex.test(bandwidthText)) {
+        if (!this.$_validateBandwidthText(bandwidthText)) {
           this.$toast.open(`${bandwidthText} is not a valid bandwidth value`)
         } else {
           // Split the bandwidth into forward and return
