@@ -126,6 +126,9 @@ export const mutations = {
   SET_SELECTED_REMOTE_LOCATIONS (state, { locations }) {
     state.selectedRemoteLocations = locations
   },
+  ADD_REMOTE_LOCATIONS_OPTIONS (state, { locations }) {
+    locations.forEach(location => state.remoteLocationOptions.push(location))
+  },
   SET_REMOTE_ANTENNA_OPTIONS (state, { antennas }) {
     state.remoteAntennaOptions = antennas
   },
@@ -206,6 +209,9 @@ export const actions = {
   setSelectedRemoteLocations ({ commit }, locations) {
     commit('SET_SELECTED_REMOTE_LOCATIONS', locations)
     commit('GENERATE_REMOTE_STATIONS')
+  },
+  addRemoteLocationOptions ({ commit }, locations) {
+    commit('ADD_REMOTE_LOCATIONS_OPTIONS', locations)
   },
   setRemoteAntennaOptions ({ commit }, antennas) {
     commit('SET_REMOTE_ANTENNA_OPTIONS', antennas)

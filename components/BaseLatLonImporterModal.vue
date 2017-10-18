@@ -21,10 +21,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="location in sampleLocations">
+                <tr v-for="location in locations">
                   <td>{{location.name}}</td>
                   <td>{{location.country}}</td>
-                  <td>{{location.coords | transformCoords(latLonFormat)}}</td>
+                  <td>{{location | transformCoords(latLonFormat)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -48,22 +48,23 @@
                 Lon,Lat
               </b-radio>
             </div>
-            <!--<b-field :label="coordsText">-->
-              <!--<b-input type="textarea" size="is-large"></b-input>-->
-            <!--</b-field>-->
-            <no-ssr placeholder="loading...">
-                <hot-table ref="coordsTable" :root="root" :settings="hotSettings"></hot-table>
-            </no-ssr>
+
+            <!-- Textarea to receive user input -->
+            <b-field label="Locations copied from Excel">
+              <b-input
+                type="textarea"
+                v-model="locationsText"
+                @input="updateLocations"
+              ></b-input>
+            </b-field>
 
           </div>
         </div>
 
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-primary">Add locations</button>
+        <button class="button is-primary" @click.prevent="addLocations">Add locations</button>
         <button class="button" type="button" @click="$parent.close()">Close</button>
-        <button class="button is-success" type="button" @click="printData">Print</button>
-
       </footer>
     </div>
   </form>
@@ -84,25 +85,24 @@
           data: [['a', 'ab'], ['cd', 'eg']],
           colHeaders: true
         },
+        locationsText: '',
         latLonFormat: 'latLon',
-        sampleLocations: [
+        locations: [
           {
             name: 'Bangkok',
             country: 'Thailand',
-            coords: {
-              lat: 13.826,
-              lng: 100.58
-            }
+            lat: 13.826,
+            lon: 100.86
           },
           {
             name: 'Nonthaburi',
             country: 'Thailand',
-            coords: {
-              lat: 13.861,
-              lng: 100.534
-            }
+            lat: 13.598,
+            lon: 100.543
           }
-        ]
+        ],
+        columnHeaders: ['locationName', 'country', 'coords'],
+        validationMessages: []
       }
     },
     computed: {
@@ -111,8 +111,44 @@
       }
     },
     methods: {
-      printData () {
-        console.log(JSON.stringify(this.$refs.coordsTable.getData(), undefined, 2))
+      updateLocations () {
+        if (this.locationsText) {
+          let locations = []
+          let transformedLocationObjects = this.$_transformExcelTableToObjects(this.locationsText, this.columnHeaders)
+          // Transform into proper stations object format
+          if (transformedLocationObjects) {
+            transformedLocationObjects.forEach(location => {
+              // Validate the coordinates
+              let extractedCoords = this.$_extractCoordinateText(location.coords, this.latLonFormat === 'latLon')
+              if (!extractedCoords) {
+                this.validationMessages.push(`${location.coords} is not a valid ${this.latLonFormat} coordinates`)
+              }
+              // If there is no validation messages (all data is valid), generate the location object
+              if (this.validationMessages.length === 0) {
+                locations.push({
+                  name: location.locationName,
+                  country: location.country,
+                  lat: extractedCoords.lat,
+                  lon: extractedCoords.lon
+                })
+              } else {
+                this.openValidationMessageToast()
+              }
+            })
+            this.locations = locations
+          } else {
+            this.validationMessages.push('The copied table is in incorrect format')
+            this.openValidationMessageToast()
+            this.locations = []
+          }
+        }
+      },
+      addLocations () {
+        this.$emit('locationsAdded', { locations: this.locations })
+        this.$parent.close() // close the modal
+      },
+      openValidationMessageToast () {
+        this.$toast.open(this.validationMessages.join(','))
       }
     },
     props: {

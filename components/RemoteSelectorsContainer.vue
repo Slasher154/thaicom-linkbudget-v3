@@ -28,7 +28,8 @@
               :locationOptions="filteredRemoteLocationOptions"
               :multiple="true"
               :defaultSelectedLocations="defaultSelectedLocations"
-              @locations-changed="updateLocations"
+              :selectedLocationsFromOutside="selectedLocationsFromOutside"
+              @locations-changed="updateRemoteLocations"
             />
           </b-field>
           <b-field>
@@ -55,7 +56,7 @@
           <b-field label="Bandwidth">
             <remote-bandwidth-selector
               label="Bandwidth (You can press Enter to add)"
-              @bandwidthAdded="updateBandwidth"
+              @bandwidthAdded="updateRemoteBandwidth"
             />
           </b-field>
 
@@ -72,6 +73,7 @@
         <b-modal :active.sync="isLatLonImporterModalActive" has-modal-card>
           <base-lat-lon-importer-modal
             title="Remote Locations Importer"
+            @locationsAdded="addRemoteLocationsFromExcel"
           />
         </b-modal>
 
@@ -119,6 +121,7 @@
     data () {
       return {
         defaultSelectedLocations: [],
+        selectedLocationsFromOutside: [],
         defaultSelectedAntennas: [],
         defaultSelectedBucs: [],
         isLatLonImporterModalActive: false,
@@ -133,7 +136,11 @@
       ])
     },
     methods: {
-      updateLocations ({ locations }) {
+      addRemoteLocationsFromExcel ({ locations }) {
+        this.$store.dispatch('linkcalc/addRemoteLocationOptions', { locations })
+        this.selectedLocationsFromOutside = locations
+      },
+      updateRemoteLocations ({ locations }) {
         this.$store.dispatch('linkcalc/setSelectedRemoteLocations', { locations })
       },
       updateRemoteAntennas ({ antennas }) {
@@ -142,7 +149,7 @@
       updateRemoteBucs ({ bucs }) {
         this.$store.dispatch('linkcalc/setSelectedRemoteBucs', { bucs })
       },
-      updateBandwidth ({ bandwidth }) {
+      updateRemoteBandwidth ({ bandwidth }) {
         this.$store.dispatch('linkcalc/addSelectedBandwidth', { bandwidth })
       },
       updateRemoteStations ({ stations }) {

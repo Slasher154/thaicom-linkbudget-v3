@@ -81,7 +81,6 @@
               <b-input
                 type="textarea"
                 v-model="stationsText"
-                size="is-large"
                 @input="updateStations"
               ></b-input>
             </b-field>
@@ -186,11 +185,9 @@
           // Transform into proper stations object format
           if (transformedStationObjects) {
             transformedStationObjects.forEach(station => {
-              this.validationMessages = []
-
               // Validate the coordinates
               let extractedCoords = this.$_extractCoordinateText(station.coords, this.latLonFormat === 'latLon')
-              if (!extractedCoords) { // Check validation passed to trigger the toast only 1 time
+              if (!extractedCoords) {
                 this.validationMessages.push(`${station.coords} is not a valid ${this.latLonFormat} coordinates`)
               }
               // Validate the bandwidth

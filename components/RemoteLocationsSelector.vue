@@ -44,6 +44,10 @@
       defaultSelectedLocations: {
         type: Array,
         default: []
+      },
+      selectedLocationsFromOutside: {
+        type: Array,
+        default: []
       }
     },
     data () {
@@ -62,6 +66,12 @@
     watch: {
       defaultSelectedLocations (newValue) {
         this.selectedLocations = newValue
+      },
+      selectedLocationsFromOutside (newValue) {
+        newValue.forEach(location => {
+          this.selectedLocations.push(location)
+        })
+        this.$emit('locations-changed', { locations: this.selectedLocations })
       }
     }
   }
