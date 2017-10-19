@@ -117,6 +117,48 @@ Vue.mixin({
       return bucOptions.find(buc => {
         return buc.name === bucText.toUpperCase() || buc.size === +bucText
       })
+    },
+    $_validateGatewayAntennaText (antennaText) {
+      return !isNaN(antennaText) && +antennaText > 0
+    },
+    $_transformGatewayAntennaText (antennaText) {
+      if (this.$_validateGatewayAntennaText(antennaText)) {
+        return {
+          name: `${antennaText} m`,
+          size: +antennaText
+        }
+      }
+      return false
+    },
+    $_validateHpaText (hpaText) {
+      return !isNaN(hpaText) && +hpaText > 0
+    },
+    $_transformHpaText (hpaText) {
+      if (this.$_validateHpaText(hpaText)) {
+        return {
+          name: `${hpaText}W`,
+          size: +hpaText
+        }
+      }
+      return false
+    },
+    $_validateOboText (oboText) {
+      return !isNaN(oboText) && +oboText >= 0
+    },
+    $_transformOboText (oboText) {
+      if (this.$_validateHpaText(oboText)) {
+        return +oboText
+      }
+      return false
+    },
+    $_validateIflText (iflText) {
+      return !isNaN(iflText) && +iflText >= 0
+    },
+    $_transformIflText (iflText) {
+      if (this.$_validateHpaText(iflText)) {
+        return +iflText
+      }
+      return false
     }
   }
 })
