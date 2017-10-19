@@ -12,14 +12,19 @@
               >Use Default Gateway</b-checkbox>
             </div>
 
-            <b-field
-              v-if="!useDefaultGateway"
-            >
-              <button class="button is-warning"
-                      @click="isGatewayStationImporterModalActive = true">
-                Import remote stations from spreadsheet
-              </button>
-            </b-field>
+            <template v-if="!useDefaultGateway">
+              <b-field>
+                <button class="button is-warning"
+                        @click="isGatewayStationImporterModalActive = true">
+                  Import remote stations from spreadsheet
+                </button>
+              </b-field>
+              <!-- Gateway Stations Table -->
+              <base-gateway-stations-table
+                v-if="$store.state.linkcalc.gatewayStations.length > 0"
+                :stations="$store.state.linkcalc.gatewayStations"
+              />
+            </template>
 
             <!-- Gateway Station Importer Modal -->
             <b-modal :active.sync="isGatewayStationImporterModalActive" has-modal-card>
@@ -37,9 +42,11 @@
 
 <script>
   import GatewayStationsImporterModal from './GatewayStationsImporterModal'
+  import BaseGatewayStationsTable from './BaseGatewayStationsTable'
   export default {
     components: {
-      GatewayStationsImporterModal
+      GatewayStationsImporterModal,
+      BaseGatewayStationsTable
     },
     data () {
       return {
@@ -48,8 +55,8 @@
       }
     },
     methods: {
-      updateGatewayStations () {
-        console.log('')
+      updateGatewayStations ({ stations }) {
+        this.$store.dispatch('linkcalc/setGatewayStations', { stations })
       }
     }
   }

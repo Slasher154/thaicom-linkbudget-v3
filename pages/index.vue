@@ -18,16 +18,31 @@
         class="columns">
         <div class="column is-6">
           <gateway-selectors-container />
+          <br>
+          <modem-selectors-container />
+          <br>
+          <advanced-options-container />
         </div>
         <div class="column is-6">
           <remote-selectors-container />
         </div>
       </div>
+
       <div
         v-if="$store.state.linkcalc.selectedTransponders.length > 0 || $store.state.linkcalc.findBestTransponders"
         class="columns">
-        <div class="column">
+        <div class="column" v-show="false">
           <map-container />
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+          <button
+            class="button is-primary"
+            @click.prevent="submitRequest">
+            Submit
+          </button>
         </div>
       </div>
     </div>
@@ -39,6 +54,8 @@
   import SatelliteSelectorsContainer from '@/components/SatelliteSelectorsContainer'
   import GatewaySelectorsContainer from '@/components/GatewaySelectorsContainer'
   import RemoteSelectorsContainer from '@/components/RemoteSelectorsContainer'
+  import ModemSelectorsContainer from '@/components/ModemSelectorsContainer'
+  import AdvancedOptionsContainer from '@/components/AdvancedOptionsContainer'
   import MapContainer from '@/components/MapContainer'
 
   import axios from 'axios'
@@ -47,6 +64,8 @@
       SatelliteSelectorsContainer,
       GatewaySelectorsContainer,
       RemoteSelectorsContainer,
+      ModemSelectorsContainer,
+      AdvancedOptionsContainer,
       MapContainer
     },
     async fetch ({ store }) {
@@ -78,6 +97,11 @@
         throw error
       }
 //
+    },
+    methods: {
+      submitRequest () {
+        this.$toast.open('Request submitted')
+      }
     }
   }
 </script>

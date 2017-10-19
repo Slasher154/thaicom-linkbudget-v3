@@ -119,6 +119,12 @@ export const mutations = {
   SET_MODEM_OPTIONS (state, { modems }) {
     state.modemOptions = modems
   },
+  SET_SELECTED_MODEMS (state, { modems }) {
+    state.selectedModems = modems
+  },
+  SET_GATEWAY_STATIONS (state, { stations }) {
+    state.gatewayStations = stations
+  },
   SET_LOCATION_OPTIONS (state, { locations }) {
     state.gatewayLocationOptions = locations
     state.remoteLocationOptions = locations
@@ -203,6 +209,12 @@ export const actions = {
   setModemOptions ({ commit }, modems) {
     commit('SET_MODEM_OPTIONS', modems)
   },
+  setSelectedModems ({ commit }, modems) {
+    commit('SET_SELECTED_MODEMS', modems)
+  },
+  setGatewayStations ({ commit }, stations) {
+    commit('SET_GATEWAY_STATIONS', stations)
+  },
   setLocationOptions ({ commit }, locations) {
     commit('SET_LOCATION_OPTIONS', locations)
   },
@@ -234,9 +246,6 @@ export const actions = {
   removeSelectedBandwidth ({ commit }, id) {
     commit('REMOVE_SELECTED_BANDWIDTH', id)
   },
-  // setSelectedModems({ commit }, modems) {
-  //   commit('SET_SELECTED_MODEMS', modems)
-  // }),
   generateGatewayStations ({ commit }) {
     commit('GENERATE_GATEWAY_STATIONS')
   },

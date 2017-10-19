@@ -46,6 +46,20 @@ Vue.mixin({
       let concatenatedTransponders = _.concat(_.sortBy(transformedHtsTransponders, 'category'), _.sortBy(transformedConventionalTransponders, 'category'))
       return concatenatedTransponders
     },
+    $_transformModemOptions (modemOptions) {
+      // Group modem by vendor
+      let groupedModems = _.groupBy(modemOptions, x => x.vendor)
+
+      // Transform to grouped objects suitable for Vue Multiselect
+      let transformedModems = []
+      _.keys(groupedModems).forEach(key => {
+        transformedModems.push({
+          category: key,
+          modems: groupedModems[key]
+        })
+      })
+      return transformedModems
+    },
     $_transformExcelTableToObjects (stringData, columnHeaders) {
       // Source: https://stackoverflow.com/questions/2006468/copy-paste-from-excel-to-a-web-page
       // StringData is data copied from Excel, columnHeaders are fields

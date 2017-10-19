@@ -212,8 +212,8 @@
                   location: {
                     name: station.locationName,
                     country: station.country,
-                    lat: extractedCoords.lat,
-                    lon: extractedCoords.lon
+                    lat: +extractedCoords.lat,
+                    lon: +extractedCoords.lon
                   },
                   antenna,
                   buc,

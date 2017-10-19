@@ -1,14 +1,14 @@
 <template>
-  <multiselect v-model="selectedTransponders"
-               :options="transponderOptions"
-               :multiple="true"
-               :close-on-select="false"
+  <multiselect v-model="selectedModems"
+               :options="modemOptions"
+               :multiple="multiple"
+               :close-on-select="true"
                :clear-on-select="false"
                :hide-selected="true"
                :disabled="isDisabled"
-               group-values="transponders"
+               group-values="modems"
                group-label="category"
-               placeholder="Pick 1 or more transponders"
+               placeholder="Pick 1 or more modems"
                track-by="name"
                label="name"
                @input="onChanged"
@@ -23,7 +23,7 @@
   export default {
     components: { Multiselect },
     props: {
-      transponderOptions: {
+      modemOptions: {
         type: Array,
         required: true
       },
@@ -32,7 +32,7 @@
         required: true,
         default: false
       },
-      defaultSelectedTransponders: {
+      defaultSelectedModems: {
         type: Array,
         default: () => []
       },
@@ -43,23 +43,24 @@
     },
     data () {
       return {
-        selectedTransponders: []
+        selectedModems: []
       }
     },
     methods: {
       onChanged () {
-        this.$emit('transponders-changed', { transponders: this.selectedTransponders })
+        this.$emit('modems-changed', { modems: this.selectedModems })
       }
     },
     mounted () {
-      this.selectedTransponders = this.defaultSelectedTransponders || []
+      this.selectedModems = this.defaultSelectedModems || []
     },
     watch: {
       defaultSelectedTransponders (newValue) {
-        this.selectedTransponders = newValue
-        this.$emit('transponders-changed', { transponders: this.selectedTransponders })
+        this.selectedModems = newValue
+        this.$emit('modems-changed', { modems: this.selectedModems })
       }
     }
   }
 </script>
+
 
