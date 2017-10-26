@@ -61,6 +61,10 @@
     mounted () {
       this.dispatchModem()
     },
+    destroyed () {
+      // Remove the selected MCG of this modem
+      this.$store.dispatch('linkcalc/removeSelectedModemsAndMcgs', { modem: _.cloneDeep(this.modem) })
+    },
     methods: {
       findMcgsFromPath (type) {
         let application = this.modem.applications.find(x => x.type === type) || this.modem.applications[0]

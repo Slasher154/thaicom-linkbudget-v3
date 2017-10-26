@@ -62,7 +62,13 @@ export const state = () => ({
   selectedLinkAvailabilities: [],
 
   // Max Mode
-  isMaxMode: false,
+  maxMode: false,
+
+  // Finiding Max Coverage
+  maxCoverage: false,
+
+  // Finidng Max total link availability
+  maxLinkAvailability: false,
 
   // Find best transponders from input locations
   findBestTransponders: false,
@@ -128,6 +134,9 @@ export const mutations = {
   UPSERT_SELECTED_MODEMS_AND_MCGS (state, { modem }) {
     // if this modem is not in the array before, add it. Otherwise, replace the current one
     upsert(state.selectedModemsAndMcgs, { _id: modem._id }, modem)
+  },
+  REMOVE_SELECTED_MODEMS_AND_MCGS (state, { modem }) {
+    _.remove(state.selectedModemsAndMcgs, x => x._id === modem._id)
   },
   SET_GATEWAY_STATIONS (state, { stations }) {
     state.gatewayStations = stations
@@ -196,6 +205,15 @@ export const mutations = {
   },
   UPDATE_FIND_BEST_TRANSPONDERS (state, status) {
     state.findBestTransponders = status
+  },
+  SET_MAX_MODE (state, status) {
+    state.maxMode = status
+  },
+  SET_MAX_COVERAGE (state, status) {
+    state.maxCoverage = status
+  },
+  SET_MAX_LINK_AVAILABILITY (state, status) {
+    state.maxLinkAvailability = status
   }
 }
 
@@ -221,6 +239,9 @@ export const actions = {
   },
   upsertSelectedModemsAndMcgs ({ commit }, modem) {
     commit('UPSERT_SELECTED_MODEMS_AND_MCGS', modem)
+  },
+  removeSelectedModemsAndMcgs ({ commit }, modem) {
+    commit('REMOVE_SELECTED_MODEMS_AND_MCGS', modem)
   },
   setGatewayStations ({ commit }, stations) {
     commit('SET_GATEWAY_STATIONS', stations)
@@ -270,6 +291,15 @@ export const actions = {
   },
   updateFindBestTransponders ({ commit }, status) {
     commit('UPDATE_FIND_BEST_TRANSPONDERS', status)
+  },
+  setMaxMode({ commit }, status) {
+    commit('SET_MAX_MODE', status)
+  },
+  setMaxCoverage({ commit }, status) {
+    commit('SET_MAX_COVERAGE', status)
+  },
+  setMaxLinkAvailability({ commit }, status) {
+    commit('SET_MAX_LINK_AVAILABILITY', status)
   }
 }
 
