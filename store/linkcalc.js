@@ -55,6 +55,9 @@ export const state = () => ({
   modemOptions: [],
   selectedModems: [],
 
+  // Modem and MCGs
+  selectedModemsAndMcgs: [],
+
   // Link Availability
   selectedLinkAvailabilities: [],
 
@@ -121,6 +124,10 @@ export const mutations = {
   },
   SET_SELECTED_MODEMS (state, { modems }) {
     state.selectedModems = modems
+  },
+  UPSERT_SELECTED_MODEMS_AND_MCGS (state, { modem }) {
+    // if this modem is not in the array before, add it. Otherwise, replace the current one
+    upsert(state.selectedModemsAndMcgs, { _id: modem._id }, modem)
   },
   SET_GATEWAY_STATIONS (state, { stations }) {
     state.gatewayStations = stations
@@ -212,6 +219,9 @@ export const actions = {
   setSelectedModems ({ commit }, modems) {
     commit('SET_SELECTED_MODEMS', modems)
   },
+  upsertSelectedModemsAndMcgs ({ commit }, modem) {
+    commit('UPSERT_SELECTED_MODEMS_AND_MCGS', modem)
+  },
   setGatewayStations ({ commit }, stations) {
     commit('SET_GATEWAY_STATIONS', stations)
   },
@@ -262,3 +272,13 @@ export const actions = {
     commit('UPDATE_FIND_BEST_TRANSPONDERS', status)
   }
 }
+
+function upsert (arr, key, newval) {
+  var match = _.find(arr, key)
+  if (match) {
+    var index = _.indexOf(arr, _.find(arr, key))
+    arr.splice(index, 1, newval)
+  } else {
+    arr.push(newval)
+  }
+};

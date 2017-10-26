@@ -13,6 +13,15 @@
                label="name"
                @input="onChanged"
   >
+    <template
+      slot="tag"
+      scope="props">
+      <b-tag
+        closable
+        size="is-medium"
+        @close="props.remove(props.option)"
+      >{{props.option.name}}</b-tag>
+    </template>
   </multiselect>
 </template>
 

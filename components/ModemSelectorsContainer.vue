@@ -12,6 +12,12 @@
             :multiple="true"
             @modems-changed="updateModems" />
         </b-field>
+        <br>
+        <modem-mcgs-selector-container
+          v-for="modem in $store.state.linkcalc.selectedModems"
+          :modem="modem"
+        />
+        <br>
 
       </div>
 
@@ -22,9 +28,11 @@
 
 <script>
   import ModemSelector from './ModemSelector'
+  import ModemMcgsSelectorContainer from './ModemMcgsSelectorsContainer'
   export default {
     components: {
-      ModemSelector
+      ModemSelector,
+      ModemMcgsSelectorContainer
     },
     computed: {
       modemOptions () {
