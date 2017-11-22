@@ -5,6 +5,10 @@
 import _ from 'lodash'
 
 export const state = () => ({
+
+  // Request Information
+  requestName: '',
+
   // Satellites
   satelliteOptions: [],
   selectedSatellites: [],
@@ -58,17 +62,24 @@ export const state = () => ({
   // Modem and MCGs
   selectedModemsAndMcgs: [],
 
+  // Default Gateway
+  useDefaultGateway: true,
+
   // Link Availability
   selectedLinkAvailabilities: [],
 
   // Max Mode
   maxMode: false,
 
-  // Finiding Max Coverage
-  maxCoverage: false,
+  // Finding Max Coverage
+  findMaxCoverage: false,
+
+  // Link margins (available in finding max coverage mode)
+  forwardLinkMargins: [],
+  returnLinkMargins: [],
 
   // Finidng Max total link availability
-  maxLinkAvailability: false,
+  findMaxLinkAvailability: false,
 
   // Find best transponders from input locations
   findBestTransponders: false,
@@ -78,7 +89,21 @@ export const state = () => ({
   selectedAdjacentSatelliteTransponders: [],
 
   // Defined contours
-  definedContours: ['Peak', '50%', 'EOC', 'EOC-2']
+  definedContours: ['Peak', '50%', 'EOC', 'EOC-2'],
+
+  // Test
+  test: [],
+
+  // Link Result
+  linkResults: {},
+
+  // Field name mappers
+  fieldNameMappers: [
+    {
+
+    }
+  ]
+
 })
 
 export const getters = {
@@ -107,12 +132,55 @@ export const getters = {
     // Return sorted transponders by satellite name, uplink beam name and uplink frequency
     return _.sortBy(filteredTransponders, ['satellite', 'uplink_beam', 'uplink_cf'])
   },
-  gatewayStations (state) {
-    return state.selectedGatewayHpas
+  linkResultsFields (state) {
+    return path => {
+      let fields = []
+      let clearSkyResult = state.linkResults[path + 'LinkResults'][0]['clearSky']
+      for (var prop in clearSkyResult) {
+        if (clearSkyResult.hasOwnProperty(prop)) {
+          fields.push({
+            name: prop
+          })
+        }
+      }
+      return fields
+    }
+  },
+  linkResultsTableData (state) {
+    return path => {
+      return state.linkResults[path + 'LinkResults'].map(x => {
+        return flattenLinkResults(x, x.assumptions)
+      })
+    }
+  },
+  requestObject (state) {
+    let object = {
+      satellites: state.selectedSatellites,
+      transponders: state.selectedTransponders,
+      gatewayStations: state.gatewayStations,
+      remoteStations: state.remoteStations,
+      remoteAntennas: state.selectedRemoteAntennas,
+      remoteBucs: state.selectedRemoteBucs,
+      remoteLocations: state.selectedRemoteLocations,
+      bandwidth: state.selectedBandwidth,
+      modemsAndMcgs: state.selectedModemsAndMcgs,
+      useDefaultGateway: state.useDefaultGateway,
+      maxMode: state.maxMode,
+      forwardLinkMargins: state.forwardLinkMargins,
+      returnLinkMargins: state.returnLinkMargins,
+      findMaxCoverage: state.findMaxCoverage,
+      findMaxLinkAvailability: state.findMaxLinkAvailability,
+      findBestTransponders: state.findBestTransponders,
+      requestName: state.requestName
+    }
+    return object
   }
 }
 
 export const mutations = {
+  SET_REQUEST_NAME (state, name) {
+    state.requestName = name
+  },
   SET_SATELLITE_OPTIONS (state, { satellites }) {
     state.satelliteOptions = satellites
   },
@@ -203,6 +271,9 @@ export const mutations = {
   SET_REMOTE_STATIONS (state, { stations }) {
     state.remoteStations = stations
   },
+  SET_USE_DEFAULT_GATEWAY (state, status) {
+    state.useDefaultGateway = status
+  },
   UPDATE_FIND_BEST_TRANSPONDERS (state, status) {
     state.findBestTransponders = status
   },
@@ -210,14 +281,29 @@ export const mutations = {
     state.maxMode = status
   },
   SET_MAX_COVERAGE (state, status) {
-    state.maxCoverage = status
+    state.findMaxCoverage = status
+  },
+  SET_FORWARD_LINK_MARGINS (state, arrayOfLinkMargins) {
+    state.forwardLinkMargins = arrayOfLinkMargins
+  },
+  SET_RETURN_LINK_MARGINS (state, arrayOfLinkMargins) {
+    state.returnLinkMargins = arrayOfLinkMargins
   },
   SET_MAX_LINK_AVAILABILITY (state, status) {
-    state.maxLinkAvailability = status
+    state.findMaxLinkAvailability = status
+  },
+  PUSH_TEST (state, value) {
+    state.test.push(value)
+  },
+  SET_LINK_RESULTS (state, { linkResults }) {
+    state.linkResults = linkResults
   }
 }
 
 export const actions = {
+  setRequestName ({ commit }, name) {
+    commit('SET_REQUEST_NAME', name)
+  },
   // This action expected { satellites: [] } as a payload
   setSatelliteOptions ({ commit }, satellites) {
     commit('SET_SATELLITE_OPTIONS', satellites)
@@ -292,14 +378,80 @@ export const actions = {
   updateFindBestTransponders ({ commit }, status) {
     commit('UPDATE_FIND_BEST_TRANSPONDERS', status)
   },
-  setMaxMode({ commit }, status) {
+  setUseDefaultGateway ({ commit }, status) {
+    commit('SET_USE_DEFAULT_GATEWAY', status)
+  },
+  setMaxMode ({ commit }, status) {
     commit('SET_MAX_MODE', status)
   },
-  setMaxCoverage({ commit }, status) {
+  setMaxCoverage ({ commit }, status) {
     commit('SET_MAX_COVERAGE', status)
   },
-  setMaxLinkAvailability({ commit }, status) {
+  setForawrdLinkMargins ({ commit }, arrayOfLinkMargins) {
+    commit('SET_FORWARD_LINK_MARGINS', arrayOfLinkMargins)
+  },
+  setReturnLinkMargins ({ commit }, arrayOfLinkMargins) {
+    commit('SET_FORWARD_LINK_MARGINS', arrayOfLinkMargins)
+  },
+  setMaxLinkAvailability ({ commit }, status) {
     commit('SET_MAX_LINK_AVAILABILITY', status)
+  },
+  pushTest ({ commit }, value) {
+    commit('PUSH_TEST', value)
+  },
+  setLinkResults ({ commit }, linkResults) {
+    commit('SET_LINK_RESULTS', linkResults)
+  }
+}
+
+function flattenLinkResults (linkResults, assumptions) {
+  let resultObject = {}
+  // Flatten the clear sky link
+  let flattenClearSkyLink = flattenConditionLink(linkResults.clearSky, 'Clear')
+  _.assign(resultObject, flattenClearSkyLink)
+  console.log(`Result of clr = ${JSON.stringify(flattenClearSkyLink)}`)
+  // Flatten the rain fade link
+  let flattenRainFadeLink = flattenConditionLink(linkResults.rainFade, 'Rain')
+  _.assign(resultObject, flattenRainFadeLink)
+  console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
+  // Flatten the remote station
+  _.assign(resultObject, flattenRemoteStation(assumptions.remoteStation))
+  console.log(`Flatten object = ${JSON.stringify(resultObject)}`)
+  return resultObject
+}
+
+function flattenConditionLink (linkResult, condition) {
+  let resultObject = {}
+  for (var prop in linkResult) {
+    console.log(`Type of ${prop} is ${typeof linkResult[prop]}`)
+    if (linkResult.hasOwnProperty(prop) && (typeof linkResult[prop] === 'string' || typeof linkResult[prop] === 'number' || typeof linkResult[prop] === 'boolean')) {
+      resultObject[prop + condition] = linkResult[prop]
+    }
+  }
+  // Includes the MCG
+  // console.log(`Flatten condition = ${JSON.stringify(resultObject)}`)
+  _.assign(resultObject, flattenMcg(linkResult.mcg))
+  return resultObject
+}
+
+function flattenMcg (mcg) {
+  return {
+    mcgName: mcg.name,
+    mcgSpectralEfficiency: mcg.spectral_efficiency,
+    mcgEsNo: mcg.es_no
+  }
+}
+
+function flattenRemoteStation (remoteStation) {
+  return {
+    antennaName: remoteStation.antenna.name,
+    antennaSize: remoteStation.antenna.size,
+    bucName: remoteStation.buc.name,
+    bucSize: remoteStation.buc.size,
+    locationName: remoteStation.location.name,
+    coordinates: _.has(remoteStation.location, 'lat') ? `${remoteStation.location.lat},${remoteStation.location.lon}` : '',
+    targetedForwardBandwidth: `${remoteStation.bandwidth.forward} ${remoteStation.bandwidth.unit}`,
+    targetedReturnBandwidth: `${remoteStation.bandwidth.return} ${remoteStation.bandwidth.unit}`
   }
 }
 

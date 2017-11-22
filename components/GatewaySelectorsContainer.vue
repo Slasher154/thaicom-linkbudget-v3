@@ -9,6 +9,7 @@
             <div class="field">
               <b-checkbox
                 v-model="useDefaultGateway"
+                @input="updateUseDefaultGateway"
               >Use Default Gateway</b-checkbox>
             </div>
 
@@ -57,6 +58,9 @@
     methods: {
       updateGatewayStations ({ stations }) {
         this.$store.dispatch('linkcalc/setGatewayStations', { stations })
+      },
+      updateUseDefaultGateway (status) {
+        this.$store.dispatch('linkcalc/setUseDefaultGateway', status)
       }
     }
   }

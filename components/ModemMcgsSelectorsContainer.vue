@@ -3,13 +3,13 @@
     <b-field :label="modem.name">
       <!--<div class="block">-->
         <!--<b-radio-->
-          <!--v-model="bestMcg"-->
+          <!--v-model="findBestMcg"-->
           <!--native-value="true"-->
         <!--&gt;-->
           <!--Best MCG-->
         <!--</b-radio>-->
         <!--<b-radio-->
-          <!--v-model="bestMcg"-->
+          <!--v-model="findBestMcg"-->
           <!--native-value="false"-->
         <!--&gt;-->
           <!--Manual Pick MCG-->
@@ -17,14 +17,14 @@
       <!--</div>-->
       <div class="field">
         <b-switch
-          v-model="bestMcg"
+          v-model="findBestMcg"
           @input="dispatchModem"
         >
           Find Best MCG
         </b-switch>
       </div>
     </b-field>
-    <template v-if="!bestMcg">
+    <template v-if="!findBestMcg">
       <b-field>
         <modem-mcgs-selector
           :mcgOptions="forwardMcgs"
@@ -53,7 +53,7 @@
     },
     data () {
       return {
-        bestMcg: true,
+        findBestMcg: true,
         selectedForwardMcgs: [],
         selectedReturnMcgs: []
       }
@@ -96,11 +96,11 @@
         this.updateMcgs()
       },
       extendModemObject (modemObj) {
-        return _.assign(modemObj, { bestMcg: this.bestMcg })
+        return _.assign(modemObj, { findBestMcg: this.findBestMcg })
       },
       dispatchModem () {
         let modem = this.extendModemObject(_.cloneDeep(this.modem))
-        if (this.bestMcg) {
+        if (this.findBestMcg) {
           this.$store.dispatch('linkcalc/upsertSelectedModemsAndMcgs', { modem })
         } else {
           // if not find best mcg is selected, clear the MCGs array of all application first

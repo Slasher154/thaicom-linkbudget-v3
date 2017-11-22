@@ -17,6 +17,17 @@ module.exports = {
 
     ]
   },
+  /*
+  modules: ['nuxt-oauth'],
+  oauth: {
+    sessionName: 'mySession',
+    secretKey: 'mykey',
+    oauthHost: 'https://poseidon.thaicom.net/connect/token',
+    oauthClientID: process.env.OAUTH_CLIENT_ID,
+    oauthClientSecret: process.env.OAUTH_CLIENT_SECRET,
+    testMode: true
+  },
+  */
   plugins: [
     '~plugins/axios',
     '~plugins/buefy',

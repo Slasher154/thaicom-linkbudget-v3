@@ -7,25 +7,43 @@
       <div class="content">
         <div class="field">
           <b-checkbox
-            v-model="maxCoverage"
+            v-model="findMaxCoverage"
             @input="updateMaxCoverage"
           >Find maximum coverage</b-checkbox>
         </div>
+        <div
+          v-if="findMaxCoverage"
+          class="columns">
+          <div class="column">
+            <b-field label="Forward Link Margin(s) (dB)">
+              <b-input placeholder="Example: 2,0"
+                @input="updateForwardLinkMargins"
+              ></b-input>
+            </b-field>
+          </div>
+          <div class="column">
+            <b-field label="Return Link Margin(s) (dB)">
+              <b-input placeholder="Example: 2,0"
+               @input="updateReturnLinkMargins"
+              ></b-input>
+            </b-field>
+          </div>
+        </div>
         <article
-          v-if="maxCoverage"
+          v-if="findMaxCoverage"
           class="message is-info">
           <div class="message-body">
-            Finding maximum coverage will require the user to input fixed MCG(s) and transponder(s). Finding best transponder and best MCG options cannot be selected simultaneously with finding maximum coverage. Using this option will ignore any locations input by user.
+            Finding maximum coverage will require the user to input fixed MCG(s) and transponder(s). Finding best transponder and best MCG options cannot be selected simultaneously with finding maximum coverage. Using this option will ignore any locations input by user. In addition, you need to give the desired link margins in comma separated value. This link margin will be applied to find the max coverage under clear sky condition and will overwrite the existing modem link margin value.
           </div>
         </article>
         <div class="field">
           <b-checkbox
-            v-model="maxLinkAvailability"
+            v-model="findMaxLinkAvailability"
             @input="updateMaxLinkAvailability"
           >Find maximum total link availability</b-checkbox>
         </div>
         <article
-          v-if="maxLinkAvailability"
+          v-if="findMaxLinkAvailability"
           class="message is-info">
           <div class="message-body">
             The calculation will attempt to find maximum total link availability based on the least efficient MCG (for ACM) at rain fade or the given fixed MCG, instead of calculate based on standard total link availability.
@@ -49,8 +67,8 @@
   export default {
     data () {
       return {
-        maxCoverage: false,
-        maxLinkAvailability: false,
+        findMaxCoverage: false,
+        findMaxLinkAvailability: false,
         maxMode: false
       }
     },
@@ -66,6 +84,12 @@
       },
       updateMaxMode (status) {
         this.dispatchOption('setMaxMode', status)
+      },
+      updateForwardLinkMargins (value) {
+        console.log(value)
+      },
+      updateReturnLinkMargins (value) {
+        console.log(value)
       }
     }
   }
