@@ -5,8 +5,8 @@
     <h1 class="title">Thaicom Link Budget v3</h1>
     <h2 class="subtitle">The revolution of link budget (hopefully)</h2>
 
-    <b-tabs type="is-toggle" position="is-centered" class="block">
-      <b-tab-item label="Input">
+    <b-tabs v-model="activeTab" type="is-toggle" position="is-centered" class="block">
+      <b-tab-item label="Request">
         <br>
         <request-name-container/>
         <br>
@@ -28,7 +28,8 @@
         </div>
 
         <div
-          v-if="$store.state.linkcalc.selectedTransponders.length > 0 || $store.state.linkcalc.findBestTransponders"
+          v-if="$store.state.linkcalc
+          .selectedTransponders.length > 0 || $store.state.linkcalc.findBestTransponders"
           class="columns">
           <div class="column" v-show="false">
             <map-container/>
@@ -108,15 +109,12 @@
     },
     data () {
       return {
-        selectedTab: 'input'
+        activeTab: 0
       }
     },
     methods: {
-      setTab (tab) {
-        this.selectedTab = tab
-      },
       submitRequest () {
-        this.$toast.open('Request submitted')
+//        this.$toast.open('Request submitted')
         this.submitResultToServer()
       },
       validate () {
@@ -124,11 +122,14 @@
       },
       async submitResultToServer () {
         // Construct the link budget requests input from the store
+        const loadingComponent = this.$loading.open()
         let requestObject = this.requestObject
         console.log(JSON.stringify(requestObject, undefined, 2))
         let results = await axios.post('/linkbudget-request', {requestObject})
         this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
         console.log(JSON.stringify(results.data, undefined, 2))
+        loadingComponent.close()
+        this.activeTab = 1
       }
     },
     computed: {

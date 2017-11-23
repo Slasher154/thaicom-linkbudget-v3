@@ -43,7 +43,36 @@
 
       <b-tab-item label="Return Link">
         <br>
-        <p>Return Link</p>
+
+        <!-- Field Selector -->
+        <b-field label="Fields">
+          <result-fields-selector
+            :fieldOptions="linkResultsFields('return')"
+            :multiple="true" />
+        </b-field>
+
+        <b-table
+          :data="linkResultsTableData('return')"
+          :bordered="true"
+        >
+          <template scope="props">
+            <b-table-column label="Antenna">
+              {{ props.row.antennaName }}
+            </b-table-column>
+            <b-table-column label="Transponder">
+              {{ props.row.channelClear }}
+            </b-table-column>
+            <b-table-column label="C/N Downlink">
+              {{ props.row.cnDownlinkClear }}
+            </b-table-column>
+            <b-table-column label="C/N Total">
+              {{ props.row.cnTotalClear }}
+            </b-table-column>
+            <b-table-column label="Data Rate (Mbps)">
+              {{ props.row.dataRateClear }}
+            </b-table-column>
+          </template>
+        </b-table>
       </b-tab-item>
 
       <b-tab-item label="Maps">

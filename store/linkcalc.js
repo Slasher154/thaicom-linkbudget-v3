@@ -135,12 +135,14 @@ export const getters = {
   linkResultsFields (state) {
     return path => {
       let fields = []
-      let clearSkyResult = state.linkResults[path + 'LinkResults'][0]['clearSky']
-      for (var prop in clearSkyResult) {
-        if (clearSkyResult.hasOwnProperty(prop)) {
-          fields.push({
-            name: prop
-          })
+      if (state.linkResults[path + 'LinkResults']) {
+        let clearSkyResult = state.linkResults[path + 'LinkResults'][0]['clearSky']
+        for (var prop in clearSkyResult) {
+          if (clearSkyResult.hasOwnProperty(prop)) {
+            fields.push({
+              name: prop
+            })
+          }
         }
       }
       return fields
@@ -148,9 +150,12 @@ export const getters = {
   },
   linkResultsTableData (state) {
     return path => {
-      return state.linkResults[path + 'LinkResults'].map(x => {
-        return flattenLinkResults(x, x.assumptions)
-      })
+      if (state.linkResults[path + 'LinkResults']) {
+        return state.linkResults[path + 'LinkResults'].map(x => {
+          return flattenLinkResults(x, x.assumptions)
+        })
+      }
+      return []
     }
   },
   requestObject (state) {
