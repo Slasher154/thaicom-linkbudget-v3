@@ -14,7 +14,6 @@
       scope="props">
       <b-tag
         closable
-        size="is-medium"
         @close="props.remove(props.option)"
       >{{props.option.name}}</b-tag>
     </template>
@@ -32,12 +31,14 @@
       },
       multiple: {
         type: Boolean,
-        required: true,
         default: false
       },
       defaultSelectedFields: {
         type: Array,
         default: () => []
+      },
+      refreshCounter: {
+        type: Number
       }
     },
     data () {
@@ -59,6 +60,9 @@
     watch: {
       defaultSelectedFields (newValue) {
         this.selectedFields = newValue
+      },
+      refreshCounter () {
+        this.selectedFields = []
       }
     }
   }

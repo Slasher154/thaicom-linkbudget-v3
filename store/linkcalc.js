@@ -102,8 +102,40 @@ export const state = () => ({
     {
 
     }
-  ]
+  ],
 
+  // Link results field
+  forwardTableFields: [],
+  returnTableFields: [],
+
+  // Link results default shown fields
+  forwardTableDefaultFields: [
+    'antennaName',
+    'locationName',
+    'channelClear',
+    'mcgNameClear',
+    'mcgSpectralEfficiencyClear',
+    'dataRateClear',
+    'mcgNameRain',
+    'mcgSpectralEfficiencyRain',
+    'dataRateRain',
+    'linkAvailabilityRain',
+    'passedClear'
+  ],
+  returnTableDefaultFields: [
+    'antennaName',
+    'bucName',
+    'locationName',
+    'channelClear',
+    'mcgNameClear',
+    'mcgSpectralEfficiencyClear',
+    'dataRateClear',
+    'mcgNameRain',
+    'mcgSpectralEfficiencyRain',
+    'dataRateRain',
+    'linkAvailabilityRain',
+    'passedClear'
+  ]
 })
 
 export const getters = {
@@ -302,6 +334,30 @@ export const mutations = {
   },
   SET_LINK_RESULTS (state, { linkResults }) {
     state.linkResults = linkResults
+  },
+  GENERATE_TABLE_FIELDS (state, { path, data }) {
+    let columns = []
+    for (var prop in data) {
+      columns.push({
+        title: prop,
+        name: prop,
+        visible: _.includes(state[path + 'TableDefaultFields'], prop)
+      })
+    }
+    state[path + 'TableFields'] = columns
+  },
+  SET_TABLE_FIELDS (state, { path, list }) {
+    state[path + 'TableFields'] = list
+  },
+  HIDE_FIELD (state, { path, element }) {
+    let fieldToHide = state[path + 'TableFields'].find(f => f.name === element.name)
+    fieldToHide.visible = false
+  },
+  ADD_FIELDS (state, { path, fields }) {
+    fields.forEach(field => {
+      let fieldToAdd = state[path + 'TableFields'].find(f => f.name === field.name)
+      fieldToAdd.visible = true
+    })
   }
 }
 
@@ -404,13 +460,32 @@ export const actions = {
   pushTest ({ commit }, value) {
     commit('PUSH_TEST', value)
   },
-  setLinkResults ({ commit }, linkResults) {
+  setLinkResults ({ commit, getters }, linkResults) {
     commit('SET_LINK_RESULTS', linkResults)
+    // Generate array of table fields for forward and return links
+    let paths = ['forward', 'return']
+    paths.forEach(path => {
+      let dataTable = getters.linkResultsTableData(path)
+      let data = dataTable[0]
+      commit('GENERATE_TABLE_FIELDS', { path, data })
+    })
+  },
+  setTableFields ({ commit }, data) {
+    commit('SET_TABLE_FIELDS', data)
+  },
+  hideField ({ commit }, element) {
+    commit('HIDE_FIELD', element)
+  },
+  addFields ({ commit }, fields) {
+    commit('ADD_FIELDS', fields)
   }
 }
 
 function flattenLinkResults (linkResults, assumptions) {
   let resultObject = {}
+  // Flatten the remote station
+  _.assign(resultObject, flattenRemoteStation(assumptions.remoteStation))
+  console.log(`Flatten object = ${JSON.stringify(resultObject)}`)
   // Flatten the clear sky link
   let flattenClearSkyLink = flattenConditionLink(linkResults.clearSky, 'Clear')
   _.assign(resultObject, flattenClearSkyLink)
@@ -419,16 +494,13 @@ function flattenLinkResults (linkResults, assumptions) {
   let flattenRainFadeLink = flattenConditionLink(linkResults.rainFade, 'Rain')
   _.assign(resultObject, flattenRainFadeLink)
   console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
-  // Flatten the remote station
-  _.assign(resultObject, flattenRemoteStation(assumptions.remoteStation))
-  console.log(`Flatten object = ${JSON.stringify(resultObject)}`)
   return resultObject
 }
 
 function flattenConditionLink (linkResult, condition) {
   let resultObject = {}
   for (var prop in linkResult) {
-    console.log(`Type of ${prop} is ${typeof linkResult[prop]}`)
+    // console.log(`Type of ${prop} is ${typeof linkResult[prop]}`)
     if (linkResult.hasOwnProperty(prop) && (typeof linkResult[prop] === 'string' || typeof linkResult[prop] === 'number' || typeof linkResult[prop] === 'boolean')) {
       resultObject[prop + condition] = linkResult[prop]
     }

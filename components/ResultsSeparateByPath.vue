@@ -10,69 +10,27 @@
       <b-tab-item label="Forward Link">
         <br>
 
-        <!-- Field Selector -->
-        <b-field label="Fields">
-          <result-fields-selector
-            :fieldOptions="linkResultsFields('forward')"
-            :multiple="true" />
-        </b-field>
+        <results-fields-selector-container
+          path="forward"
+        />
 
-       <b-table
-         :data="linkResultsTableData('forward')"
-         :bordered="true"
-       >
-         <template scope="props">
-           <b-table-column label="Antenna">
-             {{ props.row.antennaName }}
-           </b-table-column>
-           <b-table-column label="Transponder">
-             {{ props.row.channelClear }}
-           </b-table-column>
-           <b-table-column label="C/N Downlink">
-             {{ props.row.cnDownlinkClear }}
-           </b-table-column>
-           <b-table-column label="C/N Total">
-             {{ props.row.cnTotalClear }}
-           </b-table-column>
-           <b-table-column label="Data Rate (Mbps)">
-             {{ props.row.dataRateClear }}
-           </b-table-column>
-         </template>
-       </b-table>
+        <results-table-by-path
+          path="forward"
+        />
+
+
      </b-tab-item>
 
       <b-tab-item label="Return Link">
         <br>
 
-        <!-- Field Selector -->
-        <b-field label="Fields">
-          <result-fields-selector
-            :fieldOptions="linkResultsFields('return')"
-            :multiple="true" />
-        </b-field>
+        <results-fields-selector-container
+          path="return"
+        />
 
-        <b-table
-          :data="linkResultsTableData('return')"
-          :bordered="true"
-        >
-          <template scope="props">
-            <b-table-column label="Antenna">
-              {{ props.row.antennaName }}
-            </b-table-column>
-            <b-table-column label="Transponder">
-              {{ props.row.channelClear }}
-            </b-table-column>
-            <b-table-column label="C/N Downlink">
-              {{ props.row.cnDownlinkClear }}
-            </b-table-column>
-            <b-table-column label="C/N Total">
-              {{ props.row.cnTotalClear }}
-            </b-table-column>
-            <b-table-column label="Data Rate (Mbps)">
-              {{ props.row.dataRateClear }}
-            </b-table-column>
-          </template>
-        </b-table>
+        <results-table-by-path
+          path="return"
+        />
       </b-tab-item>
 
       <b-tab-item label="Maps">
@@ -86,10 +44,12 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import ResultFieldsSelector from './ResultsFieldsSelector'
+  import ResultsFieldsSelectorContainer from './ResultsFieldsSelectorContainer'
+  import ResultsTableByPath from './ResultsTableByPath.vue'
   export default {
     components: {
-      ResultFieldsSelector
+      ResultsFieldsSelectorContainer,
+      ResultsTableByPath
     },
     props: {
       linkResults: {
