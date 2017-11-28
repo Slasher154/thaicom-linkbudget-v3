@@ -100,7 +100,339 @@ export const state = () => ({
   // Field name mappers
   fieldNameMappers: [
     {
-
+      'name': 'channelOutputBackoff',
+      'title': 'Transponder Output Backoff @ Full Load',
+      'unit': 'dB'
+    },
+    {
+      'name': 'channelDeepin',
+      'title': 'Transponder Deep-in @ Full Load',
+      'unit': 'dB'
+    },
+    {
+      'name': 'channel',
+      'title': 'Transponder',
+      'unit': ''
+    },
+    {
+      'name': 'operatingMode',
+      'title': 'Transponder Operating Mode',
+      'unit': ''
+    },
+    {
+      'name': 'operatingSfd',
+      'title': 'Operating SFD @ Location @ Atten',
+      'unit': 'dBW/m^2'
+    },
+    {
+      'name': 'operatingPfdPerCarrier',
+      'title': 'Operating PFD per Carrier @ Desired Level',
+      'unit': 'dBW/m^2'
+    },
+    {
+      'name': 'carrierPfd',
+      'title': 'Actual Carrier PFD',
+      'unit': 'dBW/m^2'
+    },
+    {
+      'name': 'carrierObo',
+      'title': 'Carrier Output Backoff',
+      'unit': 'dB'
+    },
+    {
+      'name': 'gainVariation',
+      'title': 'Gain Variation',
+      'unit': 'dB'
+    },
+    {
+      'name': 'uplinkPointingLoss',
+      'title': 'Uplink Pointing Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'uplinkXpolLoss',
+      'title': 'Uplink Xpol Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'uplinkAtmLoss',
+      'title': 'Upllink Atmospheric Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'uplinkEirp',
+      'title': 'EIRP Uplink',
+      'unit': 'dBW'
+    },
+    {
+      'name': 'uplinkGt',
+      'title': 'G/T Uplink',
+      'unit': 'dB/K'
+    },
+    {
+      'name': 'uplinkPathLoss',
+      'title': 'Uplink Path Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'uplinkCondition',
+      'title': 'Uplink Condition',
+      'unit': ''
+    },
+    {
+      'name': 'uplinkAvailability',
+      'title': 'Uplink Availability',
+      'unit': '%'
+    },
+    {
+      'name': 'uplinkContour',
+      'title': 'Uplink Contour',
+      'unit': 'dB'
+    },
+    {
+      'name': 'operatingHpaPower',
+      'title': 'Operating HPA Power',
+      'unit': 'W'
+    },
+    {
+      'name': 'cnUplink',
+      'title': 'C/N Uplink',
+      'unit': 'dB'
+    },
+    {
+      'name': 'antennaTemp',
+      'title': 'Antenna Temperature',
+      'unit': 'K'
+    },
+    {
+      'name': 'systemTemp',
+      'title': 'System Temperature',
+      'unit': 'K'
+    },
+    {
+      'name': 'antGain',
+      'title': 'Antenna Gain',
+      'unit': 'dBi'
+    },
+    {
+      'name': 'downlinkPointingLoss',
+      'title': 'Downlink Pointing Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'downlinkXpolLoss',
+      'title': 'Downlink Xpol Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'downlinkAtmLoss',
+      'title': 'Downlink Atmospheric Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'downlinkEirp',
+      'title': 'EIRP Downlink',
+      'unit': 'dBW'
+    },
+    {
+      'name': 'saturatedEirpAtLoc',
+      'title': 'Saturated EIRP @ Location',
+      'unit': 'dBW'
+    },
+    {
+      'name': 'downlinkGt',
+      'title': 'G/T Downlink',
+      'unit': 'dB/K'
+    },
+    {
+      'name': 'downlinkPathLoss',
+      'title': 'Downlink Path Loss',
+      'unit': 'dB'
+    },
+    {
+      'name': 'downlinkCondition',
+      'title': 'Downlink Condition',
+      'unit': ''
+    },
+    {
+      'name': 'downlinkAvailability',
+      'title': 'Downlink Availability',
+      'unit': '%'
+    },
+    {
+      'name': 'downlinkContour',
+      'title': 'Downlink Contour',
+      'unit': 'dB'
+    },
+    {
+      'name': 'cnDownlink',
+      'title': 'C/N Downlink',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciUplinkIntermod',
+      'title': 'C/I Uplink Intermod',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciUplinkAdjSat',
+      'title': 'C/I Uplink Adjacent Satellite',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciUplinkXpol',
+      'title': 'C/I Uplink Xpol',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciUplinkXCells',
+      'title': 'C/I Uplink Cross Cells',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciDownlinkAdjSat',
+      'title': 'C/I Downlink Adjacent Satellite',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciDownlinkIntermod',
+      'title': 'C/I Downlink Intermod',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciDownlinkXpol',
+      'title': 'C/I Downlink Xpol',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciDownlinkXcells',
+      'title': 'C/I Downlink Cross Cells',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciUplink',
+      'title': 'C/I Uplink',
+      'unit': 'dB'
+    },
+    {
+      'name': 'ciDownlink',
+      'title': 'C/I Downlink',
+      'unit': 'dB'
+    },
+    {
+      'name': 'cnTotal',
+      'title': 'C/N Total',
+      'unit': 'dB'
+    },
+    {
+      'name': 'linkMargin',
+      'title': 'Link Margin',
+      'unit': 'dB'
+    },
+    {
+      'name': 'requiredMargin',
+      'title': 'Required Link Margin',
+      'unit': 'dB'
+    },
+    {
+      'name': 'passed',
+      'title': 'Pass?',
+      'unit': 'Y/N'
+    },
+    {
+      'name': 'linkAvailability',
+      'title': 'Total Link Availability',
+      'unit': '%'
+    },
+    {
+      'name': 'occupiedBandwidth',
+      'title': 'Occupied Bandwidth',
+      'unit': 'MHz'
+    },
+    {
+      'name': 'noiseBandwidth',
+      'title': 'Noise Bandwidth',
+      'unit': 'MHz'
+    },
+    {
+      'name': 'roundupBandwidth',
+      'title': 'Rounded Up Bandwidth',
+      'unit': 'MHz'
+    },
+    {
+      'name': 'guardband',
+      'title': 'Guard Band',
+      'unit': '%'
+    },
+    {
+      'name': 'dataRate',
+      'title': 'Data Rate',
+      'unit': 'Mbps'
+    },
+    {
+      'name': 'powerUtilPercent',
+      'title': 'Power Utilization',
+      'unit': '%'
+    },
+    {
+      'name': 'rollOffFactor',
+      'title': 'Roll-off Factor',
+      'unit': ''
+    },
+    {
+      'name': 'mcgName',
+      'title': 'MCG',
+      'unit': ''
+    },
+    {
+      'name': 'mcgSpectralEfficiency',
+      'title': 'Spectral Efficiency',
+      'unit': 'bps/Hz'
+    },
+    {
+      'name': 'mcgEsNo',
+      'title': 'MCG Es/No Threshold',
+      'unit': 'dB'
+    },
+    {
+      'name': 'antennaName',
+      'title': 'Antenna',
+      'unit': ''
+    },
+    {
+      'name': 'antennaSize',
+      'title': 'Antenna Size',
+      'unit': 'm'
+    },
+    {
+      'name': 'bucName',
+      'title': 'BUC',
+      'unit': ''
+    },
+    {
+      'name': 'bucSize',
+      'title': 'BUC Size',
+      'unit': 'W'
+    },
+    {
+      'name': 'locationName',
+      'title': 'Location',
+      'unit': ''
+    },
+    {
+      'name': 'coordinates',
+      'title': 'Coordinates',
+      'unit': ''
+    },
+    {
+      'name': 'targetedForwardBandwidth',
+      'title': 'Target Bandwidth',
+      'unit': ''
+    },
+    {
+      'name': 'targetedReturnBandwidth',
+      'title': 'Target Bandwidth',
+      'unit': ''
     }
   ],
 
@@ -339,8 +671,8 @@ export const mutations = {
     let columns = []
     for (var prop in data) {
       columns.push({
-        title: prop,
         name: prop,
+        title: mapName(state.fieldNameMappers, prop),
         visible: _.includes(state[path + 'TableDefaultFields'], prop)
       })
     }
@@ -530,6 +862,29 @@ function flattenRemoteStation (remoteStation) {
     targetedForwardBandwidth: `${remoteStation.bandwidth.forward} ${remoteStation.bandwidth.unit}`,
     targetedReturnBandwidth: `${remoteStation.bandwidth.return} ${remoteStation.bandwidth.unit}`
   }
+}
+
+function mapName (mappers, name) {
+  let condition = ''
+  let fieldName = name
+  let matchedTitle
+  if (name.endsWith('Clear')) {
+    condition = 'Clear Sky'
+    fieldName = name.replace('Clear', '')
+  }
+  if (name.endsWith('Rain')) {
+    condition = 'Rain'
+    fieldName = name.replace('Rain', '')
+  }
+  matchedTitle = mappers.find(m => m.name === fieldName)
+  let unit = ''
+  let title = ''
+  if (matchedTitle) {
+    title = matchedTitle.title
+    unit = matchedTitle.unit ? `(${matchedTitle.unit})` : ''
+    return `${title} ${condition} ${unit}`.trim()
+  }
+  return ''
 }
 
 function upsert (arr, key, newval) {

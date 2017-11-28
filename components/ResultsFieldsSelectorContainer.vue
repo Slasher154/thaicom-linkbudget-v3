@@ -29,7 +29,7 @@
                 v-if="element.visible"
                 type="is-info" closable
                 @close="hideField(element)"
-              >{{element.name}}
+              >{{element.title}}
               </b-tag>
             </draggable>
           </b-taglist>

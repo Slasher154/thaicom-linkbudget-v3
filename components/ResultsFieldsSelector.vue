@@ -50,8 +50,8 @@
       onChanged () {
         this.$emit('selected-fields-changed', { fields: this.selectedFields })
       },
-      fieldName ({ name }) {
-        return `${name}`
+      fieldName ({ title }) {
+        return `${title}`
       }
     },
     mounted () {
