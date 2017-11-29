@@ -72,6 +72,8 @@
 
   import axios from 'axios'
   export default {
+    authenticated: true,
+    name: 'Index',
     components: {
       RequestNameContainer,
       SatelliteSelectorsContainer,

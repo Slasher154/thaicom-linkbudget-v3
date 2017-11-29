@@ -18,7 +18,7 @@
     "handsontable": "^0.34.4",
     "lodash": "^4.17.4",
     "nuxt": "^1.0.0-rc11",
-    "nuxt-oauth": "0.0.5",
+    "nuxt-oauth": "https://github.com/slasher154/nuxt-oauth/tarball/master",
     "validator": "^9.0.0",
     "vue-handsontable-official": "^1.0.0",
     "vue-multiselect": "^2.0.2",
