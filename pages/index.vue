@@ -109,6 +109,18 @@
         // Fill the store with buc options
         let bucResult = await axios.get('/bucs')
         store.dispatch('linkcalc/setRemoteBucOptions', {bucs: bucResult.data.bucs})
+
+        // Fill the store with user profile
+//        let config = { headers: { 'authorization': 'Bearer ' + store.state.oauth.accessToken } }
+//        console.log(`Config = ${config}`)
+//        let user = await axios.get('https://poseidon.thaicom.net/account/Userinfo', config)
+//        if (user) {
+//          console.log(user)
+//          store.dispatch('linkcalc/setUser', { user: user.data })
+//        } else {
+//          console.log(`No user found`)
+//        }
+//        store.dispatch('linkcalc/setUser', { user })
       } catch (error) {
         throw error
       }

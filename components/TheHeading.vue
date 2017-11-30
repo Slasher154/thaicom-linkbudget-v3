@@ -62,44 +62,7 @@
             <a class="navbar-link  is-active" href="/documentation/overview/start/">
               Docs
             </a>
-            <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item " href="/documentation/overview/start/">
-                Overview
-              </a>
-              <a class="navbar-item " href="http://bulma.io/documentation/modifiers/syntax/">
-                Modifiers
-              </a>
-              <a class="navbar-item " href="http://bulma.io/documentation/columns/basics/">
-                Columns
-              </a>
-              <a class="navbar-item " href="http://bulma.io/documentation/layout/container/">
-                Layout
-              </a>
-              <a class="navbar-item " href="http://bulma.io/documentation/form/general/">
-                Form
-              </a>
-              <a class="navbar-item " href="http://bulma.io/documentation/elements/box/">
-                Elements
-              </a>
 
-              <a class="navbar-item is-active" href="http://bulma.io/documentation/components/breadcrumb/">
-                Components
-              </a>
-
-              <hr class="navbar-divider">
-              <div class="navbar-item">
-                <div>
-                  <p class="is-size-6-desktop">
-                    <strong class="has-text-info">0.5.3</strong>
-                  </p>
-
-                  <small>
-                    <a class="bd-view-all-versions" href="/versions">View all versions</a>
-                  </small>
-
-                </div>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -107,6 +70,29 @@
 
         <!--Start Navbar right menu-->
         <div class="navbar-end">
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              {{username}}
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                Profile
+              </a>
+              <a class="navbar-item">
+                Menu 2
+              </a>
+              <a class="navbar-item">
+                Menu 3
+              </a>
+              <hr class="navbar-divider">
+              <div class="navbar-item">
+                Menu 4
+              </div>
+            </div>
+          </div>
+
 
           <div class="navbar-item">
 
@@ -132,12 +118,22 @@
 </template>
 
 <script>
+  import _ from 'lodash'
   export default {
     computed: {
       logoutUrl () {
         let redirectUrl = process.env.baseUrl
         console.log(redirectUrl)
         return `auth/logout?redirect-url=https://poseidon.thaicom.net/connect/directlogout?callback_url=${redirectUrl}`
+      },
+      username () {
+        let user = this.$store.state.oauth.user
+        return this.toTitleCase(`${user.name} ${user.family_name} `)
+      }
+    },
+    methods: {
+      toTitleCase (str) {
+        return _.startCase(_.toLower(str))
       }
     }
   }

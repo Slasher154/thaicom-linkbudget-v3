@@ -1,3 +1,4 @@
+const axios = require('axios')
 module.exports = {
   /*
   ** Headers of the page
@@ -27,12 +28,19 @@ module.exports = {
     oauthHost: 'https://poseidon.thaicom.net/connect',
     oauthClientID: 'linkcalc',
     oauthClientSecret: 'secret_secret_secret',
-    fetchUser: (accessToken) => {
-      // do something to return the user
-      // const user = User.findByToken(accessToken)
-      // return user
-      console.log(JSON.stringify(accessToken, undefined, 2))
-      return {}
+    fetchUser: async (accessToken) => {
+      let config = { headers: { 'authorization': 'Bearer ' + accessToken } }
+      try {
+        let user = await axios.get('https://poseidon.thaicom.net/account/Userinfo', config)
+        if (user) {
+          console.log(`${user.data.name} ${user.data.family_name} successfully logs into the system.`)
+          return user.data
+        } else {
+          console.log(`No user found`)
+        }
+      } catch (e) {
+        console.log(e)
+      }
     },
     onLogout: (req, res) => {
       console.log(`User is successfully logged out.`)
