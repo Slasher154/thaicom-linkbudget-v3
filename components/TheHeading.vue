@@ -111,12 +111,12 @@
           <div class="navbar-item">
 
               <p class="control">
-                <a class="button is-primary" href="https://www.google.com">
-              <span class="icon">
-                <i class="fa fa-download"></i>
-              </span>
-                  <span>Logout</span>
-                </a>
+                <!--<a class="button is-primary" :href="logoutUrl">Logout</a>-->
+                <nuxt-link tag="button" class="button is-primary" :to="{ path: 'auth/logout', query: { 'redirect-url': '/logout' }}">Logout</nuxt-link>
+              <!--<span class="icon">-->
+                <!--<i class="fa fa-download"></i>-->
+              <!--</span>-->
+                  <!--<span>Logout</span>-->
               </p>
             </div>
           </div>
@@ -132,5 +132,13 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    computed: {
+      logoutUrl () {
+        let redirectUrl = process.env.baseUrl
+        console.log(redirectUrl)
+        return `auth/logout?redirect-url=https://poseidon.thaicom.net/connect/directlogout?callback_url=${redirectUrl}`
+      }
+    }
+  }
 </script>

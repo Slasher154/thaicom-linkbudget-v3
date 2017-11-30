@@ -6,9 +6,11 @@
 import axios from 'axios'
 
 // Import and set nuxt.js options
-let config = require('../nuxt.config.js')
+// let config = require('../nuxt.config.js')
+// import { config } from '../nuxt.config'
 
-axios.defaults.baseURL = config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'
+// axios.defaults.baseURL = config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'
+axios.defaults.baseURL = 'http://localhost:23324/v1'
 
 // var myAxios = axios.create({
 //   baseURL: config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'

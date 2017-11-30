@@ -3,6 +3,9 @@ module.exports = {
   ** Headers of the page
   */
   dev: (process.env.NODE_ENV !== 'production'), // true when 'npm run dev', false when 'npm run build' then 'npm start'
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   head: {
     title: 'CSD LB',
     meta: [
@@ -24,7 +27,16 @@ module.exports = {
     oauthHost: 'https://poseidon.thaicom.net/connect',
     oauthClientID: 'linkcalc',
     oauthClientSecret: 'secret_secret_secret',
-    testMode: false
+    fetchUser: (accessToken) => {
+      // do something to return the user
+      // const user = User.findByToken(accessToken)
+      // return user
+      console.log(JSON.stringify(accessToken, undefined, 2))
+      return {}
+    },
+    onLogout: (req, res) => {
+      console.log(`User is successfully logged out.`)
+    }
   },
   plugins: [
     '~plugins/axios',
@@ -45,7 +57,8 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    vendor: ['axios'], // https://nuxtjs.org/guide/plugins/
+    // Comment this out due to when assigning fetchUser in Oauth2 settings it causes an "Cannot assign to read only property 'exports' of object '#<Object>'" error in axios.js plugins
+    // vendor: ['axios'], // https://nuxtjs.org/guide/plugins/
     extend (config, ctx) {
       if (ctx.dev && ctx.isClient) {
         config.module.rules.push({
