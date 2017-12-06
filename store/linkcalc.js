@@ -74,6 +74,9 @@ export const state = () => ({
   // Finding Max Coverage
   findMaxCoverage: false,
 
+  // Finding matching return coverage
+  findMatchingReturnCoverage: true,
+
   // Link margins (available in finding max coverage mode)
   forwardLinkMargins: [],
   returnLinkMargins: [],
@@ -340,6 +343,11 @@ export const state = () => ({
       'unit': 'Y/N'
     },
     {
+      'name': 'passedText',
+      'title': 'Pass?',
+      'unit': 'Y/N'
+    },
+    {
       'name': 'linkAvailability',
       'title': 'Total Link Availability',
       'unit': '%'
@@ -386,7 +394,7 @@ export const state = () => ({
     },
     {
       'name': 'mcgSpectralEfficiency',
-      'title': 'Spectral Efficiency',
+      'title': 'EBE',
       'unit': 'bps/Hz'
     },
     {
@@ -433,6 +441,11 @@ export const state = () => ({
       'name': 'targetedReturnBandwidth',
       'title': 'Target Bandwidth',
       'unit': ''
+    },
+    {
+      'name': 'maxContour',
+      'title': 'Maximum Coverage',
+      'unit': 'dB'
     }
   ],
 
@@ -448,11 +461,12 @@ export const state = () => ({
     'mcgNameClear',
     'mcgSpectralEfficiencyClear',
     'dataRateClear',
+    'occupiedBandwidthClear',
     'mcgNameRain',
     'mcgSpectralEfficiencyRain',
     'dataRateRain',
     'linkAvailabilityRain',
-    'passedClear'
+    'passedTextClear'
   ],
   returnTableDefaultFields: [
     'antennaName',
@@ -462,11 +476,33 @@ export const state = () => ({
     'mcgNameClear',
     'mcgSpectralEfficiencyClear',
     'dataRateClear',
+    'occupiedBandwidthClear',
     'mcgNameRain',
     'mcgSpectralEfficiencyRain',
     'dataRateRain',
     'linkAvailabilityRain',
-    'passedClear'
+    'passedTextClear'
+  ],
+  forwardTableDefaultMaxContourFields: [
+    'antennaName',
+    'channelClear',
+    'requiredMarginClear',
+    'mcgNameClear',
+    'mcgSpectralEfficiencyClear',
+    'dataRateClear',
+    'occupiedBandwidthClear',
+    'maxContourClear'
+  ],
+  returnTableDefaultMaxContourFields: [
+    'antennaName',
+    'bucName',
+    'channelClear',
+    'requiredMarginClear',
+    'mcgNameClear',
+    'mcgSpectralEfficiencyClear',
+    'dataRateClear',
+    'occupiedBandwidthClear',
+    'uplinkContourClear'
   ]
 })
 
@@ -538,6 +574,7 @@ export const getters = {
       forwardLinkMargins: state.forwardLinkMargins,
       returnLinkMargins: state.returnLinkMargins,
       findMaxCoverage: state.findMaxCoverage,
+      findMatchingReturnCoverage: state.findMatchingReturnCoverage,
       findMaxLinkAvailability: state.findMaxLinkAvailability,
       findBestTransponders: state.findBestTransponders,
       requestName: state.requestName
@@ -652,6 +689,9 @@ export const mutations = {
   SET_MAX_COVERAGE (state, status) {
     state.findMaxCoverage = status
   },
+  SET_MATCHING_RETURN_COVERAGE (state, status) {
+    state.findMatchingReturnCoverage = status
+  },
   SET_FORWARD_LINK_MARGINS (state, arrayOfLinkMargins) {
     state.forwardLinkMargins = arrayOfLinkMargins
   },
@@ -669,14 +709,19 @@ export const mutations = {
   },
   GENERATE_TABLE_FIELDS (state, { path, data }) {
     let columns = []
+    let maxContour = state.findMaxCoverage ? 'MaxContour' : ''
+    let tableFieldsName = path + 'TableDefault' + maxContour + 'Fields'
+    let tableFieldsLength = state[tableFieldsName].length
+    let count = 0
     for (var prop in data) {
       columns.push({
         name: prop,
         title: mapName(state.fieldNameMappers, prop),
-        visible: _.includes(state[path + 'TableDefaultFields'], prop)
+        visible: _.includes(state[tableFieldsName], prop),
+        index: _.includes(state[tableFieldsName], prop) ? state[tableFieldsName].indexOf(prop) : tableFieldsLength + count++
       })
     }
-    state[path + 'TableFields'] = columns
+    state[path + 'TableFields'] = _.sortBy(columns, 'index')
   },
   SET_TABLE_FIELDS (state, { path, list }) {
     state[path + 'TableFields'] = list
@@ -779,12 +824,22 @@ export const actions = {
   },
   setMaxCoverage ({ commit }, status) {
     commit('SET_MAX_COVERAGE', status)
+    // Set location to an array of one location element if max contour is selected. This is to prevent zero stations combination since locations are not used when finding max contour
+    if (status) {
+      commit('SET_SELECTED_REMOTE_LOCATIONS', { locations: [{ name: 'maxContour', type: 'definedContours' }] })
+    } else {
+      commit('SET_SELECTED_REMOTE_LOCATIONS', { locations: [] })
+    }
+    commit('GENERATE_REMOTE_STATIONS')
   },
-  setForawrdLinkMargins ({ commit }, arrayOfLinkMargins) {
+  setMatchingReturnCoverage ({ commit }, status) {
+    commit('SET_MATCHING_RETURN_COVERAGE', status)
+  },
+  setForwardLinkMargins ({ commit }, arrayOfLinkMargins) {
     commit('SET_FORWARD_LINK_MARGINS', arrayOfLinkMargins)
   },
   setReturnLinkMargins ({ commit }, arrayOfLinkMargins) {
-    commit('SET_FORWARD_LINK_MARGINS', arrayOfLinkMargins)
+    commit('SET_RETURN_LINK_MARGINS', arrayOfLinkMargins)
   },
   setMaxLinkAvailability ({ commit }, status) {
     commit('SET_MAX_LINK_AVAILABILITY', status)
@@ -822,10 +877,12 @@ function flattenLinkResults (linkResults, assumptions) {
   let flattenClearSkyLink = flattenConditionLink(linkResults.clearSky, 'Clear')
   _.assign(resultObject, flattenClearSkyLink)
   console.log(`Result of clr = ${JSON.stringify(flattenClearSkyLink)}`)
-  // Flatten the rain fade link
-  let flattenRainFadeLink = flattenConditionLink(linkResults.rainFade, 'Rain')
-  _.assign(resultObject, flattenRainFadeLink)
-  console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
+  // Flatten the rain fade link if any
+  if (linkResults.rainFade) {
+    let flattenRainFadeLink = flattenConditionLink(linkResults.rainFade, 'Rain')
+    _.assign(resultObject, flattenRainFadeLink)
+    console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
+  }
   return resultObject
 }
 
@@ -839,16 +896,16 @@ function flattenConditionLink (linkResult, condition) {
   }
   // Includes the MCG
   // console.log(`Flatten condition = ${JSON.stringify(resultObject)}`)
-  _.assign(resultObject, flattenMcg(linkResult.mcg))
+  _.assign(resultObject, flattenMcg(linkResult.mcg, condition))
   return resultObject
 }
 
-function flattenMcg (mcg) {
-  return {
-    mcgName: mcg.name,
-    mcgSpectralEfficiency: mcg.spectral_efficiency,
-    mcgEsNo: mcg.es_no
-  }
+function flattenMcg (mcg, condition) {
+  let mcgObject = []
+  mcgObject['mcgName' + condition] = mcg.name
+  mcgObject['mcgSpectralEfficiency' + condition] = mcg.spectral_efficiency
+  mcgObject['mcgEsNo' + condition] = mcg.es_no
+  return mcgObject
 }
 
 function flattenRemoteStation (remoteStation) {
@@ -865,6 +922,7 @@ function flattenRemoteStation (remoteStation) {
 }
 
 function mapName (mappers, name) {
+  let fieldsWithoutCondition = ['channel', 'linkAvailability']
   let condition = ''
   let fieldName = name
   let matchedTitle
@@ -879,6 +937,8 @@ function mapName (mappers, name) {
   matchedTitle = mappers.find(m => m.name === fieldName)
   let unit = ''
   let title = ''
+  // If field name is the one which doesn't need to show the condition, like transponder or total link avail, set condition to empty string
+  condition = _.includes(fieldsWithoutCondition, fieldName) ? '' : condition
   if (matchedTitle) {
     title = matchedTitle.title
     unit = matchedTitle.unit ? `(${matchedTitle.unit})` : ''

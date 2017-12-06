@@ -128,7 +128,10 @@
       },
       username () {
         let user = this.$store.state.oauth.user
-        return this.toTitleCase(`${user.name} ${user.family_name} `)
+        if (user) {
+          return this.toTitleCase(`${user.name} ${user.family_name} `)
+        }
+        return ''
       }
     },
     methods: {

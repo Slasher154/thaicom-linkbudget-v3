@@ -14,20 +14,34 @@
         <div
           v-if="findMaxCoverage"
           class="columns">
-          <div class="column">
+          <div class="column is-6">
             <b-field label="Forward Link Margin(s) (dB)">
               <b-input placeholder="Example: 2,0"
                 @input="updateForwardLinkMargins"
               ></b-input>
             </b-field>
           </div>
-          <div class="column">
+          <div class="column is-6" v-if="!findMatchingReturnCoverage">
             <b-field label="Return Link Margin(s) (dB)">
               <b-input placeholder="Example: 2,0"
                @input="updateReturnLinkMargins"
               ></b-input>
             </b-field>
           </div>
+        </div>
+        <div v-if="findMaxCoverage" class="field">
+          <b-checkbox
+            v-model="findMatchingReturnCoverage"
+            @input="updateMatchingReturnCoverage"
+          >Automatically calculate the performance at the matching return beam contour
+            <b-tooltip
+              label="Using this option means, after the forward maximum contour is found for each station, it will automatically find the return beam contour that covers the forward contour. Then, it attempts to close the link with given return MCGs, capacity and BUC size. In this case, the modem's default link margin value will be used for return link"
+              size="is-large"
+              type="is-info"
+              multilined>
+              <span><strong>(?)</strong></span>
+            </b-tooltip>
+          </b-checkbox>
         </div>
         <article
           v-if="findMaxCoverage"
@@ -69,6 +83,7 @@
       return {
         findMaxCoverage: false,
         findMaxLinkAvailability: false,
+        findMatchingReturnCoverage: true,
         maxMode: false
       }
     },
@@ -79,6 +94,9 @@
       updateMaxCoverage (status) {
         this.dispatchOption('setMaxCoverage', status)
       },
+      updateMatchingReturnCoverage (status) {
+        this.dispatchOption('setMatchingReturnCoverage', status)
+      },
       updateMaxLinkAvailability (status) {
         this.dispatchOption('setMaxLinkAvailability', status)
       },
@@ -86,10 +104,12 @@
         this.dispatchOption('setMaxMode', status)
       },
       updateForwardLinkMargins (value) {
-        console.log(value)
+        let arrayOfLinkMargins = value.split(',')
+        this.dispatchOption('setForwardLinkMargins', arrayOfLinkMargins.map(v => +v))
       },
       updateReturnLinkMargins (value) {
-        console.log(value)
+        let arrayOfLinkMargins = value.split(',')
+        this.dispatchOption('setReturnLinkMargins', arrayOfLinkMargins.map(v => +v))
       }
     }
   }

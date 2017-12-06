@@ -6,8 +6,13 @@
     <h2 class="subtitle">The revolution of link budget (hopefully)</h2>
     <button
       class="button is-primary"
-      @click.prevent="submitSampleRequest">
+      @click.prevent="submitSampleResultToServer">
       Submit sample request
+    </button>
+    <button
+      class="button is-info"
+      @click.prevent="submitMaxContourResultToServer">
+      Submit sample max contour request
     </button>
 
     <b-tabs v-model="activeTab" type="is-toggle" position="is-centered" class="block">
@@ -50,11 +55,11 @@
             </button>
           </div>
         </div>
-  </b-tab-item>
-  <b-tab-item label="Results">
-    <results-container/>
-  </b-tab-item>
-  </b-tabs>
+      </b-tab-item>
+      <b-tab-item label="Results">
+        <results-container/>
+      </b-tab-item>
+    </b-tabs>
   </div>
 </template>
 
@@ -133,7 +138,7 @@
           'satellites': [
             {
               '_id': 'Q962ttEf4266TwTB4',
-              'name': 'IPSTAR',
+              'name': 'Thaicom 4',
               'orbital_slot': 119.5,
               'skb': 0.05,
               'type': 'Broadband',
@@ -145,7 +150,7 @@
             {
               '_id': 'JGpDvdfuzfpoYnG7Q',
               'name': '207',
-              'satellite': 'IPSTAR',
+              'satellite': 'Thaicom 4',
               'uplink_cf': 27.086,
               'downlink_cf': 12.286,
               'bandwidth': 171,
@@ -229,7 +234,7 @@
               'transponder': {
                 '_id': 'JGpDvdfuzfpoYnG7Q',
                 'name': '207',
-                'satellite': 'IPSTAR',
+                'satellite': 'Thaicom 4',
                 'uplink_cf': 27.086,
                 'downlink_cf': 12.286,
                 'bandwidth': 171,
@@ -533,7 +538,207 @@
           'findMaxCoverage': false,
           'findMaxLinkAvailability': false,
           'findBestTransponders': false,
-          'requestName': 'Test IPSTAR'
+          'requestName': 'Test Thaicom 4'
+        },
+        sampleMaxContourLink: {
+          'satellites': [
+            {
+              '_id': 'Q962ttEf4266TwTB4',
+              'name': 'Thaicom 4',
+              'orbital_slot': 119.5,
+              'skb': 0.05,
+              'type': 'Broadband',
+              'isThaicom': true,
+              'isActive': true
+            }
+          ],
+          'transponders': [
+            {
+              '_id': '36EEMmrPy5RY4QBZP',
+              'name': '503',
+              'satellite': 'Thaicom 4',
+              'uplink_cf': 29.631,
+              'downlink_cf': 12.331,
+              'bandwidth': 262.5,
+              'type': 'forward',
+              'uplink_beam': '8V',
+              'gt_peak': 18.54,
+              'uplink_pol': 'V',
+              'downlink_beam': '503',
+              'saturated_eirp_peak': 61.18,
+              'downlink_pol': 'V',
+              'transponder': '3310F2',
+              'dynamic_range': 25,
+              'mode': 'ALC',
+              'sfd': -61.41,
+              'eirp_up_channel': 70.60406609,
+              'country': 'Australia',
+              'contour_50': -1.9,
+              'contour_eoc': -3.99,
+              'default_gateway': '8V',
+              'lat': -18.12,
+              'lon': 145.45,
+              'ci_downlink_adj_cell_50': 24.7,
+              'ci_downlink_adj_cell_eoc': 19.37,
+              'ci_downlink_adj_sat': 25,
+              'ci_uplink_adj_cell': 28.34,
+              'current_num_carriers': 'multi',
+              'ci_uplink_adj_sat': 25,
+              'eirp_density_adjacent_satellite_downlink': -23.4,
+              'adjacent_satellite_orbital_slot': 122.2,
+              'delta_eirp_down': 0.38,
+              'backoff_settings': [
+                {
+                  'intermod': 17,
+                  'obo': -3,
+                  'ibo': 0,
+                  'num_carriers': 'single'
+                },
+                {
+                  'intermod': 17,
+                  'obo': -3,
+                  'ibo': 0,
+                  'num_carriers': 'two'
+                },
+                {
+                  'intermod': 20,
+                  'obo': -4,
+                  'ibo': 0,
+                  'num_carriers': 'multi'
+                }
+              ]
+            }
+          ],
+          'gatewayStations': [],
+          'remoteStations': [
+            {
+              'location': {
+                'name': 'maxContour',
+                'type': 'definedContours'
+              },
+              'antenna': {
+                '_id': '5nN4bkz6GLNW7csrz',
+                'name': '1.2 m',
+                'type': 'Standard',
+                'size': 1.2,
+                'vendor': 'Standard'
+              },
+              'buc': {
+                '_id': '97GFspvo5gkCRJYML',
+                'type': 'Standard',
+                'category': 'buc',
+                'size': 2,
+                'name': '2W',
+                'ifl': 0.3,
+                'obo': 0.5
+              },
+              'bandwidth': {
+                'id': 1,
+                'forward': 4,
+                'return': 2,
+                'unit': 'Mbps'
+              }
+            }
+          ],
+          'remoteAntennas': [
+            {
+              '_id': '5nN4bkz6GLNW7csrz',
+              'name': '1.2 m',
+              'type': 'Standard',
+              'size': 1.2,
+              'vendor': 'Standard'
+            }
+          ],
+          'remoteBucs': [
+            {
+              '_id': '97GFspvo5gkCRJYML',
+              'type': 'Standard',
+              'category': 'buc',
+              'size': 2,
+              'name': '2W',
+              'ifl': 0.3,
+              'obo': 0.5
+            }
+          ],
+          'remoteLocations': [
+            {
+              'name': 'maxContour',
+              'type': 'definedContours'
+            }
+          ],
+          'bandwidth': [
+            {
+              'id': 1,
+              'forward': 4,
+              'return': 2,
+              'unit': 'Mbps'
+            }
+          ],
+          'modemsAndMcgs': [
+            {
+              '_id': '7LxgNPpxpBXvg8b7o',
+              'name': 'Hughes Jupiter for INDIA  (BT=5% for FWD and 20% for RTN)',
+              'vendor': 'Hughes',
+              'applications': [
+                {
+                  'mcgs': [
+                    {
+                      'es_no': 7.19,
+                      'spectral_efficiency': 2.178,
+                      'name': '8PSK 3/4'
+                    }
+                  ],
+                  'roll_off_factor': 1.05,
+                  'symbol_rates': [],
+                  'maximum_symbol_rate': 235000,
+                  'minimum_symbol_rate': 1000,
+                  'link_margin': 0.9,
+                  'acm': true,
+                  'type': 'forward',
+                  'name': 'Outbound DVB-S2X'
+                },
+                {
+                  'mcgs': [
+                    {
+                      'es_no': 10,
+                      'spectral_efficiency': 2.4,
+                      'name': '8PSK 4/5'
+                    }
+                  ],
+                  'roll_off_factor': 1.2,
+                  'symbol_rates': [
+                    512,
+                    1024,
+                    2048,
+                    4096,
+                    6144,
+                    8192,
+                    12228
+                  ],
+                  'maximum_symbol_rate': 12228,
+                  'minimum_symbol_rate': 512,
+                  'link_margin': 0.3,
+                  'acm': true,
+                  'type': 'return',
+                  'name': 'Hughes Jupiter for INDIA  (BT=5% for FWD and 20% for RTN)'
+                }
+              ],
+              'warning_messages': [],
+              'findBestMcg': false
+            }
+          ],
+          'useDefaultGateway': true,
+          'maxMode': false,
+          'forwardLinkMargins': [
+            2,
+            0
+          ],
+          'returnLinkMargins': [],
+          'findMaxCoverage': true,
+          'findMatchingReturnCoverage': true,
+          'findMaxLinkAvailability': false,
+          'findBestTransponders': false,
+          'requestName': 'test'
         }
       }
     },
@@ -541,9 +746,6 @@
       submitRequest () {
 //        this.$toast.open('Request submitted')
         this.submitResultToServer()
-      },
-      submitSampleRequest () {
-        this.submitSampleResultToServer()
       },
       validate () {
         alert('')
@@ -560,10 +762,15 @@
         loadingComponent.close()
         this.activeTab = 1
       },
-      async submitSampleResultToServer () {
+      submitSampleResultToServer () {
+        this.submitLinkToServer(this.sampleLink)
+      },
+      submitMaxContourResultToServer () {
+        this.submitLinkToServer(this.sampleMaxContourLink)
+      },
+      async submitLinkToServer (requestObject) {
         // Construct the link budget requests input from the store
         const loadingComponent = this.$loading.open()
-        let requestObject = this.sampleLink
         console.log(JSON.stringify(requestObject, undefined, 2))
         let results = await axios.post('/linkbudget-request', {requestObject})
         // Save the result to Vuex Store
