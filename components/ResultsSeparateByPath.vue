@@ -35,7 +35,7 @@
 
       <b-tab-item label="Maps">
         <br>
-        <p>Maps</p>
+        <results-map-container />
       </b-tab-item>
     </b-tabs>
 
@@ -46,10 +46,12 @@
   import { mapGetters } from 'vuex'
   import ResultsFieldsSelectorContainer from './ResultsFieldsSelectorContainer'
   import ResultsTableByPath from './ResultsTableByPath.vue'
+  import ResultsMapContainer from './ResultsMapContainer'
   export default {
     components: {
       ResultsFieldsSelectorContainer,
-      ResultsTableByPath
+      ResultsTableByPath,
+      ResultsMapContainer
     },
     props: {
       linkResults: {
