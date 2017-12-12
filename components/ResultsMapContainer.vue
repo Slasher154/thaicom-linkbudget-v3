@@ -14,19 +14,22 @@
             v-for="(p, index) in $store.state.map.contours"
             v-if="p.showOnMap"
             :key="index"
+            :options="p.options"
             :path="p.path"
-            >
+          >
           </gmap-polygon>
         </gmap-map>
       </div>
       <div class="column is-3">
-        <button class="button is-primary" @click="resize">Load map</button>
+        <button class="button is-primary" @click="loadMap">Load map</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  /* eslint-disable no-undef */ // Suppress due to 'google is not defined' error (vue2-google maps package add google maps library so it's not defined in this file)
+
   import { mapGetters } from 'vuex'
   import axios from 'axios'
   export default {
@@ -35,8 +38,8 @@
         type: Object,
         default () {
           return {
-            lat: -16.8602,
-            lng: 144.5129
+            lat: 7,
+            lng: 100
           }
         }
       },
@@ -55,7 +58,7 @@
       }
     },
     methods: {
-      resize () {
+      loadMap () {
         this.$refs.contourMap.resizePreserveCenter()
         let contourObjects = this.transformLinkResultsToContourObjectsQuery(this.path)
         this.fetchContourFromDatabaseAndSetToStore(contourObjects)
@@ -67,7 +70,7 @@
         return linkResults.map(this.convertLinkResultsToQueryObject)
       },
       convertLinkResultsToQueryObject (linkResult) {
-      // console.log(JSON.stringify(linkResult, undefined, 2))
+        // console.log(JSON.stringify(linkResult, undefined, 2))
         let link = 'downlink'
         if (this.path === 'return') {
           link = 'uplink'
@@ -83,7 +86,8 @@
       },
       expandMapToShowAllContours () { // Fit the map bounds to all polygons
         // Obtain the map bounds
-        let bounds = this.$refs.contourMap.$mapObject.getBounds()
+        let bounds = new google.maps.LatLngBounds()
+        // let bounds = this.$refs.contourMap.$mapObject.getBounds()
         this.$store.state.map.contours.forEach(contour => {
           contour.path.forEach(point => {
             bounds.extend(point)
@@ -97,7 +101,7 @@
           console.log(JSON.stringify(results.data.contours))
           let geojsonObjects = results.data.contours
           // Set this value to map store
-          this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', { geojsonObjects })
+          this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', {geojsonObjects})
         } catch (e) {
           console.log(e)
         }

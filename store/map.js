@@ -65,11 +65,20 @@ function convertGeojsonContourToVueGoogleMaps (geojsonContour) {
     // console.log(`geo contour = ${JSON.stringify(geojsonContour, undefined, 2)}`)
     return {
       path: convertGeojsonPolygonCoordinatesToPaths(geojsonContour.geometry.coordinates),
+      options: constructPolygonOptions(),
       properties: geojsonContour.properties,
       showOnMap: true
     }
   } catch (e) {
     return false
+  }
+}
+
+function constructPolygonOptions () {
+  return {
+    strokeColor: '#FF0000',
+    strokeWeight: 2,
+    fillOpacity: 0
   }
 }
 

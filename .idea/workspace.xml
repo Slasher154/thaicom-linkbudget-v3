@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/thanatv.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/thanatv.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/BaseMap.vue" afterPath="$PROJECT_DIR$/components/BaseMap.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/ResultsMapContainer.vue" afterPath="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/index.vue" afterPath="$PROJECT_DIR$/pages/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/linkcalc.js" afterPath="$PROJECT_DIR$/store/linkcalc.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/map.js" afterPath="$PROJECT_DIR$/store/map.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -34,23 +30,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="50" column="6" lean-forward="true" selection-start-line="50" selection-start-column="6" selection-end-line="50" selection-end-column="6" />
+            <state relative-caret-position="539">
+              <caret line="37" column="21" lean-forward="true" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
               <folding>
-                <element signature="e#775#808#0" expanded="true" />
+                <element signature="e#973#1006#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="map.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/store/map.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="66" column="10" lean-forward="false" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
+            <state relative-caret-position="440">
+              <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding>
                 <element signature="e#0#41#0" expanded="false" />
               </folding>
@@ -229,8 +225,8 @@
         <option value="$PROJECT_DIR$/plugins/mixins.js" />
         <option value="$PROJECT_DIR$/store/linkcalc.js" />
         <option value="$PROJECT_DIR$/pages/index.vue" />
-        <option value="$PROJECT_DIR$/store/map.js" />
         <option value="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
+        <option value="$PROJECT_DIR$/store/map.js" />
       </list>
     </option>
   </component>
@@ -515,7 +511,7 @@
       <workItem from="1511249766475" duration="21882000" />
       <workItem from="1511771834907" duration="15970000" />
       <workItem from="1511944805911" duration="20083000" />
-      <workItem from="1512104431100" duration="37510000" />
+      <workItem from="1512104431100" duration="38853000" />
     </task>
     <task id="LOCAL-00001" summary="Add transponder selector">
       <created>1507043872699</created>
@@ -650,15 +646,21 @@
       <option name="project" value="LOCAL" />
       <updated>1512643528826</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Able to show forward link results contours on Google Maps">
+      <created>1513073600460</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1513073600460</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255710000" />
+    <option name="totallyTimeSpent" value="257053000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -668,7 +670,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23267327" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20589784" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20589784" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871288" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -730,7 +732,8 @@
     <MESSAGE value="Add fetch user with accessToken and put it in Vuex Store" />
     <MESSAGE value="Add maximum contour column to forward link table" />
     <MESSAGE value="Add Google Maps into result page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Google Maps into result page" />
+    <MESSAGE value="Able to show forward link results contours on Google Maps" />
+    <option name="LAST_COMMIT_MESSAGE" value="Able to show forward link results contours on Google Maps" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1115,16 +1118,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/store/map.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="66" column="10" lean-forward="false" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#41#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2386">
@@ -1155,10 +1148,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="50" column="6" lean-forward="true" selection-start-line="50" selection-start-column="6" selection-end-line="50" selection-end-column="6" />
+        <state relative-caret-position="539">
+          <caret line="37" column="21" lean-forward="true" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
           <folding>
-            <element signature="e#775#808#0" expanded="true" />
+            <element signature="e#973#1006#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/store/map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
