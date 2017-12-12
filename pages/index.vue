@@ -766,6 +766,8 @@
         this.submitLinkToServer(this.sampleLink)
       },
       submitMaxContourResultToServer () {
+        // Set max contour option to true to simulate this mode
+        this.$store.dispatch('linkcalc/setMaxCoverage', true)
         this.submitLinkToServer(this.sampleMaxContourLink)
       },
       async submitLinkToServer (requestObject) {

@@ -12,6 +12,12 @@
             <!--<gmap-info-window :position="{lat:1.38, lng:103.8}">-->
               <!--Hello world!-->
             <!--</gmap-info-window>-->
+            <gmap-polygon
+              v-for="(c, index) in $store.state.map.contours"
+              v-if="c.showOnMap"
+              :key="index"
+              :paths="c.paths"
+              />
           </gmap-map>
         </div>
       </div>

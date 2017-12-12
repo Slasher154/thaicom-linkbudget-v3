@@ -872,16 +872,18 @@ function flattenLinkResults (linkResults, assumptions) {
   let resultObject = {}
   // Flatten the remote station
   _.assign(resultObject, flattenRemoteStation(assumptions.remoteStation))
-  console.log(`Flatten object = ${JSON.stringify(resultObject)}`)
+  // Flatten the satellite
+  _.assign(resultObject, flattenSatellite(assumptions.satellite))
+  // console.log(`Flatten object = ${JSON.stringify(resultObject)}`)
   // Flatten the clear sky link
   let flattenClearSkyLink = flattenConditionLink(linkResults.clearSky, 'Clear')
   _.assign(resultObject, flattenClearSkyLink)
-  console.log(`Result of clr = ${JSON.stringify(flattenClearSkyLink)}`)
+  // console.log(`Result of clr = ${JSON.stringify(flattenClearSkyLink)}`)
   // Flatten the rain fade link if any
   if (linkResults.rainFade) {
     let flattenRainFadeLink = flattenConditionLink(linkResults.rainFade, 'Rain')
     _.assign(resultObject, flattenRainFadeLink)
-    console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
+    // console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
   }
   return resultObject
 }
@@ -918,6 +920,15 @@ function flattenRemoteStation (remoteStation) {
     coordinates: _.has(remoteStation.location, 'lat') ? `${remoteStation.location.lat},${remoteStation.location.lon}` : '',
     targetedForwardBandwidth: `${remoteStation.bandwidth.forward} ${remoteStation.bandwidth.unit}`,
     targetedReturnBandwidth: `${remoteStation.bandwidth.return} ${remoteStation.bandwidth.unit}`
+  }
+}
+
+function flattenSatellite (satellite) {
+  return {
+    satelliteName: satellite.name,
+    orbitalSlot: satellite.orbitalSlot,
+    satelliteType: satellite.type,
+    isThaicom: satellite.isThaicom
   }
 }
 

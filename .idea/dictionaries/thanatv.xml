@@ -2,6 +2,7 @@
   <dictionary name="thanatv">
     <words>
       <w>axios</w>
+      <w>geojson</w>
       <w>hpas</w>
       <w>linkbudget</w>
       <w>linkcalc</w>
