@@ -44,7 +44,8 @@ module.exports = {
     },
     onLogout: (req, res) => {
       console.log(`User is successfully logged out.`)
-    }
+    },
+    testMode: true
   },
   plugins: [
     '~plugins/axios',

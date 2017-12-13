@@ -2,7 +2,8 @@
  * Created by thanatv on 12/7/17.
  */
 
-// import _ from 'lodash'
+import _ from 'lodash'
+import pluralize from 'pluralize'
 
 export const state = () => ({
   // All contour lines
@@ -11,26 +12,119 @@ export const state = () => ({
   //   [ {lat: 1.380, lng: 103.800}, {lat:1.380, lng: 103.810}, {lat: 1.390, lng: 103.810}, {lat: 1.390, lng: 103.800} ],
   //   [ {lat: 1.382, lng: 103.802}, {lat:1.382, lng: 103.808}, {lat: 1.388, lng: 103.808}, {lat: 1.388, lng: 103.802} ],
   // ]
-  contours: [],
+  // From Vue Color Compact Picker
+  colorChoices: ['#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'],
+  forwardContours: [],
+  returnContours: [],
   // All places (markers)
-  places: []
+  places: [],
+  // Beam Labels
+  beamLabels: [],
+  // Forward Filter Fields
+  forwardFilterFields: [
+    'mcg', 'antenna', 'linkMargin'
+  ],
+  // Return Filter Fields
+  returnFilterFields: [],
+  // Selected options for forward and return link (MCG, antenna name, link margin, BUC)
+  forwardCombinationFilters: {},
+  returnCombinationFilters: {},
+  // Contour categories
+  forwardCategories: [],
+  returnCategories: []
 })
 
-// export const getters = {
-//   htsSatelliteSelected (state) {
-//     return state.selectedSatellites.filter(x => x.type === 'Broadband' || x.type === 'HTS').length > 0
-//   }
-// }
+export const getters = {
+  extractFieldsForSelector (state) {
+    return (field, path) => {
+      let fields = state[path + 'Contours'].map(c => {
+        return c.properties[field]
+      })
+      return _.uniq(fields)
+    }
+  }
+}
 
 export const mutations = {
-  SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, { geojsonObjects }) {
-    state.contours = geojsonObjects.map(convertGeojsonContourToVueGoogleMaps)
+  SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, {geojsonObjects, path}) {
+    state[path + 'Contours'] = geojsonObjects.map(convertGeojsonContourToVueGoogleMaps)
+  },
+  SET_COMBINATION_FILTERS (state, {path, parameter, value}) {
+    console.log(`Updating ${path} ${parameter} to ${JSON.stringify(value)}`)
+    state[path + 'CombinationFilters'][parameter] = value
+  },
+  CONSTRUCT_CONTOUR_CATEGORIES (state, path) {
+    let count = 1
+    let param = path + 'CombinationFilters'
+    for (let mcg of state[param].mcgs) {
+      for (let antenna of state[param].antennas) {
+        for (let linkMargin of state[param].linkMargins) {
+          state[path + 'Categories'].push({
+            mcg,
+            antenna,
+            linkMargin,
+            name: `${mcg} - ${antenna} - ${linkMargin} dB`,
+            color: state.colorChoices[(count % state.colorChoices.length) - 1],
+            index: count++,
+            showOnMap: true
+          })
+        }
+      }
+    }
+  },
+  VISUALIZE_CONTOURS (state, path) {
+    // Find the matching category to set the color
+    state[path + 'Contours'].forEach(contour => {
+      let matchedCategory = findCategory(state[path + 'Categories'], contour, state[path + 'FilterFields'])
+      contour.options.strokeColor = matchedCategory.color
+    })
+  },
+  REFRESH_CONTOUR_VISIBILITY (state, path) {
+    // Check whether each category should be shown on map or not based on selected filter
+    state[path + 'Categories'].forEach(category => {
+      let filterFields = state[path + 'FilterFields']
+      category.showOnMap = _.every(filterFields.map(field => {
+        return _.includes(state[path + 'CombinationFilters'][pluralize(field)], category[field])
+      }))
+    })
+    // Loop all contours and updates its visibility based on its category visibility
+    state[path + 'Contours'].forEach(contour => {
+      contour.showOnMap = findCategory(state[path + 'Categories'], contour, state[path + 'FilterFields']).showOnMap
+    })
+    // // Loop all contours to check if the changed parameter is still being selected or not
+    // state[path + 'Contours'].forEach(contour => {
+    //   if (_.includes(value, contour.properties[parameter])) {
+    //     console.log(`${parameter} ${contour.properties[parameter]} is included in ${JSON.stringify(value)}. Show it`)
+    //     contour.showOnMap = true
+    //   } else {
+    //     console.log(`${parameter} ${contour.properties[parameter]} is not included in ${JSON.stringify(value)}. Hide it`)
+    //     contour.showOnMap = false
+    //   }
+    // })
   }
 }
 
 export const actions = {
-  setAndConvertGeojsonToVueGoogleMaps ({ commit }, geojsonObjects) {
+  setAndConvertGeojsonToVueGoogleMaps ({commit}, geojsonObjects) {
     commit('SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS', geojsonObjects)
+  },
+  changeCombinationFilters ({commit}, options) { // Trigger when users select dropdown to change contour shown on map
+    commit('SET_COMBINATION_FILTERS', options) // Set the value of the changed filters to the new value
+    options.parameter = pluralize.singular(options.parameter)
+    commit('REFRESH_CONTOUR_VISIBILITY', options.path) // Trigger contour visibility due to filter changed
+  },
+  setupFiltersAndCategories ({commit, getters, state}, path) {
+    state[path + 'FilterFields'].forEach(parameter => {
+      commit('SET_COMBINATION_FILTERS', {
+        path,
+        parameter: pluralize(parameter),
+        value: getters.extractFieldsForSelector(parameter, path)
+      })
+    })
+    // Create contour categories
+    commit('CONSTRUCT_CONTOUR_CATEGORIES', path)
+    // Set the visual options of the contour lines based on newly created categories
+    commit('VISUALIZE_CONTOURS', path)
   }
 }
 
@@ -96,3 +190,48 @@ function convertGeojsonPolygonCoordinatesToPaths (polygonCoordinates) {
     }
   })
 }
+
+function findCategory (arrayOfCategories, contourObject, filterFields) {
+  let matchedCategory = arrayOfCategories.find(category => {
+    return _.every(filterFields.map(field => {
+      return category[field] === contourObject.properties[field]
+    }))
+  })
+  return matchedCategory
+}
+
+// https://stackoverflow.com/questions/26703700/dynamic-nested-for-loops-to-be-solved-with-recursion
+// function createCombinations (fields, currentCombinations) {
+//   // prevent side-effects
+//   let tempFields = fields.slice()
+//
+//   // recursively build a list combinations
+//   let delimiter = ' | '
+//   if (!tempFields || tempFields.length === 0) {
+//     return currentCombinations
+//   } else {
+//     let combinations = []
+//     let field = tempFields.pop()
+//
+//     for (let valueIndex = 0; valueIndex < field.length; valueIndex++) {
+//       let valueName = field[valueIndex]
+//
+//       if (!currentCombinations || currentCombinations.length === 0) {
+//         // let combinationName = valueName
+//         let combinationName = {
+//           value99: valueName
+//         }
+//         combinations.push(combinationName)
+//       } else {
+//         for (let combinationIndex = 0; combinationIndex < currentCombinations.length; combinationIndex++) {
+//           let currentCombination = currentCombinations[combinationIndex]
+//           // let combinationName = valueName + delimiter + currentCombination
+//           let combinationName = _.cloneDeep(currentCombination)
+//           combinationName['value' + combinationIndex] = valueName
+//           combinations.push(combinationName)
+//         }
+//       }
+//     }
+//     return createCombinations(tempFields, combinations)
+//   }
+// }
