@@ -32,7 +32,14 @@
         </gmap-map>
       </div>
       <div class="column is-3">
-        <button class="button is-primary" @click="loadMap">Load map</button>
+          <results-map-legend v-for="(category, index) in $store.state.map.forwardCategories"
+                              :key="index"
+                              :item="category"
+          />
+
+        <button class="button is-primary" @click="loadMap">Reload map</button>
+
+
       </div>
     </div>
   </div>
@@ -45,10 +52,12 @@
   import axios from 'axios'
   import _ from 'lodash'
   import ResultsMapFilterContainer from './ResultsMapFilterContainer'
+  import ResultsMapLegend from './ResultsMapLegend'
   import { Compact } from 'vue-color'
   export default {
     components: {
       ResultsMapFilterContainer,
+      ResultsMapLegend,
       CompactPicker: Compact
     },
     props: {

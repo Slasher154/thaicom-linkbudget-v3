@@ -54,6 +54,8 @@ export const mutations = {
     state[path + 'CombinationFilters'][parameter] = value
   },
   CONSTRUCT_CONTOUR_CATEGORIES (state, path) {
+    // Empty the current array
+    state[path + 'Categories'] = []
     let count = 1
     let param = path + 'CombinationFilters'
     for (let mcg of state[param].mcgs) {
