@@ -13,6 +13,14 @@
             :position="m.position"
           >
           </gmap-marker>
+          <gmap-marker
+            v-for="(m, index) in $store.state.map.beamLabels"
+            v-if="m.showOnMap"
+            :key="index"
+            :position="m.position"
+            :icon="constructGoogleDynamicBeamLabelIcon(m.text)"
+          >
+          </gmap-marker>
           <gmap-polygon
             v-for="(p, index) in $store.state.map.forwardContours"
             v-if="p.showOnMap"
@@ -33,11 +41,20 @@
       </div>
       <div class="column is-3">
           <results-map-legend v-for="(category, index) in $store.state.map.forwardCategories"
+                              v-if="category.showOnMap"
                               :key="index"
                               :item="category"
           />
-
-        <button class="button is-primary" @click="loadMap">Reload map</button>
+        <div class="field">
+          <div class="control">
+            <button class="button is-primary" @click="loadMap">Reload map</button>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <button class="button is-info" @click="toggleBeamLabel">Toggle Beam Label</button>
+          </div>
+        </div>
 
 
       </div>
@@ -164,6 +181,19 @@
         } catch (e) {
           console.log(e)
         }
+      },
+      constructGoogleDynamicBeamLabelIcon (beamName) {
+        let googleChartsUrl = 'https://chart.googleapis.com/chart?'
+        let bubbleStyle = 'd_bubble_text_small'
+        let frameStyle = 'bbT' // Balloon frame, no tail
+        let text = beamName.split(' ').join('+') // Text in dynamic icon URL with spaces must be joint by +
+        let fillColor = 'C6EF8C'
+        let textColor = '000000'
+        let chldSyntax = `${frameStyle}|${text}|${fillColor}|${textColor}`
+        return `${googleChartsUrl}chst=${bubbleStyle}&chld=${chldSyntax}`
+      },
+      toggleBeamLabel () {
+        this.$store.dispatch('map/toggleBeamLabel')
       }
     },
     computed: {

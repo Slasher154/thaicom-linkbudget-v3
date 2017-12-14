@@ -19,7 +19,11 @@ export const state = () => ({
   // All places (markers)
   places: [],
   // Beam Labels
-  beamLabels: [],
+  beamLabels: [{
+    text: '203',
+    position: {lat: 13, lng: 100},
+    showOnMap: true
+  }],
   // Forward Filter Fields
   forwardFilterFields: [
     'mcg', 'antenna', 'linkMargin'
@@ -48,6 +52,21 @@ export const getters = {
 export const mutations = {
   SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, {geojsonObjects, path}) {
     state[path + 'Contours'] = geojsonObjects.map(convertGeojsonContourToVueGoogleMaps)
+  },
+  GENERATE_BEAM_LABELS (state, path) {
+    state.beamLabels = []
+    // Loop all contours and get unique beam name, peak latitude and peak longitude
+    let uniqueBeamLabels = _.uniqBy(state[path + 'Contours'].map(c => {
+      return {
+        position: {
+          lat: c.properties.peakLatitude - 0.3,
+          lng: c.properties.peakLongitude
+        },
+        text: c.properties.name,
+        showOnMap: true
+      }
+    }), (p) => p.text)
+    state.beamLabels = uniqueBeamLabels
   },
   SET_COMBINATION_FILTERS (state, {path, parameter, value}) {
     console.log(`Updating ${path} ${parameter} to ${JSON.stringify(value)}`)
@@ -103,12 +122,18 @@ export const mutations = {
     //     contour.showOnMap = false
     //   }
     // })
+  },
+  TOGGLE_BEAM_LABEL (state) {
+    state.beamLabels.forEach(label => {
+      label.showOnMap = !label.showOnMap
+    })
   }
 }
 
 export const actions = {
   setAndConvertGeojsonToVueGoogleMaps ({commit}, geojsonObjects) {
     commit('SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS', geojsonObjects)
+    commit('GENERATE_BEAM_LABELS', geojsonObjects.path)
   },
   changeCombinationFilters ({commit}, options) { // Trigger when users select dropdown to change contour shown on map
     commit('SET_COMBINATION_FILTERS', options) // Set the value of the changed filters to the new value
@@ -127,6 +152,9 @@ export const actions = {
     commit('CONSTRUCT_CONTOUR_CATEGORIES', path)
     // Set the visual options of the contour lines based on newly created categories
     commit('VISUALIZE_CONTOURS', path)
+  },
+  toggleBeamLabel ({commit}) {
+    commit('TOGGLE_BEAM_LABEL')
   }
 }
 

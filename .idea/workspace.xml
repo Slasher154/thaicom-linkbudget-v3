@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/ResultsMapContainer.vue" afterPath="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/map.js" afterPath="$PROJECT_DIR$/store/map.js" />
@@ -34,10 +33,10 @@
       <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="27" column="32" lean-forward="true" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+            <state relative-caret-position="317">
+              <caret line="51" column="14" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
               <folding>
-                <element signature="e#1541#1574#0" expanded="true" />
+                <element signature="e#2156#2189#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,8 +45,8 @@
       <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/store/map.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="55" column="46" lean-forward="true" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+            <state relative-caret-position="429">
+              <caret line="130" column="1" lean-forward="true" selection-start-line="130" selection-start-column="1" selection-end-line="130" selection-end-column="1" />
               <folding>
                 <element signature="e#43#65#0" expanded="true" />
               </folding>
@@ -251,8 +250,8 @@
         <option value="$PROJECT_DIR$/nuxt.config.js" />
         <option value="$PROJECT_DIR$/components/BaseMultipleSelector.vue" />
         <option value="$PROJECT_DIR$/components/ResultsMapFilterContainer.vue" />
-        <option value="$PROJECT_DIR$/store/map.js" />
         <option value="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
+        <option value="$PROJECT_DIR$/store/map.js" />
         <option value="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
       </list>
     </option>
@@ -540,7 +539,7 @@
       <workItem from="1511944805911" duration="20083000" />
       <workItem from="1512104431100" duration="40171000" />
       <workItem from="1513133241012" duration="534000" />
-      <workItem from="1513146570266" duration="20320000" />
+      <workItem from="1513146570266" duration="22998000" />
     </task>
     <task id="LOCAL-00001" summary="Add transponder selector">
       <created>1507043872699</created>
@@ -696,11 +695,18 @@
       <option name="project" value="LOCAL" />
       <updated>1513170523327</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Add map legends to the result map">
+      <created>1513223488295</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1513223488295</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="279225000" />
+    <option name="totallyTimeSpent" value="281903000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="0" width="1920" height="1080" extended-state="0" />
@@ -779,7 +785,8 @@
     <MESSAGE value="Able to show forward link results contours on Google Maps" />
     <MESSAGE value="Add polygon options and fit bounds to the map" />
     <MESSAGE value="Add filters for forward link maximum contour" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add filters for forward link maximum contour" />
+    <MESSAGE value="Add map legends to the result map" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add map legends to the result map" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1095,14 +1102,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1447">
-          <caret line="715" column="8" lean-forward="false" selection-start-line="715" selection-start-column="4" selection-end-line="715" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/logout.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1141,10 +1140,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1447">
+          <caret line="715" column="8" lean-forward="false" selection-start-line="715" selection-start-column="4" selection-end-line="715" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/store/map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="55" column="46" lean-forward="true" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+        <state relative-caret-position="429">
+          <caret line="130" column="1" lean-forward="true" selection-start-line="130" selection-start-column="1" selection-end-line="130" selection-end-column="1" />
           <folding>
             <element signature="e#43#65#0" expanded="true" />
           </folding>
@@ -1153,10 +1160,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="27" column="32" lean-forward="true" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+        <state relative-caret-position="317">
+          <caret line="51" column="14" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
           <folding>
-            <element signature="e#1541#1574#0" expanded="true" />
+            <element signature="e#2156#2189#0" expanded="true" />
           </folding>
         </state>
       </provider>
