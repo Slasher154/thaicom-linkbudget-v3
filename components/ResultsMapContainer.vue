@@ -147,7 +147,7 @@
       async fetchContourFromDatabaseAndSetToStore (contourObjects, path) {
         try {
           let results = await axios.post('/get-contour-lines', {contourObjects})
-          console.log(JSON.stringify(results.data.contours))
+          console.log(JSON.stringify(results.data.contours, undefined, 2))
           let geojsonObjects = results.data.contours
           // Loop the link results to re-map the returned contours with link budget results (so we know which contour line belongs to which results
           let linkResults = this.linkResultsTableData(path)
