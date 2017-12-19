@@ -50,6 +50,7 @@
              label="Available Symbol Rates (ksps)"
     >
       <b-input
+        :value="symbolRates"
         @input="updateSymbolRates"
         placeholder="Ex. 128,256,512,1024,2048. If there is no limitation of symbol rates, just leave it blank."
         />
@@ -58,9 +59,10 @@
       label="Roll-off factor"
       placeholder="Please input one value only. Ex. 1.05 or 1.2 or 1.35">
       <b-input
-        v-model="newApplication.roll_off_factor"
+        v-model.number="newApplication.roll_off_factor"
         name="rollOffFactor"
         type="number"
+        step="0.01"
         min="0"
       />
     </b-field>
@@ -102,7 +104,8 @@
           symbol_rates: [],
           mcgs: []
         },
-        mcgs: []
+        mcgs: [],
+        symbolRates: ''
       }
     },
     methods: {
@@ -120,10 +123,12 @@
         this.$emit('applicationChanged', newApp)
       }
     },
+    mounted () {
+      this.newApplication = Object.assign({}, this.application)
+      // Update Symbol Rates
+      this.symbolRates = this.newApplication.symbol_rates.join(',')
+    },
     watch: {
-      application (newVal) {
-        this.newApplication = newVal
-      },
       newApplication: {
         handler (newVal) {
           // Emit the change to the parent

@@ -42,10 +42,15 @@
         ]
       }
     },
-    prop: {
+    props: {
       mcgs: {
         type: Array,
         required: true
+      }
+    },
+    mounted () {
+      if (this.mcgs && this.mcgs.length > 0) {
+        this.mcgArray = this.mcgs
       }
     },
     methods: {

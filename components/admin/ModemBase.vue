@@ -44,7 +44,7 @@
     components: {
       ModemApplication
     },
-    prop: {
+    props: {
       modem: {
         type: Object,
         required: true
@@ -68,6 +68,11 @@
         this.vendorOptions = result.data.modemVendors.map(x => x.name)
       } catch (e) {
         console.log(e)
+      }
+    },
+    mounted () {
+      if (this.modem.name && this.modem.vendor) {
+        this.newModem = Object.assign({}, this.modem)
       }
     },
     computed: {

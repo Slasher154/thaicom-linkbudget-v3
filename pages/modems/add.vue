@@ -23,18 +23,6 @@
     components: {
       ModemBase
     },
-    async asyncData () {
-      // Fetch the modem from database via API
-      // Fetch teh vendors
-      try {
-        let result = await axios.get('/modem-vendors')
-        return {
-          modemVendors: result.data.modemVendors.map(x => x.name)
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    },
     data () {
       return {
         modem: {},
