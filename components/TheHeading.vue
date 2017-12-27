@@ -59,9 +59,13 @@
         <!--Start Navbar left menu-->
         <div class="navbar-start">
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link  is-active" href="/documentation/overview/start/">
-              Docs
+            <a class="navbar-link">
+              Database
             </a>
+            <div class="navbar-dropdown">
+              <nuxt-link class="navbar-item" :to="{ name: 'modems'}">Modems</nuxt-link>
+            </div>
+
 
           </div>
 

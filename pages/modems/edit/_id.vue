@@ -51,12 +51,18 @@
         this.newModem = value
       },
       saveChanges () {
-        this.modem = this.xmodem
-//        axios.post('/modems/add', { modem: this.newModem }).then(result => {
-//          this.$toast.open('Modem edited')
-//        }).catch(e => {
-//          console.log(e)
-//        })
+        this.newModem._id = this.modem._id
+        this.$dialog.confirm({
+          message: `Save changes to '${this.modem.name}'?`,
+          onConfirm: () => {
+            axios.post('/modems/edit', { modem: this.newModem }).then(result => {
+              this.$toast.open(`${result.data.modem.name} has been successfully edited.`)
+              this.$router.replace({ name: 'modems' })
+            }).catch(e => {
+              console.log(e)
+            })
+          }
+        })
       }
     }
   }

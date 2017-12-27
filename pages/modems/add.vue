@@ -34,10 +34,16 @@
         this.newModem = value
       },
       addModem () {
-        axios.post('/modems/add', { modem: this.newModem }).then(result => {
-          this.$toast.open('Modem add')
-        }).catch(e => {
-          console.log(e)
+        this.$dialog.confirm({
+          message: `Add '${this.newModem.name}'?`,
+          onConfirm: () => {
+            axios.post('/modems/add', { modem: this.newModem }).then(result => {
+              this.$toast.open(`${result.data.modem.name} has been successfully added.`)
+              this.$router.replace({ name: 'modems' })
+            }).catch(e => {
+              console.log(e)
+            })
+          }
         })
       }
     }

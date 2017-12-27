@@ -121,8 +121,11 @@
       modem (newVal) {
         this.newModem = newVal
       },
-      newModem (newVal) {
-        this.emitModem(newVal)
+      newModem: {
+        handler (newVal) {
+          this.emitModem(newVal)
+        },
+        deep: true
       }
     }
   }
