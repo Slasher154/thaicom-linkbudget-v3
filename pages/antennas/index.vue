@@ -34,6 +34,7 @@
        <b-table-column
         label="Size (m)"
         field="size"
+        sortable
        >
          {{props.row.size}}
        </b-table-column>
@@ -59,7 +60,9 @@
 
 <script>
   import axios from 'axios'
+  import BTableColumn from '../../node_modules/buefy/src/components/table/TableColumn'
   export default {
+    components: {BTableColumn},
     async asyncData () {
       // Fetch the antenna from database via API
       try {
