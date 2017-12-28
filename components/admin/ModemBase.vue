@@ -19,6 +19,15 @@
         </option>
       </b-select>
     </b-field>
+    <b-field
+      horizontal
+    >
+      <nuxt-link
+        tag="button"
+        class="button is-small is-warning"
+        :to="{ name: 'modem-vendors-add' }"
+      >Add new vendor</nuxt-link>
+    </b-field>
     <hr>
     <modem-application
       v-for="(app, index) in newModem.applications"

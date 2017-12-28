@@ -24,6 +24,15 @@
     </b-field>
     <b-field
       horizontal
+    >
+      <nuxt-link
+        tag="button"
+        class="button is-small is-warning"
+        :to="{ name: 'antenna-vendors-add' }"
+      >Add new vendor</nuxt-link>
+    </b-field>
+    <b-field
+      horizontal
       label="Size (m)"
       >
       <b-input
@@ -116,7 +125,9 @@
 
 <script>
   import axios from 'axios'
+  import BField from '../../node_modules/buefy/src/components/field/Field'
   export default {
+    components: {BField},
     props: {
       antenna: {
         type: Object,
