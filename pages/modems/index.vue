@@ -4,7 +4,16 @@
     <h2 class="subtitle">To view modem data, select 'Edit'</h2>
     <div class="field">
       <p class="control">
-        <nuxt-link tag="button" class="button is-success" :to="{ path: 'modems/add'}">Add Modem</nuxt-link>
+        <nuxt-link
+          tag="button"
+          class="button is-success"
+          :to="{ path: 'modems/add'}">
+          <b-icon
+            pack="fa"
+            icon="plus"
+          ></b-icon>
+          <span>Add modem</span>
+        </nuxt-link>
       </p>
     </div>
     <b-table
@@ -46,7 +55,6 @@
   export default {
     async asyncData () {
       // Fetch the modem from database via API
-      // Fetch the vendors
       try {
         let modemsResult = await axios.get('/modems')
         return {

@@ -5,12 +5,16 @@
       :modem="modem"
       @modemChanged="updateModem"
     ></modem-base>
-    <b-field
-      position="is-centered">
-      <p class="control">
-        <button class="button is-primary" @click="addModem">Add modem</button>
-      </p>
-    </b-field>
+    <hr>
+    <div class="has-text-centered">
+      <button class="button is-primary" @click="addModem">
+        <b-icon
+          pack="fa"
+          icon="save">
+        </b-icon>
+        <span>Save modem to database</span>
+      </button>
+    </div>
   </section>
 </template>
 

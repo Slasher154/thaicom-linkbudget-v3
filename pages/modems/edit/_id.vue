@@ -5,12 +5,26 @@
       :modem="modem"
       @modemChanged="updateModem"
     ></modem-base>
-    <b-field
-      position="is-centered">
-      <p class="control">
-        <button class="button is-primary" @click="saveChanges">Save Changes</button>
-      </p>
-    </b-field>
+    <!--<b-field-->
+      <!--position="is-centered">-->
+      <!--<p class="control">-->
+        <!--<button-->
+          <!--class="button is-primary"-->
+          <!--@click="saveChanges"-->
+        <!--&gt;Save Changes</button>-->
+      <!--</p>-->
+    <!--</b-field>-->
+    <hr>
+    <div class="has-text-centered">
+      <button
+      class="button is-primary"
+      @click="saveChanges"
+      ><b-icon
+        pack="fa"
+        icon="save"></b-icon>
+        <span>Save to Database</span>
+      </button>
+    </div>
   </section>
 </template>
 
@@ -31,10 +45,14 @@
     async asyncData ({ params }) {
       // Fetch the modem from database via API
       try {
-        console.log(`Modem ID = ${params.id}`)
+//        console.log(`Modem ID = ${params.id}`)
         let modemResult = await axios.post('/modems/find-by-id', { modemId: params.id })
-        return {
-          modem: modemResult.data.modem
+        if (modemResult) {
+          return {
+            modem: modemResult.data.modem
+          }
+        } else {
+          this.$toast.open(`Antenna with ID ${params.id} cannot be found`)
         }
       } catch (e) {
         console.log(e)

@@ -29,7 +29,14 @@
     />
     <b-field horizontal>
       <p class="control">
-        <button class="button is-info" @click="addApp">Add Application</button>
+        <button class="button is-info" @click="addApp">
+          <b-icon
+            pack="fa"
+            icon="plus"
+          >
+          </b-icon>
+          <span>Add another application</span>
+        </button>
       </p>
     </b-field>
   </div>
@@ -88,9 +95,6 @@
           roll_off_factor: 1.2,
           mcgs: []
         }
-      },
-      submitButtonText () {
-        return 'Add modem'
       }
     },
     methods: {
@@ -99,13 +103,10 @@
         this.newModem.applications.push(_.cloneDeep(this.dummyApplication))
       },
       updateApplication (value) {
-        console.log(JSON.stringify(value))
         let index = _.findIndex(this.applications, { index: value.index })
         if (index > -1) {
-          console.log('app found!')
           this.applications.splice(index, 1, value)
         } else {
-          console.log('add new app')
           this.applications.push(value)
         }
         this.emitModem(this.newModem)
