@@ -448,6 +448,21 @@ export const state = () => ({
       'name': 'maxContour',
       'title': 'Maximum Coverage',
       'unit': 'dB'
+    },
+    {
+      'name': 'satelliteName',
+      'title': 'Satellite',
+      'unit': ''
+    },
+    {
+      'name': 'satelliteType',
+      'title': 'Satellite Type',
+      'unit': ''
+    },
+    {
+      'name': 'isThaicom',
+      'title': 'Thaicom satellite?',
+      'unit': ''
     }
   ],
 

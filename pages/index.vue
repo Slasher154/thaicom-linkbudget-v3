@@ -131,6 +131,12 @@
       }
 //
     },
+    mounted () {
+      // Clear the saved requests if any. The purpose is to prevent the case where user viewed their requests,
+      // Click home to request new link budget, then export result and the file name has the previously viewed request
+      // as the parameter still lived in the store
+      this.$store.dispatch('linkcalc/setSavedRequest', {})
+    },
     data () {
       return {
         activeTab: 0,

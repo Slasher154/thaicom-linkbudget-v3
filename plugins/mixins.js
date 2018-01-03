@@ -176,7 +176,7 @@ Vue.mixin({
     },
     $_convertMillisecondsToText (timeInMilliseconds) {
       // console.log(timeInMilliseconds)
-      return this.$moment(timeInMilliseconds).format('dddd, MMMM do YYYY, hh:mm A')
+      return this.$moment(timeInMilliseconds).format('dddd, MMMM do YYYY, kk:mm')
     }
   }
 })

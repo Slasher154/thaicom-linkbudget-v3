@@ -16,6 +16,7 @@
     "axios": "^0.16.2",
     "buefy": "^0.6.2",
     "handsontable": "^0.34.5",
+    "json2csv": "^3.11.5",
     "lodash": "^4.17.4",
     "nuxt": "^1.0.0-rc9",
     "nuxt-oauth": "https://github.com/slasher154/nuxt-oauth/tarball/master",

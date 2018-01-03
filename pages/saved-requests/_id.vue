@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="title">View Request: {{savedRequest.requestName}}</h1>
+    <h2 class="subtitle">Description: {{savedRequest.description}}</h2>
     <h2 class="subtitle">Requested by: {{savedRequest.requestorName}} on {{requestedDate}}</h2>
     <hr>
     <b-tabs
