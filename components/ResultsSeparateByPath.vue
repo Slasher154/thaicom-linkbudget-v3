@@ -37,6 +37,11 @@
         <br>
         <results-map-container />
       </b-tab-item>
+
+      <b-tab-item label="Tools">
+        <br/>
+        <results-tools-container />
+      </b-tab-item>
     </b-tabs>
 
   </div>
@@ -47,11 +52,13 @@
   import ResultsFieldsSelectorContainer from './ResultsFieldsSelectorContainer'
   import ResultsTableByPath from './ResultsTableByPath.vue'
   import ResultsMapContainer from './ResultsMapContainer'
+  import ResultsToolsContainer from './ResultsToolsContainer'
   export default {
     components: {
       ResultsFieldsSelectorContainer,
       ResultsTableByPath,
-      ResultsMapContainer
+      ResultsMapContainer,
+      ResultsToolsContainer
     },
     props: {
       linkResults: {

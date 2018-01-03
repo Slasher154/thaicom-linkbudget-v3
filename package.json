@@ -23,6 +23,7 @@
     "validator": "^9.2.0",
     "vue-color": "^2.4.3",
     "vue-handsontable-official": "^1.0.0",
+    "vue-moment": "^3.1.0",
     "vue-multiselect": "^2.0.8",
     "vue-no-ssr": "^0.2.2",
     "vue2-google-maps": "^0.8.4",

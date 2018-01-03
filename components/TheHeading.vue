@@ -40,7 +40,7 @@
       <div class="navbar-brand">
 
         <!--Logo-->
-        <nuxt-link class="navbar-item" to="/">
+        <nuxt-link class="navbar-item" :to="{ path: '/'}">
           <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"
                width="112" height="28">
         </nuxt-link>
@@ -70,6 +70,10 @@
             </div>
 
 
+          </div>
+
+          <div class="navbar-item">
+            <nuxt-link :to="{ name: 'saved-requests'}">My Requests</nuxt-link>
           </div>
 
         </div>

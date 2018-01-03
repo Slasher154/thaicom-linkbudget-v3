@@ -173,6 +173,10 @@ Vue.mixin({
         return +iflText
       }
       return false
+    },
+    $_convertMillisecondsToText (timeInMilliseconds) {
+      console.log(timeInMilliseconds)
+      return this.$moment(timeInMilliseconds).format('dddd, MMMM do YYYY, hh:mm:ss A')
     }
   }
 })

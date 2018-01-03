@@ -45,7 +45,7 @@ module.exports = {
     onLogout: (req, res) => {
       console.log(`User is successfully logged out.`)
     },
-    testMode: true
+    testMode: false
   },
   plugins: [
     '~plugins/axios',
@@ -53,6 +53,7 @@ module.exports = {
     '~plugins/filters',
     '~plugins/googlemaps',
     '~plugins/mixins',
+    '~plugins/moment',
     { src: '~/plugins/handsontable', ssr: false }
   ],
   /*
