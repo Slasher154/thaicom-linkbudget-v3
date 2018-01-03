@@ -758,7 +758,7 @@
         let results = await axios.post('/linkbudget-request', {requestObject})
         // Save the result to Vuex Store
         this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
-        console.log(JSON.stringify(results.data, undefined, 2))
+//        console.log(JSON.stringify(results.data, undefined, 2))
         loadingComponent.close()
         this.activeTab = 1
       },

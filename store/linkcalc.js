@@ -99,6 +99,8 @@ export const state = () => ({
 
   // Link Result
   linkResults: {},
+  // Saved Request
+  savedRequest: {},
 
   // Field name mappers
   fieldNameMappers: [
@@ -735,6 +737,9 @@ export const mutations = {
       let fieldToAdd = state[path + 'TableFields'].find(f => f.name === field.name)
       fieldToAdd.visible = true
     })
+  },
+  SET_SAVED_REQUEST (state, { savedRequest }) {
+    state.savedRequest = savedRequest
   }
 }
 
@@ -854,6 +859,7 @@ export const actions = {
     paths.forEach(path => {
       let dataTable = getters.linkResultsTableData(path)
       let data = dataTable[0]
+      console.log(`Data = ${data}`)
       commit('GENERATE_TABLE_FIELDS', { path, data })
     })
   },
@@ -865,6 +871,9 @@ export const actions = {
   },
   addFields ({ commit }, fields) {
     commit('ADD_FIELDS', fields)
+  },
+  setSavedRequest ({ commit }, savedRequest) {
+    commit('SET_SAVED_REQUEST', savedRequest)
   }
 }
 

@@ -52,7 +52,7 @@
             modem: modemResult.data.modem
           }
         } else {
-          this.$toast.open(`Antenna with ID ${params.id} cannot be found`)
+          console.log(`Antenna with ID ${params.id} cannot be found`)
         }
       } catch (e) {
         console.log(e)

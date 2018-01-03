@@ -11,7 +11,10 @@
         <b-table-column
           label="Name"
         >
-          {{ props.row.requestName }}
+          <nuxt-link
+            :to="{ name: 'saved-requests-id', params: { id: props.row._id }}"
+          >{{ props.row.requestName }}
+          </nuxt-link>
         </b-table-column>
         <b-table-column
           label="Requested Date"
@@ -25,13 +28,7 @@
 
 <script>
   import axios from 'axios'
-  import BTable from '../node_modules/buefy/src/components/table/Table'
-  import BTableColumn from '../node_modules/buefy/src/components/table/TableColumn'
   export default {
-    components: {
-      BTableColumn,
-      BTable
-    },
     async created () {
       try {
         let user = this.$store.state.oauth.user
