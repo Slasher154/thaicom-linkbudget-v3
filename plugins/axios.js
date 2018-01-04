@@ -5,16 +5,5 @@
 // import Vue from 'vue'
 import axios from 'axios'
 
-// Import and set nuxt.js options
-// let config = require('../nuxt.config.js')
-// import { config } from '../nuxt.config'
-
-// axios.defaults.baseURL = config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'
-axios.defaults.baseURL = process.env.API_URL
-
-// var myAxios = axios.create({
-//   baseURL: config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'
-// })
-//
-// // Prototype the custom axios instance into Vue >> https://stackoverflow.com/questions/41879928/switching-from-vue-resource-to-axios
-// Vue.prototype.$http = myAxios
+// apiUrl is set from env properties in nuxt.config.js
+axios.defaults.baseURL = process.env.apiUrl

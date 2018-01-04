@@ -5,7 +5,9 @@ module.exports = {
   ** Headers of the page
   */
   dev: (process.env.NODE_ENV !== 'production'), // true when 'npm run dev', false when 'npm run build' then 'npm start'
+  // only environment variables set in here can be accessed with process.env.xx inside the rest of the code
   env: {
+    apiUrl: process.env.API_URL,
     baseUrl: process.env.BASE_URL
   },
   head: {
