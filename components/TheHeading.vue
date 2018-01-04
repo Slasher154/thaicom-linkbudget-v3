@@ -64,6 +64,7 @@
             </a>
             <div class="navbar-dropdown">
               <nuxt-link class="navbar-item" :to="{ name: 'antennas'}">Antennas</nuxt-link>
+              <nuxt-link class="navbar-item" :to="{ name: 'antennas-patterns'}">Antenna Patterns</nuxt-link>
               <nuxt-link class="navbar-item" :to="{ name: 'bucs'}">Bucs</nuxt-link>
               <nuxt-link class="navbar-item" :to="{ name: 'modems'}">Modems</nuxt-link>
 
