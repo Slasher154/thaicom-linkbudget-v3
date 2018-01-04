@@ -1,11 +1,12 @@
 const axios = require('axios')
+require('dotenv').config()
 module.exports = {
   /*
   ** Headers of the page
   */
   dev: (process.env.NODE_ENV !== 'production'), // true when 'npm run dev', false when 'npm run build' then 'npm start'
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+    baseUrl: process.env.BASE_URL
   },
   head: {
     title: 'CSD LB',
@@ -26,8 +27,8 @@ module.exports = {
     sessionName: 'mySession',
     secretKey: 'mykey',
     oauthHost: 'https://poseidon.thaicom.net/connect',
-    oauthClientID: 'linkcalc',
-    oauthClientSecret: 'secret_secret_secret',
+    oauthClientID: process.env.CLIENT_ID,
+    oauthClientSecret: process.env.CLIENT_SECRET,
     fetchUser: async (accessToken) => {
       let config = { headers: { 'authorization': 'Bearer ' + accessToken } }
       try {

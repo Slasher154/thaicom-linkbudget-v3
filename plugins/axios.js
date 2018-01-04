@@ -10,7 +10,7 @@ import axios from 'axios'
 // import { config } from '../nuxt.config'
 
 // axios.defaults.baseURL = config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'
-axios.defaults.baseURL = 'http://localhost:23324/v1'
+axios.defaults.baseURL = process.env.API_URL
 
 // var myAxios = axios.create({
 //   baseURL: config.dev ? 'http://localhost:23324/v1' : 'http://http://linkcalc-api.thaicom.net/v1'

@@ -108,12 +108,7 @@
           <div class="navbar-item">
 
               <p class="control">
-                <!--<a class="button is-primary" :href="logoutUrl">Logout</a>-->
                 <nuxt-link tag="button" class="button is-primary" :to="{ path: 'auth/logout', query: { 'redirect-url': '/logout' }}">Logout</nuxt-link>
-              <!--<span class="icon">-->
-                <!--<i class="fa fa-download"></i>-->
-              <!--</span>-->
-                  <!--<span>Logout</span>-->
               </p>
             </div>
           </div>
@@ -132,11 +127,6 @@
   import _ from 'lodash'
   export default {
     computed: {
-      logoutUrl () {
-        let redirectUrl = process.env.baseUrl
-        console.log(redirectUrl)
-        return `auth/logout?redirect-url=https://poseidon.thaicom.net/connect/directlogout?callback_url=${redirectUrl}`
-      },
       username () {
         let user = this.$store.state.oauth.user
         if (user) {
