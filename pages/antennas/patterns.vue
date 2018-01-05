@@ -22,6 +22,7 @@
           :key="index"
           :pattern="pattern"
           :index="index"
+          :antennaSize="selectedAntenna.size"
           @patternChanged="updatePattern('rx',...arguments)"
         />
         <b-field>
@@ -43,6 +44,7 @@
           :key="index"
           :pattern="pattern"
           :index="index"
+          :antennaSize="selectedAntenna.size"
           @patternChanged="updatePattern('tx',...arguments)"
         />
         <b-field>

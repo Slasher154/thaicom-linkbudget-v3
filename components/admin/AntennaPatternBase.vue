@@ -19,17 +19,29 @@
       </b-field>
     </div>
     <div class="column">
-
+      <antenna-pattern-graph
+        v-if="patternData.length > 0"
+        :patternData="patternData"
+        :onAxisGain="onAxisGain"
+      />
     </div>
   </div>
+
 </template>
 
 <script>
+  import AntennaPatternGraph from '../AntennaPatternGraph'
   export default {
+    components: {
+      AntennaPatternGraph
+    },
     props: {
       pattern: {
         type: Object,
         required: true
+      },
+      antennaSize: {
+        type: Number
       },
       index: {
         type: Number
@@ -42,7 +54,19 @@
           data: []
         },
         patternDataText: '',
+        patternData: [],
         columnHeaders: ['degree', 'value']
+      }
+    },
+    computed: {
+      onAxisGain () {
+        if (this.antennaSize && this.newPattern.frequency) {
+          let antennaEfficiency = 0.6
+          let wavelength = (3 * Math.pow(10, 8)) / (this.newPattern.frequency * Math.pow(10, 9))
+          return 10 * Math.log10(antennaEfficiency * Math.pow(Math.PI * this.antennaSize / wavelength, 2))
+        } else {
+          return null
+        }
       }
     },
     methods: {
@@ -54,18 +78,21 @@
             v.degree = +v.degree
             v.value = +v.value
           })
-          let pattern = Object.assign({}, this.newPattern, { index: this.index, data: arrayOfPatternValues })
+          this.patternData = arrayOfPatternValues // Assign to component data to show in the graph
+          let pattern = Object.assign({}, this.newPattern, {index: this.index, data: arrayOfPatternValues})
           this.$emit('patternChanged', pattern)
         }
       }
     },
     mounted () {
       this.newPattern = this.pattern
+      this.patternData = this.pattern.data // show the pattern in graph when component is mounted or updated
     },
     watch: {
       pattern: {
         handler (newVal) {
           this.newPattern = newVal
+          this.patternData = newVal.data // update the pattern in graph when antenna size is changed
         },
         deep: true
       }

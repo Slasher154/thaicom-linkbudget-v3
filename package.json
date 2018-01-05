@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "buefy": "^0.6.2",
+    "chart.js": "^2.7.1",
     "dotenv": "^4.0.0",
     "handsontable": "^0.34.5",
     "json2csv": "^3.11.5",
@@ -23,6 +24,7 @@
     "nuxt-oauth": "https://github.com/slasher154/nuxt-oauth/tarball/master",
     "pluralize": "^7.0.0",
     "validator": "^9.2.0",
+    "vue-chartjs": "^3.0.2",
     "vue-color": "^2.4.3",
     "vue-handsontable-official": "^1.0.0",
     "vue-moment": "^3.1.0",

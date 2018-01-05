@@ -113,13 +113,6 @@
         </ul>
       </b-message>
     </template>
-    <!--<b-field-->
-      <!--horizontal>-->
-      <!--<button class="button is-warning">-->
-        <!--<b-icon pack="fa" icon="area-chart"></b-icon>-->
-        <!--<span>Add Antenna Pattern</span>-->
-      <!--</button>-->
-    <!--</b-field>-->
   </div>
 </template>
 
