@@ -116,7 +116,6 @@
     },
     methods: {
       updateAntenna (value) {
-        console.log(value)
         this.selectedAntenna = this.antennas.find(x => x._id === value)
         this.txPatterns = this.selectedAntenna.tx_patterns
         this.rxPatterns = this.selectedAntenna.rx_patterns

@@ -177,6 +177,16 @@ Vue.mixin({
     $_convertMillisecondsToText (timeInMilliseconds) {
       // console.log(timeInMilliseconds)
       return this.$moment(timeInMilliseconds).format('dddd, MMMM do YYYY, kk:mm')
+    },
+    $_alertError (message) {
+      this.$dialog.alert({
+        title: 'Error',
+        message,
+        type: 'is-danger',
+        hasIcon: true,
+        icon: 'times-circle',
+        iconPack: 'fa'
+      })
     }
   }
 })

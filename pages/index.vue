@@ -17,8 +17,8 @@
 
     <b-tabs v-model="activeTab" type="is-toggle" position="is-centered" class="block">
       <b-tab-item label="Request">
-        <br>
-        <request-name-container/>
+        <!--<br>-->
+        <!--<request-name-container/>-->
         <br>
         <satellite-selectors-container/>
         <br>
@@ -750,23 +750,63 @@
     },
     methods: {
       submitRequest () {
-//        this.$toast.open('Request submitted')
         this.submitResultToServer()
       },
-      validate () {
-        alert('')
+      validate (requestObject) {
+        // Validate the linkcalc parameters based on requestObject
+        // Check if any satellite is selected
+        if (requestObject.satellites.length <= 0) {
+          return 'Please select at least 1 satellite.'
+        }
+        // If find best transponder is not selected, check if any transponder is selected
+        if (!requestObject.findBestTransponders && requestObject.transponders.length <= 0) {
+          return 'Please select at least 1 transponder'
+        }
+        // Check if any modem is selected
+        if (requestObject.modemsAndMcgs.length <= 0) {
+          return 'Please select at least 1 modem'
+        }
+        // If best MCG is not selected, check if any MCG is selected
+        for (let i = 0; i < requestObject.modemsAndMcgs.length; i++) {
+          let modem = requestObject.modemsAndMcgs[i]
+          if (!modem.findBestMcg && !modem.applications.every(app => app.mcgs.length > 0)) {
+            return 'Please select at least 1 MCG (as you did not choose to find best MCG)'
+          }
+        }
+        // Check if there is any remote station
+        if (requestObject.remoteStations.length <= 0) {
+          return 'Please select all of locations/antenna/buc/bandwidth or import custom remote stations'
+        }
+        // If max contour is selected, best transponder and best MCG is not allowed
+        if (requestObject.findMaxCoverage && (requestObject.findBestTransponders || requestObject.modemsAndMcgs.some(modem => modem.findBestMcg))) {
+          return 'Finding maximum coverage cannot be used together with find best transponders and/or find best MCG'
+        }
+        // If max contour is selected, custom link margin must be input
+        if (requestObject.findMaxCoverage && requestObject.forwardLinkMargins.length <= 0) {
+          return 'Finding maximum coverage requires custom link margin input'
+        }
+        return false
       },
       async submitResultToServer () {
         // Construct the link budget requests input from the store
-        const loadingComponent = this.$loading.open()
         let requestObject = this.requestObject
-        console.log(JSON.stringify(requestObject, undefined, 2))
-        let results = await axios.post('/linkbudget-request', {requestObject})
-        // Save the result to Vuex Store
-        this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
-//        console.log(JSON.stringify(results.data, undefined, 2))
-        loadingComponent.close()
-        this.activeTab = 1
+        // Validate the requestObject
+        let errorMessage = this.validate(requestObject)
+        if (errorMessage) {
+          this.$_alertError(errorMessage)
+        } else {
+          try {
+            const loadingComponent = this.$loading.open()
+            console.log(JSON.stringify(requestObject, undefined, 2))
+            let results = await axios.post('/linkbudget-request', {requestObject})
+            // Save the result to Vuex Store
+            this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
+            loadingComponent.close()
+            this.activeTab = 1
+          } catch (e) {
+            this.$_alertError(e)
+          }
+        }
       },
       submitSampleResultToServer () {
         this.submitLinkToServer(this.sampleLink)

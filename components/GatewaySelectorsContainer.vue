@@ -10,6 +10,7 @@
               <b-checkbox
                 v-model="useDefaultGateway"
                 @input="updateUseDefaultGateway"
+                disabled
               >Use Default Gateway</b-checkbox>
             </div>
 
