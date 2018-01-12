@@ -11,8 +11,8 @@
     </button>
     <button
       class="button is-info"
-      @click.prevent="submitMaxContourResultToServer">
-      Submit sample max contour request
+      @click.prevent="submitFindBestTransponderResultToServer">
+      Submit find best TP
     </button>
 
     <b-tabs v-model="activeTab" type="is-toggle" position="is-centered" class="block">
@@ -745,6 +745,348 @@
           'findMaxLinkAvailability': false,
           'findBestTransponders': false,
           'requestName': 'test'
+        },
+        sampleFindBestTransponderLink: {
+          'satellites': [
+            {
+              '_id': 'Q962ttEf4266TwTB4',
+              'name': 'Thaicom 4',
+              'orbital_slot': 119.5,
+              'skb': 0.05,
+              'type': 'Broadband',
+              'isThaicom': true,
+              'isActive': true
+            }
+          ],
+          'transponders': [],
+          'gatewayStations': [],
+          'remoteStations': [
+            {
+              'location': {
+                'name': 'Bangkok',
+                'country': 'Thailand',
+                'lat': 13.826,
+                'lon': 100.86
+              },
+              'antenna': {
+                '_id': '5nN4bkz6GLNW7csrz',
+                'name': '1.2 m',
+                'type': 'Standard',
+                'size': 1.2,
+                'vendor': 'Standard',
+                'rx_patterns': [],
+                'tx_patterns': []
+              },
+              'buc': {
+                '_id': '97GFspvo5gkCRJYML',
+                'type': 'Standard',
+                'category': 'buc',
+                'size': 2,
+                'name': '2W',
+                'ifl': 0.3,
+                'obo': 0.5
+              },
+              'bandwidth': {
+                'id': 1,
+                'forward': 4,
+                'return': 2,
+                'unit': 'Mbps'
+              }
+            },
+            {
+              'location': {
+                'name': 'Nonthaburi',
+                'country': 'Thailand',
+                'lat': 13.598,
+                'lon': 100.543
+              },
+              'antenna': {
+                '_id': '5nN4bkz6GLNW7csrz',
+                'name': '1.2 m',
+                'type': 'Standard',
+                'size': 1.2,
+                'vendor': 'Standard',
+                'rx_patterns': [],
+                'tx_patterns': []
+              },
+              'buc': {
+                '_id': '97GFspvo5gkCRJYML',
+                'type': 'Standard',
+                'category': 'buc',
+                'size': 2,
+                'name': '2W',
+                'ifl': 0.3,
+                'obo': 0.5
+              },
+              'bandwidth': {
+                'id': 1,
+                'forward': 4,
+                'return': 2,
+                'unit': 'Mbps'
+              }
+            }
+          ],
+          'remoteAntennas': [
+            {
+              '_id': '5nN4bkz6GLNW7csrz',
+              'name': '1.2 m',
+              'type': 'Standard',
+              'size': 1.2,
+              'vendor': 'Standard',
+              'rx_patterns': [],
+              'tx_patterns': []
+            }
+          ],
+          'remoteBucs': [
+            {
+              '_id': '97GFspvo5gkCRJYML',
+              'type': 'Standard',
+              'category': 'buc',
+              'size': 2,
+              'name': '2W',
+              'ifl': 0.3,
+              'obo': 0.5
+            }
+          ],
+          'remoteLocations': [
+            {
+              'name': 'Bangkok',
+              'country': 'Thailand',
+              'lat': 13.826,
+              'lon': 100.86
+            },
+            {
+              'name': 'Nonthaburi',
+              'country': 'Thailand',
+              'lat': 13.598,
+              'lon': 100.543
+            }
+          ],
+          'bandwidth': [
+            {
+              'id': 1,
+              'forward': 4,
+              'return': 2,
+              'unit': 'Mbps'
+            }
+          ],
+          'modemsAndMcgs': [
+            {
+              '_id': '7LxgNPpxpBXvg8b7o',
+              'name': 'Hughes Jupiter for INDIA  (BT=5% for FWD and 20% for RTN)',
+              'vendor': 'Hughes',
+              'applications': [
+                {
+                  'mcgs': [
+                    {
+                      'es_no': -0.9,
+                      'spectral_efficiency': 0.479,
+                      'name': 'QPSK 1/4'
+                    },
+                    {
+                      'es_no': -0.42,
+                      'spectral_efficiency': 0.641,
+                      'name': 'QPSK 1/3'
+                    },
+                    {
+                      'es_no': 0.39,
+                      'spectral_efficiency': 0.771,
+                      'name': 'QPSK 2/5'
+                    },
+                    {
+                      'es_no': 0.83,
+                      'spectral_efficiency': 0.889,
+                      'name': 'QPSK 9/20'
+                    },
+                    {
+                      'es_no': 1.49,
+                      'spectral_efficiency': 0.965,
+                      'name': 'QPSK 1/2'
+                    },
+                    {
+                      'es_no': 2,
+                      'spectral_efficiency': 1.089,
+                      'name': 'QPSK 11/20'
+                    },
+                    {
+                      'es_no': 2.6,
+                      'spectral_efficiency': 1.16,
+                      'name': 'QPSK 3/5'
+                    },
+                    {
+                      'es_no': 3.4,
+                      'spectral_efficiency': 1.291,
+                      'name': 'QPSK 2/3'
+                    },
+                    {
+                      'es_no': 4.5,
+                      'spectral_efficiency': 1.452,
+                      'name': 'QPSK 3/4'
+                    },
+                    {
+                      'es_no': 5.1,
+                      'spectral_efficiency': 1.549,
+                      'name': 'QPSK 4/5'
+                    },
+                    {
+                      'es_no': 5.59,
+                      'spectral_efficiency': 1.615,
+                      'name': 'QPSK 5/6'
+                    },
+                    {
+                      'es_no': 6.2,
+                      'spectral_efficiency': 1.936,
+                      'name': '8PSK 2/3'
+                    },
+                    {
+                      'es_no': 7.19,
+                      'spectral_efficiency': 2.178,
+                      'name': '8PSK 3/4'
+                    },
+                    {
+                      'es_no': 8.46,
+                      'spectral_efficiency': 2.282,
+                      'name': '16APSK 26/45'
+                    },
+                    {
+                      'es_no': 8.48,
+                      'spectral_efficiency': 2.422,
+                      'name': '8PSK 5/6'
+                    },
+                    {
+                      'es_no': 8.98,
+                      'spectral_efficiency': 2.458,
+                      'name': '16APSK 28/45'
+                    },
+                    {
+                      'es_no': 9.28,
+                      'spectral_efficiency': 2.525,
+                      'name': '16APSK 23/36'
+                    },
+                    {
+                      'es_no': 9.5,
+                      'spectral_efficiency': 2.896,
+                      'name': '16APSK 3/4'
+                    },
+                    {
+                      'es_no': 10.88,
+                      'spectral_efficiency': 3.09,
+                      'name': '16APSK 4/5'
+                    },
+                    {
+                      'es_no': 11.74,
+                      'spectral_efficiency': 3.222,
+                      'name': '16APSK 5/6'
+                    },
+                    {
+                      'es_no': 12.32,
+                      'spectral_efficiency': 3.44,
+                      'name': '16APSK 8/9'
+                    },
+                    {
+                      'es_no': 13.16,
+                      'spectral_efficiency': 3.57,
+                      'name': '32APSK 13/18'
+                    },
+                    {
+                      'es_no': 13.69,
+                      'spectral_efficiency': 3.866,
+                      'name': '32APSK 4/5'
+                    },
+                    {
+                      'es_no': 14.5,
+                      'spectral_efficiency': 4.031,
+                      'name': '32APSK 5/6'
+                    },
+                    {
+                      'es_no': 15.39,
+                      'spectral_efficiency': 4.303,
+                      'name': '32APSK 8/9'
+                    },
+                    {
+                      'es_no': 17.09,
+                      'spectral_efficiency': 4.35,
+                      'name': '32APSK 9/10'
+                    }
+                  ],
+                  'roll_off_factor': 1.05,
+                  'symbol_rates': [],
+                  'maximum_symbol_rate': 235000,
+                  'minimum_symbol_rate': 1000,
+                  'link_margin': 0.9,
+                  'acm': true,
+                  'type': 'forward',
+                  'name': 'Outbound DVB-S2X'
+                },
+                {
+                  'mcgs': [
+                    {
+                      'es_no': 3.06,
+                      'spectral_efficiency': 1,
+                      'name': 'OQPSK 1/2'
+                    },
+                    {
+                      'es_no': 4.33,
+                      'spectral_efficiency': 1.33,
+                      'name': 'OQPSK 2/3'
+                    },
+                    {
+                      'es_no': 6.09,
+                      'spectral_efficiency': 1.6,
+                      'name': 'OQPSK 4/5'
+                    },
+                    {
+                      'es_no': 7.81,
+                      'spectral_efficiency': 2,
+                      'name': '8PSK 2/3'
+                    },
+                    {
+                      'es_no': 7.96,
+                      'spectral_efficiency': 1.6,
+                      'name': 'OQPSK 9/10'
+                    },
+                    {
+                      'es_no': 10,
+                      'spectral_efficiency': 2.4,
+                      'name': '8PSK 4/5'
+                    },
+                    {
+                      'es_no': 11.89,
+                      'spectral_efficiency': 2.67,
+                      'name': '8PSK 8/9'
+                    }
+                  ],
+                  'roll_off_factor': 1.2,
+                  'symbol_rates': [
+                    512,
+                    1024,
+                    2048,
+                    4096,
+                    6144,
+                    8192,
+                    12228
+                  ],
+                  'maximum_symbol_rate': 12228,
+                  'minimum_symbol_rate': 512,
+                  'link_margin': 0.3,
+                  'acm': true,
+                  'type': 'return',
+                  'name': 'Hughes Jupiter for INDIA  (BT=5% for FWD and 20% for RTN)'
+                }
+              ],
+              'warning_messages': [],
+              'findBestMcg': true
+            }
+          ],
+          'useDefaultGateway': true,
+          'maxMode': false,
+          'forwardLinkMargins': [],
+          'returnLinkMargins': [],
+          'findMaxCoverage': false,
+          'findMatchingReturnCoverage': true,
+          'findMaxLinkAvailability': false,
+          'findBestTransponders': true,
+          'requestName': ''
         }
       }
     },
@@ -804,6 +1146,7 @@
             loadingComponent.close()
             this.activeTab = 1
           } catch (e) {
+            console.log(e)
             this.$_alertError(e)
           }
         }
@@ -815,6 +1158,9 @@
         // Set max contour option to true to simulate this mode
         this.$store.dispatch('linkcalc/setMaxCoverage', true)
         this.submitLinkToServer(this.sampleMaxContourLink)
+      },
+      submitFindBestTransponderResultToServer () {
+        this.submitLinkToServer(this.sampleFindBestTransponderLink)
       },
       async submitLinkToServer (requestObject) {
         // Construct the link budget requests input from the store

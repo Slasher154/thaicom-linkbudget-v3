@@ -1,6 +1,7 @@
 <template>
   <b-table
     :data="linkResultsTableData(path)"
+    :row-class="(row, index) => row.passedTextClear === 'Yes' ? '' : 'is-danger'"
     :bordered="true"
   >
     <template scope="props">
@@ -8,7 +9,10 @@
       <b-table-column v-for="(column, index) in tableFields"
                       :key="index"
                       :label="column.title"
-                      :visible="column.visible">
+                      :visible="column.visible"
+                      :field="column.name"
+                      sortable
+      >
         {{ props.row[column.name] }}
       </b-table-column>
     </template>
@@ -34,3 +38,10 @@
     }
   }
 </script>
+
+<style>
+  tr.is-danger {
+    background: hsl(348, 100%, 61%) !important;
+    color: white
+  }
+</style>

@@ -94,13 +94,13 @@ Vue.mixin({
       let coordsObj = {}
       if (latlonMode && latlonRegex.test(coordsText)) {
         coordsObj = {
-          lat: coordsText.split(',')[0],
-          lon: coordsText.split(',')[1]
+          lat: +coordsText.split(',')[0],
+          lon: +coordsText.split(',')[1]
         }
       } else if (!latlonMode && lonlatRegex.test(coordsText)) {
         coordsObj = {
-          lon: coordsText.split(',')[0],
-          lat: coordsText.split(',')[1]
+          lon: +coordsText.split(',')[0],
+          lat: +coordsText.split(',')[1]
         }
       } else {
         return false
