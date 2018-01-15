@@ -44,7 +44,7 @@
 
             <b-field label="Country"
               v-if="$store.state.linkcalc.findBestTransponders"
-              message="Select countries will find the beams faster"
+              message="Select countries will significantly improve query time"
             >
               <country-selector
                 :country-options="$store.state.linkcalc.countryOptions"

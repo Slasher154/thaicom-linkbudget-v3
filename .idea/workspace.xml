@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/CountrySelector.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue" afterPath="$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/index.vue" afterPath="$PROJECT_DIR$/pages/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/linkcalc.js" afterPath="$PROJECT_DIR$/store/linkcalc.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,7 +19,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.42679557">
+    <splitter split-orientation="horizontal" split-proportion="0.46754143">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="patterns.vue" pinned="false" current-in-tab="false">
@@ -36,7 +34,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="linkcalc.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="linkcalc.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="469">
@@ -52,13 +50,13 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="SatelliteSelectorsContainer.vue" pinned="false" current-in-tab="false">
+          <file leaf-file-name="SatelliteSelectorsContainer.vue" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="287">
-                  <caret line="46" column="39" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+                <state relative-caret-position="480">
+                  <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
                   <folding>
-                    <element signature="e#2078#2121#0" expanded="true" />
+                    <element signature="e#2089#2132#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -141,12 +139,14 @@
           <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/pages/index.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="475">
-                  <caret line="770" column="36" lean-forward="true" selection-start-line="770" selection-start-column="36" selection-end-line="770" selection-end-column="36" />
+                <state relative-caret-position="-2229">
+                  <caret line="17" column="31" lean-forward="true" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
                   <folding>
-                    <element signature="e#1889#1922#0" expanded="true" />
-                    <element signature="e#5521#18864#0" expanded="false" />
-                    <element signature="e#18896#24972#0" expanded="false" />
+                    <element signature="e#2028#2061#0" expanded="true" />
+                    <element signature="e#5660#19003#0" expanded="false" />
+                    <element signature="e#19035#25111#0" expanded="false" />
+                    <element signature="e#25152#36129#0" expanded="false" />
+                    <element signature="e#36512#38409#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -240,8 +240,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>selectedAn</find>
-      <find>window.</find>
       <find>$</find>
       <find>$confi</find>
       <find>$confirm</find>
@@ -270,6 +268,8 @@
       <find>Find best tr</find>
       <find>Satellites</find>
       <find>passed</find>
+      <find>submitResult</find>
+      <find>submitRequest</find>
     </findStrings>
     <replaceStrings>
       <replace>transponder</replace>
@@ -353,8 +353,8 @@
         <option value="$PROJECT_DIR$/components/BaseLatLonImporterModal.vue" />
         <option value="$PROJECT_DIR$/components/ResultsTableByPath.vue" />
         <option value="$PROJECT_DIR$/components/CountrySelector.vue" />
-        <option value="$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue" />
         <option value="$PROJECT_DIR$/store/linkcalc.js" />
+        <option value="$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue" />
         <option value="$PROJECT_DIR$/pages/index.vue" />
       </list>
     </option>
@@ -744,7 +744,7 @@
       <workItem from="1513438510251" duration="552000" />
       <workItem from="1513649976445" duration="7281000" />
       <workItem from="1514035684334" duration="63237000" />
-      <workItem from="1515470289728" duration="8008000" />
+      <workItem from="1515470289728" duration="9627000" />
     </task>
     <task id="LOCAL-00001" summary="Add transponder selector">
       <created>1507043872699</created>
@@ -1033,11 +1033,18 @@
       <option name="project" value="LOCAL" />
       <updated>1515750435233</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Add countries selector for finding best transponder option">
+      <created>1515989817093</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1515989817093</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="379305000" />
+    <option name="totallyTimeSpent" value="380924000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="0" width="1920" height="1080" extended-state="0" />
@@ -1094,7 +1101,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add fetch user with accessToken and put it in Vuex Store" />
     <MESSAGE value="Add maximum contour column to forward link table" />
     <MESSAGE value="Add Google Maps into result page" />
     <MESSAGE value="Able to show forward link results contours on Google Maps" />
@@ -1119,7 +1125,8 @@
     <MESSAGE value="Add remarks to antenna pattern input" />
     <MESSAGE value="Add input validations before submitting link budget request to API server" />
     <MESSAGE value="Add sortable and table row color for failed cases in the result table" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add sortable and table row color for failed cases in the result table" />
+    <MESSAGE value="Add countries selector for finding best transponder option" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add countries selector for finding best transponder option" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1505,28 +1512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="46" column="39" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
-          <folding>
-            <element signature="e#2078#2121#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="770" column="36" lean-forward="true" selection-start-line="770" selection-start-column="36" selection-end-line="770" selection-end-column="36" />
-          <folding>
-            <element signature="e#1889#1922#0" expanded="true" />
-            <element signature="e#5521#18864#0" expanded="false" />
-            <element signature="e#18896#24972#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="469">
@@ -1537,6 +1522,30 @@
             <element signature="e#9669#9975#0" expanded="false" />
             <element signature="e#10016#10214#0" expanded="false" />
             <element signature="e#10254#10470#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2229">
+          <caret line="17" column="31" lean-forward="true" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
+          <folding>
+            <element signature="e#2028#2061#0" expanded="true" />
+            <element signature="e#5660#19003#0" expanded="false" />
+            <element signature="e#19035#25111#0" expanded="false" />
+            <element signature="e#25152#36129#0" expanded="false" />
+            <element signature="e#36512#38409#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding>
+            <element signature="e#2089#2132#0" expanded="true" />
           </folding>
         </state>
       </provider>

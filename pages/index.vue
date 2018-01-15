@@ -14,6 +14,11 @@
       @click.prevent="submitFindBestTransponderResultToServer">
       Submit find best TP
     </button>
+    <button
+      class="button is-warning"
+      @click.prevent="submitMaxContourResultToServer">
+      Submit find best TP
+    </button>
 
     <b-tabs v-model="activeTab" type="is-toggle" position="is-centered" class="block">
       <b-tab-item label="Request">
@@ -775,8 +780,8 @@
               'location': {
                 'name': 'Bangkok',
                 'country': 'Thailand',
-                'lat': 13.826,
-                'lon': 100.86
+                'lat': -13.826,
+                'lon': -100.86
               },
               'antenna': {
                 '_id': '5nN4bkz6GLNW7csrz',
@@ -1102,7 +1107,14 @@
     },
     methods: {
       submitRequest () {
-        this.submitResultToServer()
+        let requestObject = this.requestObject
+        // Validate the requestObject
+        let errorMessage = this.validate(requestObject)
+        if (errorMessage) {
+          this.$_alertError(errorMessage)
+        } else {
+          this.submitLinkToServer(requestObject)
+        }
       },
       validate (requestObject) {
         // Validate the linkcalc parameters based on requestObject
@@ -1139,28 +1151,6 @@
         }
         return false
       },
-      async submitResultToServer () {
-        // Construct the link budget requests input from the store
-        let requestObject = this.requestObject
-        // Validate the requestObject
-        let errorMessage = this.validate(requestObject)
-        if (errorMessage) {
-          this.$_alertError(errorMessage)
-        } else {
-          try {
-            const loadingComponent = this.$loading.open()
-            console.log(JSON.stringify(requestObject, undefined, 2))
-            let results = await axios.post('/linkbudget-request', {requestObject})
-            // Save the result to Vuex Store
-            this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
-            loadingComponent.close()
-            this.activeTab = 1
-          } catch (e) {
-            console.log(e)
-            this.$_alertError(e)
-          }
-        }
-      },
       submitSampleResultToServer () {
         this.submitLinkToServer(this.sampleLink)
       },
@@ -1175,13 +1165,22 @@
       async submitLinkToServer (requestObject) {
         // Construct the link budget requests input from the store
         const loadingComponent = this.$loading.open()
-        console.log(JSON.stringify(requestObject, undefined, 2))
-        let results = await axios.post('/linkbudget-request', {requestObject})
-        // Save the result to Vuex Store
-        this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
-        console.log(JSON.stringify(results.data, undefined, 2))
+        try {
+          console.log(JSON.stringify(requestObject, undefined, 2))
+          let results = await axios.post('/linkbudget-request', {requestObject})
+          if (results.data.error) {
+            this.$_alertError(results.data.error)
+          } else {
+            // Save the result to Vuex Store
+            this.$store.dispatch('linkcalc/setLinkResults', {linkResults: results.data})
+            console.log(JSON.stringify(results.data, undefined, 2))
+            loadingComponent.close()
+            this.activeTab = 1
+          }
+        } catch (e) {
+          this.$_alertError(e)
+        }
         loadingComponent.close()
-        this.activeTab = 1
       }
     },
     computed: {
