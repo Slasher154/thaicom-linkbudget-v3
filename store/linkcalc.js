@@ -18,6 +18,10 @@ export const state = () => ({
   filteredTransponders: [],
   selectedTransponders: [],
 
+  // Countries
+  countryOptions: [],
+  selectedCountries: [],
+
   // Gateway Antennas
   gatewayAntennaOptions: [],
   selectedGatewayAntennas: [],
@@ -579,6 +583,7 @@ export const getters = {
     let object = {
       satellites: state.selectedSatellites,
       transponders: state.selectedTransponders,
+      countries: state.selectedCountries,
       gatewayStations: state.gatewayStations,
       remoteStations: state.remoteStations,
       remoteAntennas: state.selectedRemoteAntennas,
@@ -615,6 +620,12 @@ export const mutations = {
   },
   SET_SELECTED_TRANSPONDERS (state, { transponders }) {
     state.selectedTransponders = transponders
+  },
+  SET_COUNTRY_OPTIONS (state, { countries }) {
+    state.countryOptions = countries
+  },
+  SET_SELECTED_COUNTRIES (state, { countries }) {
+    state.selectedCountries = countries
   },
   SET_MODEM_OPTIONS (state, { modems }) {
     state.modemOptions = modems
@@ -774,6 +785,12 @@ export const actions = {
   },
   setSelectedTransponders ({ commit }, transponders) {
     commit('SET_SELECTED_TRANSPONDERS', transponders)
+  },
+  setCountryOptions ({ commit }, countries) {
+    commit('SET_COUNTRY_OPTIONS', countries)
+  },
+  setSelectedCountries ({ commit }, countries) {
+    commit('SET_SELECTED_COUNTRIES', countries)
   },
   setModemOptions ({ commit }, modems) {
     commit('SET_MODEM_OPTIONS', modems)

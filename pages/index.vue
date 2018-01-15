@@ -76,6 +76,7 @@
   import ResultsContainer from '@/components/ResultsContainer'
 
   import axios from 'axios'
+  import _ from 'lodash'
   export default {
     authenticated: true,
     name: 'Index',
@@ -98,6 +99,14 @@
         // Fill the store with transponders options
         let tpResult = await axios.get('allTransponders')
         store.dispatch('linkcalc/setTransponderOptions', {transponders: tpResult.data.transponders})
+
+        // Fill the store with countries options
+        let uniqueCountries = _.uniq(tpResult.data.transponders.filter(x => _.has(x, 'country')).map(tp => tp.country)).sort()
+        store.dispatch('linkcalc/setCountryOptions', { countries: uniqueCountries.map(x => {
+          return {
+            name: x
+          }
+        }) })
 
         // Fill the store with modem options
         let modemResult = await axios.get('/modems')
@@ -759,6 +768,7 @@
             }
           ],
           'transponders': [],
+          'countries': ['Thailand'],
           'gatewayStations': [],
           'remoteStations': [
             {

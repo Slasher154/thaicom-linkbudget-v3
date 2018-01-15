@@ -41,6 +41,17 @@
                 @input="updateFindBestTransponders"
               >Find best transponders from input remote locations</b-checkbox>
             </div>
+
+            <b-field label="Country"
+              v-if="$store.state.linkcalc.findBestTransponders"
+              message="Select countries will find the beams faster"
+            >
+              <country-selector
+                :country-options="$store.state.linkcalc.countryOptions"
+                :multiple="true"
+                @countries-changed="updateCountries"
+              />
+            </b-field>
           </div>
           <!--End of transponder field-->
         </div>
@@ -54,10 +65,12 @@
   import { mapGetters, mapState } from 'vuex'
   import SatelliteSelector from '@/components/SatelliteSelector'
   import SatelliteTransponderSelector from '@/components/SatelliteTranspondersSelector'
+  import CountrySelector from '@/components/CountrySelector'
   export default {
     components: {
       SatelliteSelector,
-      SatelliteTransponderSelector
+      SatelliteTransponderSelector,
+      CountrySelector
     },
     data () {
       return {
@@ -88,6 +101,9 @@
       },
       updateFindBestTransponders (value) {
         this.$store.dispatch('linkcalc/updateFindBestTransponders', value)
+      },
+      updateCountries ({ countries }) {
+        this.$store.dispatch('linkcalc/setSelectedCountries', { countries: countries.map(x => x.name) })
       }
     }
   }
