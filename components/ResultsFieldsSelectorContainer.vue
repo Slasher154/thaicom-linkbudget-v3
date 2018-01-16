@@ -25,9 +25,10 @@
           <b-taglist>
             <draggable v-model="fields" @start="drag=true" @end="drag=false">
               <b-tag
-                v-for="element in fields"
+                v-for="(element,index) in fields"
                 v-if="element.visible"
                 type="is-info" closable
+                :key="index"
                 @close="hideField(element)"
               >{{element.title}}
               </b-tag>

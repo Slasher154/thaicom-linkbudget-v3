@@ -53,6 +53,13 @@ export const mutations = {
   SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, {geojsonObjects, path}) {
     state[path + 'Contours'] = geojsonObjects.map(convertGeojsonContourToVueGoogleMaps)
   },
+  ADD_GEOJSON_TO_MAP (state, { geojsonObjects, path, color }) {
+    geojsonObjects.forEach(obj => {
+      obj.color = color
+    })
+    let contours = geojsonObjects.map(convertGeojsonContourToVueGoogleMaps)
+    Object.assign(state[path + 'Contours'], contours)
+  },
   GENERATE_BEAM_LABELS (state, path) {
     state.beamLabels = []
     // Loop all contours and get unique beam name, peak latitude and peak longitude
@@ -67,6 +74,9 @@ export const mutations = {
       }
     }), (p) => p.text)
     state.beamLabels = uniqueBeamLabels
+  },
+  SET_PLACES (state, { places }) {
+    state.places = places
   },
   SET_COMBINATION_FILTERS (state, {path, parameter, value}) {
     console.log(`Updating ${path} ${parameter} to ${JSON.stringify(value)}`)
@@ -140,6 +150,17 @@ export const actions = {
     options.parameter = pluralize.singular(options.parameter)
     commit('REFRESH_CONTOUR_VISIBILITY', options.path) // Trigger contour visibility due to filter changed
   },
+  setPlaces ({ commit }, places) {
+    commit('SET_PLACES', places)
+  },
+  addEocLines ({ commit }, geojsonObjects) {
+    geojsonObjects.color = '#FE9200'
+    commit('ADD_GEOJSON_TO_MAP', geojsonObjects)
+  },
+  addFarthestLines ({ commit }, geojsonObjects) {
+    geojsonObjects.color = '#FCDC00'
+    commit('ADD_GEOJSON_TO_MAP', geojsonObjects)
+  },
   setupFiltersAndCategories ({commit, getters, state}, path) {
     state[path + 'FilterFields'].forEach(parameter => {
       commit('SET_COMBINATION_FILTERS', {
@@ -188,8 +209,8 @@ function convertGeojsonContourToVueGoogleMaps (geojsonContour) {
   try {
     // console.log(`geo contour = ${JSON.stringify(geojsonContour, undefined, 2)}`)
     return {
-      path: convertGeojsonPolygonCoordinatesToPaths(geojsonContour.geometry.coordinates),
-      options: constructPolygonOptions(),
+      paths: convertGeojsonPolygonCoordinatesToPaths(geojsonContour.geometry.coordinates),
+      options: constructPolygonOptions(geojsonContour.color),
       properties: geojsonContour.properties,
       showOnMap: true
     }
@@ -198,9 +219,9 @@ function convertGeojsonContourToVueGoogleMaps (geojsonContour) {
   }
 }
 
-function constructPolygonOptions () {
+function constructPolygonOptions (color = '#FF0000') {
   return {
-    strokeColor: '#FF0000',
+    strokeColor: color,
     strokeWeight: 2,
     fillOpacity: 0
   }
@@ -213,11 +234,13 @@ function convertGeojsonPolygonCoordinatesToPaths (polygonCoordinates) {
   //   ring.slice(0, ring.length - 1)
   //     .map(([lng, lat]) => ({lat, lng}))
   // )
-  return polygonCoordinates[0].map(ring => {
-    return {
-      lat: ring[1],
-      lng: ring[0]
-    }
+  return polygonCoordinates.map(rings => {
+    return rings.map(ring => {
+      return {
+        lat: ring[1],
+        lng: ring[0]
+      }
+    })
   })
 }
 

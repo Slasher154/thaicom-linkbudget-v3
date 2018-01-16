@@ -14,8 +14,9 @@
         </b-field>
         <br>
         <modem-mcgs-selector-container
-          v-for="modem in $store.state.linkcalc.selectedModems"
+          v-for="(modem, index) in $store.state.linkcalc.selectedModems"
           :modem="modem"
+          :key="index"
         />
         <br>
 

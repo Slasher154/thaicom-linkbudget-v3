@@ -1,7 +1,8 @@
 <template>
   <div>
+    <!-- Show filter if only it's finding max contour and there are any contour lines -->
     <results-map-filter-container
-      v-if="$store.state.map.forwardContours.length > 0"
+      v-if="$store.state.map.forwardContours.length > 0 && $store.state.linkcalc.findMaxCoverage"
       path="forward" />
     <div class="columns">
       <div class="column is-9">
@@ -11,6 +12,7 @@
             v-if="m.showOnMap"
             :key="index"
             :position="m.position"
+            :label="m.label"
           >
           </gmap-marker>
           <gmap-marker
@@ -26,7 +28,7 @@
             v-if="p.showOnMap"
             :key="index"
             :options="p.options"
-            :path="p.path"
+            :paths="p.paths"
           >
           </gmap-polygon>
           <gmap-polygon
@@ -34,7 +36,7 @@
             v-if="p.showOnMap"
             :key="index"
             :options="p.options"
-            :path="p.path"
+            :paths="p.paths"
           >
           </gmap-polygon>
         </gmap-map>
@@ -46,15 +48,60 @@
                               :item="category"
           />
         <div class="field">
-          <div class="control">
-            <button class="button is-primary" @click="loadMap">Reload map</button>
-          </div>
+          <p class="control">
+            <button class="button is-primary" @click="loadMap">Show Max Contours</button>
+          </p>
+        </div>
+        <div class="field"
+          v-if="!$store.state.linkcalc.findBestTransponders"
+        >
+          <p class="control">
+            <button class="button is-warning" @click="showEocLinesOfSelectedBeams">Show EOC Linesof selected beams</button>
+          </p>
+        </div>
+        <div class="field"
+             v-if="$store.state.linkcalc.findBestTransponders"
+        >
+          <p class="control">
+            <button class="button is-warning" @click="showEocLinesOfFindBestTransponders">Show EOC Lines of all {{$store.state.linkcalc.selectedCountries.join(',')}} beams</button>
+          </p>
+        </div>
+        <div class="field"
+             v-if="$store.state.linkcalc.findBestTransponders"
+        >
+          <p class="control">
+            <button class="button is-danger" @click="showFarthestDatabaseLinesOfFindBestTransponders">Show max contour database lines of all {{$store.state.linkcalc.selectedCountries.join(',')}} beams</button>
+          </p>
         </div>
         <div class="field">
-          <div class="control">
-            <button class="button is-info" @click="toggleBeamLabel">Toggle Beam Label</button>
-          </div>
+          <p class="control">
+            <button class="button is-success" @click="toggleLocationMarkers">Toggle Location Markers</button>
+          </p>
         </div>
+        <div class="field">
+          <p class="control">
+            <button class="button is-info" @click="toggleBeamLabel">Toggle Beam Label</button>
+          </p>
+        </div>
+        <b-table
+          :data="$store.state.map.places"
+          :bordered="true"
+          :striped="true"
+          :narrowed="true"
+        >
+          <template scope="props">
+            <b-table-column
+              label="Legend"
+            >
+              {{props.row.label}}
+            </b-table-column>
+            <b-table-column
+              label="Name"
+            >
+              {{props.row.name}}
+            </b-table-column>
+          </template>
+        </b-table>
 
 
       </div>
@@ -63,7 +110,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-undef */ // Suppress due to 'google is not defined' error (vue2-google maps package add google maps library so it's not defined in this file)
+  /* eslint-disable no-undef,spaced-comment */ // Suppress due to 'google is not defined' error (vue2-google maps package add google maps library so it's not defined in this file)
 
   import { mapGetters } from 'vuex'
   import axios from 'axios'
@@ -113,6 +160,71 @@
         await this.fetchContourFromDatabaseAndSetToStore(contourObjects, this.path)
         this.expandMapToShowAllContours()
       },
+      async showEocLinesOfSelectedBeams () {
+        // Check if any transponder is selected
+        if (this.$store.state.linkcalc.selectedTransponders.length === 0) {
+          this.$_alertError('Please select at least 1 transponder')
+        } else {
+          let queryObject = { transponders: this.$store.state.linkcalc.selectedTransponders }
+          await this.fetchEocContoursAndSetToStore(queryObject)
+        }
+      },
+      async showEocLinesOfFindBestTransponders () {
+        // Get EOC contours of all beams in selected countries
+        if (this.$store.state.linkcalc.selectedCountries.length === 0) {
+          this.$_alertError('Please select at least 1 country')
+        } else {
+          let transpondersToQuery = this.findTranspondersOfSelectedCountries()
+          let queryObject = { transponders: transpondersToQuery }
+          await this.fetchEocContoursAndSetToStore(queryObject)
+        }
+      },
+      async showFarthestDatabaseLinesOfFindBestTransponders () {
+        let transpondersToQuery = this.findTranspondersOfSelectedCountries()
+        try {
+          this.$refs.contourMap.resizePreserveCenter()
+          let results = await axios.post('/get-farthest-database-contours', { transponders: transpondersToQuery })
+          this.$store.dispatch('map/addFarthestLines', { geojsonObjects: results.data.contours, path: this.path })
+          this.expandMapToShowAllContours()
+        } catch (e) {
+          this.$_alertError(e)
+        }
+      },
+      async fetchEocContoursAndSetToStore (queryObject) {
+        try {
+          this.$refs.contourMap.resizePreserveCenter()
+          let results = await axios.post('/get-eoc-lines', queryObject)
+          console.log('EOC = ' + JSON.stringify(results.data.contours))
+          this.$store.dispatch('map/addEocLines', { geojsonObjects: results.data.contours, path: this.path })
+          this.expandMapToShowAllContours()
+        } catch (e) {
+          this.$_alertError(e)
+        }
+      },
+      toggleLocationMarkers () {
+        this.$refs.contourMap.resizePreserveCenter()
+        // Extract all locations from the remote stations array
+        if (this.$store.state.linkcalc.remoteStations.length === 0) {
+          this.$_alertError('There is no remote station to extract the location from')
+        } else {
+          let uniqueLocations = _.uniq(_.map(this.$store.state.linkcalc.remoteStations, 'location'))
+          // Set locations to 'places' in map store
+          let labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+          let places = uniqueLocations.map((loc, index) => {
+            return {
+              position: {
+                lat: loc.lat,
+                lng: loc.lon
+              },
+              showOnMap: true,
+              label: labels[index % labels.length],
+              name: loc.name
+            }
+          })
+          this.$store.dispatch('map/setPlaces', { places })
+          this.expandMapToShowAllContours()
+        }
+      },
       transformLinkResultsToContourObjectsQuery (path) {
         // Get the link results which is used to show in the results table
         let linkResults = this.linkResultsTableData(path)
@@ -134,15 +246,31 @@
         let bounds = new google.maps.LatLngBounds()
         // let bounds = this.$refs.contourMap.$mapObject.getBounds()
         let paths = ['forward', 'return']
-        paths.forEach(path => {
+        /*paths.forEach(path => {
           this.$store.state.map[path + 'Contours'].forEach(contour => {
-            contour.path.forEach(point => {
+            contour.paths.forEach(point => {
               bounds.extend(point)
+            })
+          })
+        })*/
+        paths.forEach(p => {
+          this.$store.state.map[p + 'Contours'].forEach(contour => {
+            contour.paths.forEach(contourPath => {
+              contourPath.forEach(point => {
+                bounds.extend(point)
+              })
             })
           })
         })
         this.$refs.contourMap.fitBounds(bounds)
         this.$refs.contourMap.resizePreserveCenter()
+      },
+      findTranspondersOfSelectedCountries () {
+        let transponders = this.$store.state.linkcalc.transponderOptions
+        let countries = this.$store.state.linkcalc.selectedCountries
+        return transponders.filter(tp => {
+          return countries.includes(tp.country) && tp.type === 'forward' && this.$store.state.linkcalc.selectedSatellites.map(sat => sat.name).includes(tp.satellite)
+        })
       },
       async fetchContourFromDatabaseAndSetToStore (contourObjects, path) {
         try {

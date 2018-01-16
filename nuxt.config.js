@@ -1,5 +1,6 @@
 const axios = require('axios')
 require('dotenv').config()
+const path = require('path')
 module.exports = {
   /*
   ** Headers of the page
@@ -57,7 +58,6 @@ module.exports = {
     '~plugins/googlemaps',
     '~plugins/mixins',
     '~plugins/moment',
-    { src: '~/plugins/handsontable', ssr: false }
   ],
   /*
   ** Customize the progress bar color
@@ -80,6 +80,20 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+      }
+      // Fix the npm run build error >> https://github.com/xkjyeah/vue-google-maps/issues/268
+      config.module.rules.splice(0, 0, {
+        test: /\.js$/,
+        include: [path.resolve(__dirname, './node_modules/vue2-google-maps')],
+        loader: 'babel-loader'
+      })
+    },
+    // Add this to remove buefy css warning as discussed in https://github.com/rafaelpimpa/buefy/issues/306
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': {
+          warnings: false
+        }
       }
     }
   }

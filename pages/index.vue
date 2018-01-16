@@ -17,7 +17,7 @@
     <button
       class="button is-warning"
       @click.prevent="submitMaxContourResultToServer">
-      Submit find best TP
+      Submit find best contour
     </button>
 
     <b-tabs v-model="activeTab" type="is-toggle" position="is-centered" class="block">
