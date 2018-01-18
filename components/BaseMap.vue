@@ -1,36 +1,44 @@
 <template>
-  <div class="card">
-    <header class="card-header">
-      <p class="card-header-title">MAPS</p>
-    </header>
-    <div class="card-content">
-      <div class="content">
-        <div class="map-container">
-          <gmap-map :center="center" :zoom="zoom" :style="mapStyle">
-            <!--<gmap-marker :position="{lat:1.38, lng:103.8}">-->
-            <!--</gmap-marker>-->
-            <!--<gmap-info-window :position="{lat:1.38, lng:103.8}">-->
-              <!--Hello world!-->
-            <!--</gmap-info-window>-->
-            <gmap-marker
-              v-for="(m, index) in $store.state.map.places"
-              v-if="m.showOnMap"
-              :key="index"
-              label="A"
-              :position="m.position"
-            />
-            <gmap-polygon
-              v-for="(c, index) in $store.state.map.contours"
-              v-if="c.showOnMap"
-              :key="index"
-              :paths="c.paths"
-              />
-          </gmap-map>
-        </div>
+  <div>
+    <div class="columns">
+      <div class="column is-9">
+        <gmap-map :center="center" :zoom="zoom" :style="mapStyle" ref="contourMap">
+          <gmap-marker
+            v-for="(m, index) in $store.state.map.places"
+            v-if="m.showOnMap"
+            :key="index"
+            :position="m.position"
+            :label="m.label"
+          >
+          </gmap-marker>
+          <gmap-marker
+            v-for="(m, index) in $store.state.map.beamLabels"
+            v-if="m.showOnMap"
+            :key="index"
+            :position="m.position"
+            :icon="constructGoogleDynamicBeamLabelIcon(m.text)"
+          >
+          </gmap-marker>
+          <gmap-polygon
+            v-for="(p, index) in $store.state.map.forwardContours"
+            v-if="p.showOnMap"
+            :key="index"
+            :options="p.options"
+            :paths="p.paths"
+          >
+          </gmap-polygon>
+          <gmap-polyline
+            v-for="(p, index) in $store.state.map.returnContours"
+            v-if="p.showOnMap"
+            :key="index"
+            :options="p.options"
+            :path="p.path"
+          >
+          </gmap-polyline>
+        </gmap-map>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -51,7 +59,7 @@
       },
       height: {
         type: Number,
-        default: 300
+        default: 700
       }
     },
     computed: {

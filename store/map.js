@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /**
  * Created by thanatv on 12/7/17.
  */
@@ -14,16 +15,12 @@ export const state = () => ({
   // ]
   // From Vue Color Compact Picker
   colorChoices: ['#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'],
-  forwardContours: [],
-  returnContours: [],
+  forwardContours: [], // Google maps Polygons
+  returnContours: [], // Google maps Polylines (using Polyline so it's able to show as dotted lines)
   // All places (markers)
   places: [],
   // Beam Labels
-  beamLabels: [{
-    text: '203',
-    position: {lat: 13, lng: 100},
-    showOnMap: true
-  }],
+  beamLabels: [],
   // Forward Filter Fields
   forwardFilterFields: [
     'mcg', 'antenna', 'linkMargin'
@@ -35,7 +32,9 @@ export const state = () => ({
   returnCombinationFilters: {},
   // Contour categories
   forwardCategories: [],
-  returnCategories: []
+  returnCategories: [],
+  categories: [],
+  strokeWeight: 1
 })
 
 export const getters = {
@@ -51,7 +50,8 @@ export const getters = {
 
 export const mutations = {
   SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, {geojsonObjects, path}) {
-    state[path + 'Contours'] = geojsonObjects.map(convertGeojsonContourToVueGoogleMaps)
+    console.log(JSON.stringify(geojsonObjects))
+    state[path + 'Contours'] = geojsonObjects.map(x => convertGeojsonContourToVueGoogleMaps(x, path, state.categories))
   },
   ADD_GEOJSON_TO_MAP (state, { geojsonObjects, path, color }) {
     geojsonObjects.forEach(obj => {
@@ -137,6 +137,28 @@ export const mutations = {
     state.beamLabels.forEach(label => {
       label.showOnMap = !label.showOnMap
     })
+  },
+  // Add a new category into this map, to keep track of its color and display as map legends
+  ADD_NEW_CATEGORY (state, name) {
+    let currentMaximumIndex = 0
+    let categories = state.categories
+    if (categories.length > 0) {
+      currentMaximumIndex = _.max(categories.map(c => c.index))
+      currentMaximumIndex++
+    }
+    categories.push({
+      name,
+      color: state.colorChoices[currentMaximumIndex % state.colorChoices.length],
+      index: currentMaximumIndex
+    })
+  },
+  // Remove all categories
+  REMOVE_ALL_CATEGORIES (state) {
+    state.categories = []
+  },
+  REMOVE_ALL_CONTOURS (state) {
+    state.forwardContours = []
+    state.returnContours = []
   }
 }
 
@@ -176,6 +198,30 @@ export const actions = {
   },
   toggleBeamLabel ({commit}) {
     commit('TOGGLE_BEAM_LABEL')
+  },
+  addNewCategory ({commit}, category) {
+    commit('ADD_NEW_CATEGORY', category)
+  },
+  addNewCategories ({commit}, categories) {
+    categories.forEach(c => commit('ADD_NEW_CATEGORY', c))
+  },
+  setContours ({commit}, geojsonObjects) {
+    // Divide contours into forward and return
+    let paths = ['forward', 'return']
+    paths.forEach(p => {
+      let filteredContours = geojsonObjects.filter(g => g.properties.path === p)
+      //console.log(JSON.stringify(filteredContours))
+      if (filteredContours.length > 0) {
+        commit('SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS', {
+          geojsonObjects: filteredContours,
+          path: p
+        })
+      }
+    })
+  },
+  resetMap ({commit}) {
+    commit('REMOVE_ALL_CATEGORIES')
+    commit('REMOVE_ALL_CONTOURS')
   }
 }
 
@@ -205,43 +251,81 @@ export const actions = {
 //     "relativeGain" : -0.1
 // }
 // }
-function convertGeojsonContourToVueGoogleMaps (geojsonContour) {
+function convertGeojsonContourToVueGoogleMaps (geojsonContour, path = 'forward', categories = []) {
   try {
     // console.log(`geo contour = ${JSON.stringify(geojsonContour, undefined, 2)}`)
-    return {
-      paths: convertGeojsonPolygonCoordinatesToPaths(geojsonContour.geometry.coordinates),
-      options: constructPolygonOptions(geojsonContour.color),
+    // If it's forward contour, the contours are polygon and 'paths' property will be used
+    // If it's return contour, the contours are polyline and 'path' property will be used
+    let pathProperty = path === 'forward' ? 'paths' : 'path'
+    let googleMapPath = convertGeojsonPolygonCoordinatesToPaths(geojsonContour.geometry.coordinates, path)
+    // Find the color from geojson property and category color
+    let color = categories.find(c => c.name === geojsonContour.properties.category).color
+    let pathObject = {
+      options: constructPolygonOptions(color, path),
       properties: geojsonContour.properties,
       showOnMap: true
     }
+    pathObject[pathProperty] = googleMapPath
+    return pathObject
   } catch (e) {
     return false
   }
 }
 
-function constructPolygonOptions (color = '#FF0000') {
-  return {
-    strokeColor: color,
-    strokeWeight: 2,
-    fillOpacity: 0
+function constructPolygonOptions (color = '#FF0000', path = 'forward') {
+  // Returns solid polygon options for forward link
+  if (path === 'forward') {
+    return {
+      strokeColor: color,
+      strokeWeight: 2,
+      fillOpacity: 0
+    }
+  } else {
+    // Returns dashed polyline options for return link
+    let lineSymbol = {
+      path: 0, // a dot
+      fillOpacity: 1
+    }
+    let options = {
+      strokeOpacity: 0,
+      strokeColor: color,
+      strokeWeight: 1,
+      icons: [{
+        icon: lineSymbol,
+        offset: '0',
+        repeat: '5px'
+      }]
+    }
+    return options
   }
 }
 
 // Source: https://github.com/xkjyeah/vue-google-maps/blob/vue2/examples/polygon-editing-geojson.html
-function convertGeojsonPolygonCoordinatesToPaths (polygonCoordinates) {
+function convertGeojsonPolygonCoordinatesToPaths (polygonCoordinates, path = 'forward') {
   // console.log(`Ring = ${JSON.stringify(polygonCoordinates)}`)
   // return polygonCoordinates[0].map(ring =>
   //   ring.slice(0, ring.length - 1)
   //     .map(([lng, lat]) => ({lat, lng}))
   // )
-  return polygonCoordinates.map(rings => {
-    return rings.map(ring => {
+  // Return polygons paths if it's forward
+  if (path === 'forward') {
+    return polygonCoordinates.map(rings => {
+      return rings.map(ring => {
+        return {
+          lat: ring[1],
+          lng: ring[0]
+        }
+      })
+    })
+    // Return polyline if it's return
+  } else {
+    return polygonCoordinates[0].map(ring => {
       return {
         lat: ring[1],
         lng: ring[0]
       }
     })
-  })
+  }
 }
 
 function findCategory (arrayOfCategories, contourObject, filterFields) {

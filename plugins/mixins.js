@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Created by thanatv on 9/28/17.
  */
@@ -178,6 +179,19 @@ Vue.mixin({
       console.log(timeInMilliseconds)
       return this.$moment(parseInt(timeInMilliseconds)).format('dddd, MMMM Do YYYY, kk:mm')
     },
+    $_definedContourText (name) {
+      if (name === '50') {
+        return '50%'
+      } else if (name === 'eoc') {
+        return 'EOC'
+      } else if (name === 'eoc-2') {
+        return 'EOC-2'
+      } else if (name === 'peak') {
+        return 'Peak'
+      } else {
+        return ''
+      }
+    },
     $_alertError (message) {
       this.$dialog.alert({
         title: 'Error',
@@ -187,6 +201,26 @@ Vue.mixin({
         icon: 'times-circle',
         iconPack: 'fa'
       })
+    },
+    $_expandMap (map) {
+      // Obtain the map bounds
+      let bounds = new google.maps.LatLngBounds()
+      // Expand to all forward contours
+      this.$store.state.map.forwardContours.forEach(contour => {
+        contour.paths.forEach(contourPath => {
+          contourPath.forEach(point => {
+            bounds.extend(point)
+          })
+        })
+      })
+      // Expand to all return contours
+      this.$store.state.map.returnContours.forEach(contour => {
+        contour.path.forEach(point => {
+          bounds.extend(point)
+        })
+      })
+      map.fitBounds(bounds)
+      map.resizePreserveCenter()
     }
   }
 })

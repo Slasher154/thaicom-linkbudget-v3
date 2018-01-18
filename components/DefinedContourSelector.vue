@@ -1,14 +1,14 @@
 <template>
   <div>
-    <multiselect v-model="selectedSatellites"
-                 :options="satelliteOptions"
+    <multiselect v-model="selectedDefinedContours"
+                 :options="definedContourOptions"
                  :multiple="multiple"
-                 :close-on-select="true"
+                 :close-on-select="false"
                  :clear-on-select="false"
                  :hide-selected="true"
-                 :custom-label="satelliteWithSlot"
                  select-label=""
-                 placeholder="Pick 1 or more satellites"
+                 placeholder="Pick 1 or more defined contours"
+                 label="label"
                  track-by="name"
                  @input="onChanged"
     >
@@ -19,7 +19,7 @@
           closable
           size="is-medium"
           @close="props.remove(props.option)"
-        >{{props.option.name}}</b-tag>
+        >{{props.option.label}}</b-tag>
       </template>
     </multiselect>
   </div>
@@ -32,41 +32,45 @@
   export default {
     components: { Multiselect },
     props: {
-      satelliteOptions: {
-        type: Array,
-        required: true
-      },
       multiple: {
         type: Boolean,
         required: true,
         default: false
       },
-      defaultSelectedSatellites: {
+      defaultSelectedDefinedContours: {
         type: Array,
         default: () => []
       }
     },
     data () {
       return {
-        selectedSatellites: []
+        definedContourOptions: [{
+          name: '50',
+          label: '50%'
+        }, {
+          name: 'eoc',
+          label: 'EOC'
+        }, {
+          name: 'eoc-2',
+          label: 'EOC-2'
+        }],
+        selectedDefinedContours: []
       }
     },
     methods: {
       onChanged () {
-        this.$emit('satellites-changed', { satellites: this.selectedSatellites })
-      },
-      satelliteWithSlot ({ name, orbital_slot }) {
-        return `${name} (${this.$_convertOrbitalSlotToLetter(orbital_slot)})`
+        this.$emit('defined-contours-changed', { definedContours: this.selectedDefinedContours.map(x => x.name) })
       }
     },
     mounted () {
-      this.selectedSatellites = this.defaultSelectedSatellites || []
+      this.selectedDefinedContours = this.defaultSelectedDefinedContours || []
     },
     watch: {
-      defaultSelectedSatellites (newValue) {
-        this.selectedSatellites = newValue
+      defaultSelectedDefinedContours (newValue) {
+        this.selectedDefinedContours = newValue
       }
     }
   }
 </script>
+
 

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <multiselect v-model="selectedSatellites"
-                 :options="satelliteOptions"
+    <multiselect v-model="selectedPaths"
+                 :options="pathOptions"
                  :multiple="multiple"
                  :close-on-select="true"
                  :clear-on-select="false"
                  :hide-selected="true"
-                 :custom-label="satelliteWithSlot"
                  select-label=""
-                 placeholder="Pick 1 or more satellites"
+                 placeholder="Pick 1 or more paths"
+                 label="label"
                  track-by="name"
                  @input="onChanged"
     >
@@ -19,7 +19,7 @@
           closable
           size="is-medium"
           @close="props.remove(props.option)"
-        >{{props.option.name}}</b-tag>
+        >{{props.option.label}}</b-tag>
       </template>
     </multiselect>
   </div>
@@ -32,41 +32,42 @@
   export default {
     components: { Multiselect },
     props: {
-      satelliteOptions: {
-        type: Array,
-        required: true
-      },
       multiple: {
         type: Boolean,
         required: true,
         default: false
       },
-      defaultSelectedSatellites: {
+      defaultSelectedPaths: {
         type: Array,
         default: () => []
       }
     },
     data () {
       return {
-        selectedSatellites: []
+        pathOptions: [{
+          name: 'forward',
+          label: 'Forward'
+        }, {
+          name: 'return',
+          label: 'Return'
+        }],
+        selectedPaths: []
       }
     },
     methods: {
       onChanged () {
-        this.$emit('satellites-changed', { satellites: this.selectedSatellites })
-      },
-      satelliteWithSlot ({ name, orbital_slot }) {
-        return `${name} (${this.$_convertOrbitalSlotToLetter(orbital_slot)})`
+        this.$emit('paths-changed', { paths: this.selectedPaths.map(x => x.name) })
       }
     },
     mounted () {
-      this.selectedSatellites = this.defaultSelectedSatellites || []
+      this.selectedPaths = this.defaultSelectedPaths || []
     },
     watch: {
-      defaultSelectedSatellites (newValue) {
-        this.selectedSatellites = newValue
+      defaultSelectedPaths (newValue) {
+        this.selectedPaths = newValue
       }
     }
   }
 </script>
+
 

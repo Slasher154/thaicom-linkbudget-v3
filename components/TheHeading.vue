@@ -76,6 +76,9 @@
           <div class="navbar-item">
             <nuxt-link :to="{ name: 'saved-requests'}">My Requests</nuxt-link>
           </div>
+          <div class="navbar-item">
+            <nuxt-link :to="{ name: 'maps'}">Maps</nuxt-link>
+          </div>
 
         </div>
         <!--End Navbar left menu-->

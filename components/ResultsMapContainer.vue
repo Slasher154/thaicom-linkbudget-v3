@@ -31,14 +31,14 @@
             :paths="p.paths"
           >
           </gmap-polygon>
-          <gmap-polygon
+          <gmap-polyline
             v-for="(p, index) in $store.state.map.returnContours"
             v-if="p.showOnMap"
             :key="index"
             :options="p.options"
-            :paths="p.paths"
+            :path="p.path"
           >
-          </gmap-polygon>
+          </gmap-polyline>
         </gmap-map>
       </div>
       <div class="column is-3">
@@ -245,7 +245,7 @@
         // Obtain the map bounds
         let bounds = new google.maps.LatLngBounds()
         // let bounds = this.$refs.contourMap.$mapObject.getBounds()
-        let paths = ['forward', 'return']
+        let paths = ['forward']
         /*paths.forEach(path => {
           this.$store.state.map[path + 'Contours'].forEach(contour => {
             contour.paths.forEach(point => {
