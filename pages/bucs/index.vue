@@ -16,7 +16,7 @@
     <b-table
       :data="bucs"
     >
-      <template slot-scope="props">
+      <template scope="props">
         <b-table-column
           label="Name"
           field="name"

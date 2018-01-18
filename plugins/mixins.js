@@ -175,8 +175,8 @@ Vue.mixin({
       return false
     },
     $_convertMillisecondsToText (timeInMilliseconds) {
-      // console.log(timeInMilliseconds)
-      return this.$moment(timeInMilliseconds).format('dddd, MMMM do YYYY, kk:mm')
+      console.log(timeInMilliseconds)
+      return this.$moment(parseInt(timeInMilliseconds)).format('dddd, MMMM Do YYYY, kk:mm')
     },
     $_alertError (message) {
       this.$dialog.alert({
