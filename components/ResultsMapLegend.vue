@@ -3,8 +3,8 @@
     <p class="control">
       <a class="button is-static">
         <span class="current-color"
-              :style="'background-color: ' + item.color"
-              @click="showPicker(item)"
+              :style="'background-color: ' + newItem.color"
+              @click="showPicker(newItem)"
         ></span>
 
         <!--<compact-picker :value="colors"-->
@@ -13,7 +13,10 @@
       </a>
     </p>
     <p class="control is-expanded">
-      <input type="text" class="input" v-model="item.name">
+      <input type="text" class="input"
+             :value="newItem.name"
+             @input="updateName"
+             >
     </p>
 
   </div>
@@ -34,7 +37,12 @@
     data () {
       return {
         colors: {},
-        displayPicker: false
+        displayPicker: false,
+        newItem: {
+          index: 0,
+          name: '',
+          color: ''
+        }
       }
     },
     methods: {
@@ -42,6 +50,17 @@
         if (item.color) {
           this.colors = item.color
         }
+      },
+      updateName (e) {
+        this.$store.dispatch('map/setCategoryName', { index: this.newItem.index, name: e.target.value })
+      }
+    },
+    mounted () {
+      this.newItem = this.item
+    },
+    watch: {
+      item (newVal) {
+        this.newItem = newVal
       }
     }
   }

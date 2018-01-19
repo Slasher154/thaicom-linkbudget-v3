@@ -159,6 +159,10 @@ export const mutations = {
   REMOVE_ALL_CONTOURS (state) {
     state.forwardContours = []
     state.returnContours = []
+  },
+  SET_CATEGORY_NAME (state, { index, name }) {
+    let categoryToEdit = state.categories.find(c => c.index === index)
+    categoryToEdit.name = name
   }
 }
 
@@ -222,6 +226,9 @@ export const actions = {
   resetMap ({commit}) {
     commit('REMOVE_ALL_CATEGORIES')
     commit('REMOVE_ALL_CONTOURS')
+  },
+  setCategoryName ({commit}, category) {
+    commit('SET_CATEGORY_NAME', category)
   }
 }
 

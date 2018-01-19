@@ -37,12 +37,22 @@
           </gmap-polyline>
         </gmap-map>
       </div>
+      <div class="column is-3">
+        <results-map-legend
+          v-for="category in $store.state.map.categories"
+          :item="category"
+          :key="category.index" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import ResultsMapLegend from './ResultsMapLegend'
   export default {
+    components: {
+      ResultsMapLegend
+    },
     props: {
       center: {
         type: Object,
