@@ -219,6 +219,10 @@ Vue.mixin({
           bounds.extend(point)
         })
       })
+      // Expand to all place markers
+      this.$store.state.map.places.forEach(place => {
+        bounds.extend(place.position)
+      })
       map.fitBounds(bounds)
       map.resizePreserveCenter()
     },

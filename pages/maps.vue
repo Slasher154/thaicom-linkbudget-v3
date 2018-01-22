@@ -102,6 +102,7 @@
   import DefinedContourSelector from '@/components/DefinedContourSelector'
   import ContoursImporterModal from '@/components/ContoursImporterModal'
   export default {
+    authenticated: true,
     components: {
       BaseMap,
       SatelliteSelector,
@@ -140,7 +141,6 @@
         selectedTransponders: [],
         selectedPaths: [],
         selectedDefinedContours: [],
-        copyFromExcel: false,
         isContoursImportModalActive: false
       }
     },
@@ -177,37 +177,40 @@
         return this.selectedTransponders.length > 0 && this.isBroadbandSatelliteSelected
       },
       broadbandManual () {
-        return this.showBroadbandOptions && !this.copyFromExcel
+        return this.showBroadbandOptions
       }
     },
     methods: {
       async submitContours () {
         // For broadband satellite, select path and beams manually
         if (this.broadbandManual) {
-          let query = {
-            beams: this.selectedTransponders.map(tp => tp.name), // get names only for broadband = beam
-            paths: this.selectedPaths,
-            definedContours: this.selectedDefinedContours,
-            satellite: this.selectedSatellites[0].name
+          // The UI is already covered this validation as the 'Add Lines' will appear only when all options are selected
+          let errorMessage = this.validateAddContourLines()
+          if (errorMessage) {
+            this.$_alertError(errorMessage)
+          } else {
+            let query = {
+              beams: this.selectedTransponders.map(tp => tp.name), // get names only for broadband = beam
+              paths: this.selectedPaths,
+              definedContours: this.selectedDefinedContours,
+              satellite: this.selectedSatellites[0].name
+            }
+            let contourResult = await axios.post('/get-defined-contours', query)
+            let contours = contourResult.data.contours
+            // Setup categories = defined contours
+            let categories = this.selectedDefinedContours.map(this.$_definedContourText)
+            // Set categories to Vuex Store
+            this.$store.dispatch('map/addNewCategories', categories)
+            // Add category to each contour line properties
+            contours.forEach(c => {
+              c.properties.category = this.$_definedContourText(c.properties.definedContour)
+            })
+            // Set contours to store
+            this.$store.dispatch('map/setContours', contours)
+            // Expand map
+            this.$_expandMap(this.$refs.map.$refs.contourMap)
           }
-          let contourResult = await axios.post('/get-defined-contours', query)
-          let contours = contourResult.data.contours
-          // Setup categories = defined contours
-          let categories = this.selectedDefinedContours.map(this.$_definedContourText)
-          // Set categories to Vuex Store
-          this.$store.dispatch('map/addNewCategories', categories)
-          // Add category to each contour line properties
-          contours.forEach(c => {
-            c.properties.category = this.$_definedContourText(c.properties.definedContour)
-          })
-          // Set contours to store
-          this.$store.dispatch('map/setContours', contours)
-          // Expand map
-          this.$_expandMap(this.$refs.map.$refs.contourMap)
         }
-      },
-      launchCopyFromExcelModal () {
-        console.log('gg')
       },
       updateSatellites (value) {
         if (typeof value.satellites === 'object') {
@@ -253,6 +256,21 @@
         } catch (e) {
           console.log(e)
         }
+      },
+      validateAddContourLines () {
+        if (this.selectedSatellites.length === 0) {
+          return 'Please select at least 1 satellite'
+        }
+        if (this.selectedTransponders.length === 0) {
+          return 'Please select at least 1 transponder'
+        }
+        if (this.selectedPaths.length === 0) {
+          return 'Please select either forward or return (or both)'
+        }
+        if (this.selectedDefinedContours.length === 0) {
+          return 'Please select at least 1 option from 50%, EOC or EOC-2'
+        }
+        return false
       }
     }
   }

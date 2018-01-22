@@ -34,7 +34,8 @@ export const state = () => ({
   forwardCategories: [],
   returnCategories: [],
   categories: [],
-  strokeWeight: 1
+  strokeWeight: 1,
+  placeLabels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 })
 
 export const getters = {
@@ -57,7 +58,7 @@ export const mutations = {
       state[path + 'Contours'].push(y)
     })
   },
-  ADD_GEOJSON_TO_MAP (state, { geojsonObjects, path, color }) {
+  ADD_GEOJSON_TO_MAP (state, {geojsonObjects, path, color}) {
     geojsonObjects.forEach(obj => {
       obj.color = color
     })
@@ -67,7 +68,8 @@ export const mutations = {
   GENERATE_BEAM_LABELS (state, path) {
     state.beamLabels = []
     // Loop all contours and get unique beam name, peak latitude and peak longitude
-    let uniqueBeamLabels = _.uniqBy(state[path + 'Contours'].map(c => {
+    let allContours = _.concat(state.forwardContours, state.returnContours)
+    let uniqueBeamLabels = _.uniqBy(allContours.map(c => {
       return {
         position: {
           lat: c.properties.peakLatitude - 0.3,
@@ -79,8 +81,24 @@ export const mutations = {
     }), (p) => p.text)
     state.beamLabels = uniqueBeamLabels
   },
-  SET_PLACES (state, { places }) {
+  SET_PLACES (state, {places}) {
     state.places = places
+  },
+  ADD_NEW_PLACE (state, place) {
+    let currentMaximumIndex = 0
+    let places = state.places
+    if (places.length > 0) {
+      // Find the maximum index of current place, then add by one
+      currentMaximumIndex = _.max(places.map(c => c.index))
+      currentMaximumIndex++
+    }
+    places.push({
+      name: place.name,
+      index: currentMaximumIndex,
+      position: place.position,
+      showOnMap: place.showOnMap,
+      label: state.placeLabels[currentMaximumIndex % state.placeLabels.length]
+    })
   },
   SET_COMBINATION_FILTERS (state, {path, parameter, value}) {
     console.log(`Updating ${path} ${parameter} to ${JSON.stringify(value)}`)
@@ -137,9 +155,9 @@ export const mutations = {
     //   }
     // })
   },
-  TOGGLE_BEAM_LABEL (state) {
+  TOGGLE_BEAM_LABELS (state, showLabel) {
     state.beamLabels.forEach(label => {
-      label.showOnMap = !label.showOnMap
+      label.showOnMap = showLabel
     })
   },
   // Add a new category into this map, to keep track of its color and display as map legends
@@ -170,7 +188,10 @@ export const mutations = {
   REMOVE_ALL_PLACES (state) {
     state.places = []
   },
-  SET_CATEGORY_NAME (state, { index, name }) {
+  REMOVE_ALL_BEAM_LABELS (state) {
+    state.beamLabels = []
+  },
+  SET_CATEGORY_NAME (state, {index, name}) {
     let categoryToEdit = state.categories.find(c => c.index === index)
     categoryToEdit.name = name
   }
@@ -186,14 +207,17 @@ export const actions = {
     options.parameter = pluralize.singular(options.parameter)
     commit('REFRESH_CONTOUR_VISIBILITY', options.path) // Trigger contour visibility due to filter changed
   },
-  setPlaces ({ commit }, places) {
+  setPlaces ({commit}, places) {
     commit('SET_PLACES', places)
   },
-  addEocLines ({ commit }, geojsonObjects) {
+  addNewPlaces ({commit}, places) {
+    places.forEach(p => commit('ADD_NEW_PLACE', p))
+  },
+  addEocLines ({commit}, geojsonObjects) {
     geojsonObjects.color = '#FE9200'
     commit('ADD_GEOJSON_TO_MAP', geojsonObjects)
   },
-  addFarthestLines ({ commit }, geojsonObjects) {
+  addFarthestLines ({commit}, geojsonObjects) {
     geojsonObjects.color = '#FCDC00'
     commit('ADD_GEOJSON_TO_MAP', geojsonObjects)
   },
@@ -209,9 +233,6 @@ export const actions = {
     commit('CONSTRUCT_CONTOUR_CATEGORIES', path)
     // Set the visual options of the contour lines based on newly created categories
     commit('VISUALIZE_CONTOURS', path)
-  },
-  toggleBeamLabel ({commit}) {
-    commit('TOGGLE_BEAM_LABEL')
   },
   addNewCategory ({commit}, category) {
     commit('ADD_NEW_CATEGORY', category)
@@ -232,10 +253,16 @@ export const actions = {
         })
       }
     })
+    // Generate beam labels
+    commit('GENERATE_BEAM_LABELS')
+  },
+  removeAllPlaces ({commit}) {
+    commit('REMOVE_ALL_PLACES')
   },
   removeAllContours ({commit}) {
     commit('REMOVE_ALL_CATEGORIES')
     commit('REMOVE_ALL_CONTOURS')
+    commit('REMOVE_ALL_BEAM_LABELS')
   },
   setCategoryName ({commit}, category) {
     commit('SET_CATEGORY_NAME', category)
@@ -243,7 +270,11 @@ export const actions = {
   resetMap ({commit}) {
     commit('REMOVE_ALL_CATEGORIES')
     commit('REMOVE_ALL_CONTOURS')
+    commit('REMOVE_ALL_BEAM_LABELS')
     commit('REMOVE_ALL_PLACES')
+  },
+  toggleBeamLabels ({commit}, showLabel) {
+    commit('TOGGLE_BEAM_LABELS', showLabel)
   }
 }
 
