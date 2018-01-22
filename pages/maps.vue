@@ -2,57 +2,7 @@
   <div>
     <h1 class="title">Maps</h1>
     <h2 class="subtitle">View Thaicom satellite contours on Google Maps</h2>
-    <!--<b-field grouped>
-      <b-field label="Satellite">
-        <satellite-selector
-          :multiple="false"
-          :satellite-options="satelliteOptions"
-          @satellites-changed="updateSatellites"
-        />
-      </b-field>
-      <b-field label="Transponders" expanded>
-        <satellite-transponder-selector
-          :multiple="true"
-          :transponder-options="filteredTransponders"
-          @transponders-changed="updateTransponders"
-        />
-      </b-field>
-      <b-field
-        v-if="showBroadbandOptions"
-        label="Copy from Excel?"
-      >
-        <b-checkbox v-model="copyFromExcel"></b-checkbox>
-      </b-field>
-      <b-field
-        v-broadbandManualions"
-        label="Path"
-      >
-        <path-selector
-          :multiple="true"
-          @paths-changed="updatePaths"
-        />
-      </b-field>
-      <b-field
-        v-broadbandManualions"
-        label="Defined Contours"
-      >
-        <defined-contour-selector
-          :multiple="true"
-          @defined-contours-changed="updateDefinedContours"
-        />
-      </b-field>
 
-      <b-field
-        v-if="readyToSubmit"
-        label="Submit"
-      >
-        <p class="control">
-          <button class="button is-primary"
-            @click="submitContours"
-          >Submit</button>
-        </p>
-      </b-field>
-    </b-field>-->
     <div class="columns">
       <div class="column is-3">
         <b-field>
@@ -74,17 +24,29 @@
           />
         </b-field>
       </div>
-      <div class="column is-2">
-        <b-field
-          v-if="showBroadbandOptions"
+      <div class="column is-3">
+        <b-field grouped group-multiline
+          v-if="selectedSatellites.length > 0"
         >
-          <!--<b-checkbox v-model="copyFromExcel"></b-checkbox>-->
           <p class="control">
             <button class="button is-success"
-                    @click="launchCopyFromExcelModal"
+                    @click="isContoursImportModalActive = true"
             >Copy from Excel</button>
           </p>
+          <p class="control">
+            <button class="button is-danger"
+                    @click="removeAllContours"
+            >Delete All</button>
+          </p>
         </b-field>
+
+        <b-modal :active.sync="isContoursImportModalActive" has-modal-card>
+          <contours-importer-modal
+            :title="contoursImporterModalText"
+            :isBroadband="isBroadbandSatelliteSelected"
+            @contoursAdded="addContoursFromExcel"
+          />
+        </b-modal>
       </div>
     </div>
     <div class="columns">
@@ -119,16 +81,11 @@
                     @click="submitContours"
             >Add Lines</button>
           </p>
-          <p class="control">
-            <button class="button is-danger"
-                    @click="removeAllContours"
-            >Delete All</button>
-          </p>
-
         </b-field>
       </div>
     </div>
     <base-map ref="map" />
+
 
   </div>
 </template>
@@ -143,15 +100,15 @@
   import SatelliteTransponderSelector from '@/components/SatelliteTranspondersSelector'
   import PathSelector from '@/components/PathSelector'
   import DefinedContourSelector from '@/components/DefinedContourSelector'
-  import BCheckbox from '../node_modules/buefy/src/components/checkbox/Checkbox'
+  import ContoursImporterModal from '@/components/ContoursImporterModal'
   export default {
     components: {
-      BCheckbox,
       BaseMap,
       SatelliteSelector,
       SatelliteTransponderSelector,
       PathSelector,
-      DefinedContourSelector
+      DefinedContourSelector,
+      ContoursImporterModal
     },
     async asyncData () {
       // Fetch the satellite from the API
@@ -183,7 +140,8 @@
         selectedTransponders: [],
         selectedPaths: [],
         selectedDefinedContours: [],
-        copyFromExcel: false
+        copyFromExcel: false,
+        isContoursImportModalActive: false
       }
     },
     computed: {
@@ -202,6 +160,12 @@
           return this.selectedSatellites[0].type === 'Broadband'
         }
         return false
+      },
+      contoursImporterModalText () {
+        if (this.selectedSatellites.length > 0) {
+          return `Contours Importer (${this.selectedSatellites[0].type})`
+        }
+        return `Contours Importer`
       },
       readyToSubmit () {
         if (this.isBroadbandSatelliteSelected) {
@@ -263,6 +227,32 @@
       },
       removeAllContours () {
         this.$store.dispatch('map/removeAllContours')
+      },
+      async addContoursFromExcel (value) {
+        console.log(`Adding ${value.contours.length} contours from Excel`)
+        // Construct contour objects to match API input
+        let contourObjects = value.contours.map(c => {
+          // Add satellite, satelliteType property
+          return Object.assign(c, {
+            satellite: this.selectedSatellites[0].name,
+            satelliteType: this.selectedSatellites[0].type
+          })
+        })
+        // Extract categories
+        let categories = _.uniq(contourObjects.map(x => x.category))
+        // Call API to get contour lines
+        try {
+          let contourResult = await axios.post('/get-contour-lines', {contourObjects})
+          let contours = contourResult.data.contours
+          // Add categories to map store
+          this.$store.dispatch('map/addNewCategories', categories)
+          // Add contour lines to map store
+          this.$store.dispatch('map/setContours', contours)
+          // Expand map
+          this.$_expandMap(this.$refs.map.$refs.contourMap)
+        } catch (e) {
+          console.log(e)
+        }
       }
     }
   }

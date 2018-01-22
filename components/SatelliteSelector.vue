@@ -4,7 +4,7 @@
                  :options="satelliteOptions"
                  :multiple="multiple"
                  :close-on-select="true"
-                 :clear-on-select="false"
+                 :clear-on-select="true"
                  :hide-selected="true"
                  :custom-label="satelliteWithSlot"
                  select-label=""

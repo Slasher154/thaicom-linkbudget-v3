@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/ContoursImporterModal.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/SatelliteSelector.vue" afterPath="$PROJECT_DIR$/components/SatelliteSelector.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/maps.vue" afterPath="$PROJECT_DIR$/pages/maps.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/mixins.js" afterPath="$PROJECT_DIR$/plugins/mixins.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/map.js" afterPath="$PROJECT_DIR$/store/map.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,7 +22,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.38547486">
+    <splitter split-orientation="horizontal" split-proportion="0.46927375">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="SatelliteSelectorsContainer.vue" pinned="false" current-in-tab="false">
@@ -54,13 +57,55 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="386">
                   <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
                   <folding>
                     <element signature="e#4017#4050#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RemoteStationsImporterModal.vue" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/components/RemoteStationsImporterModal.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="396">
+                  <caret line="34" column="22" lean-forward="true" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ContoursImporterModal.vue" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/components/ContoursImporterModal.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="525">
+                  <caret line="35" column="40" lean-forward="true" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RemoteSelectorsContainer.vue" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/components/RemoteSelectorsContainer.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-111">
+                  <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="mixins.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/plugins/mixins.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="805">
+                  <caret line="220" column="8" lean-forward="true" selection-start-line="220" selection-start-column="8" selection-end-line="220" selection-end-column="8" />
+                  <folding>
+                    <element signature="e#30#71#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -112,11 +157,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="map.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/store/map.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="398">
-                  <caret line="233" column="21" lean-forward="false" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
+                <state relative-caret-position="409">
+                  <caret line="57" column="6" lean-forward="true" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
                   <folding>
                     <element signature="e#36#77#0" expanded="false" />
                     <element signature="e#169#189#0" expanded="false" />
@@ -126,52 +171,63 @@
                     <element signature="e#1583#1751#0" expanded="false" />
                     <element signature="e#1613#1747#0" expanded="false" />
                     <element signature="e#1668#1712#0" expanded="false" />
-                    <element signature="e#2096#2298#0" expanded="false" />
-                    <element signature="e#2132#2163#0" expanded="false" />
-                    <element signature="e#2337#2788#0" expanded="false" />
-                    <element signature="e#2519#2727#0" expanded="false" />
-                    <element signature="e#2534#2721#0" expanded="false" />
-                    <element signature="e#2554#2655#0" expanded="false" />
-                    <element signature="e#2823#2854#0" expanded="false" />
-                    <element signature="e#2916#3056#0" expanded="false" />
-                    <element signature="e#3103#3727#0" expanded="false" />
-                    <element signature="e#3273#3723#0" expanded="false" />
-                    <element signature="e#3324#3717#0" expanded="false" />
-                    <element signature="e#3383#3709#0" expanded="false" />
-                    <element signature="e#3427#3698#0" expanded="false" />
-                    <element signature="e#3764#4043#0" expanded="false" />
-                    <element signature="e#3865#4038#0" expanded="false" />
-                    <element signature="e#4088#5294#0" expanded="false" />
-                    <element signature="e#4231#4462#0" expanded="false" />
-                    <element signature="e#4348#4454#0" expanded="false" />
-                    <element signature="e#4597#4720#0" expanded="false" />
-                    <element signature="e#4726#4814#0" expanded="false" />
-                    <element signature="e#5324#5417#0" expanded="false" />
-                    <element signature="e#5364#5412#0" expanded="false" />
-                    <element signature="e#6740#7087#0" expanded="false" />
-                    <element signature="e#7122#7160#0" expanded="false" />
-                    <element signature="e#7205#7296#0" expanded="false" />
-                    <element signature="e#7346#7437#0" expanded="false" />
-                    <element signature="e#7500#7945#0" expanded="false" />
-                    <element signature="e#7556#7734#0" expanded="false" />
-                    <element signature="e#7598#7727#0" expanded="false" />
-                    <element signature="e#7976#8013#0" expanded="false" />
-                    <element signature="e#9023#9027#0" expanded="false" />
-                    <element signature="e#12163#12263#0" expanded="false" />
+                    <element signature="e#2278#2480#0" expanded="false" />
+                    <element signature="e#2314#2345#0" expanded="false" />
+                    <element signature="e#2519#2970#0" expanded="false" />
+                    <element signature="e#2701#2909#0" expanded="false" />
+                    <element signature="e#2716#2903#0" expanded="false" />
+                    <element signature="e#2736#2837#0" expanded="false" />
+                    <element signature="e#3005#3036#0" expanded="false" />
+                    <element signature="e#3098#3238#0" expanded="false" />
+                    <element signature="e#3285#3909#0" expanded="false" />
+                    <element signature="e#3455#3905#0" expanded="false" />
+                    <element signature="e#3506#3899#0" expanded="false" />
+                    <element signature="e#3565#3891#0" expanded="false" />
+                    <element signature="e#3609#3880#0" expanded="false" />
+                    <element signature="e#3946#4225#0" expanded="false" />
+                    <element signature="e#4047#4220#0" expanded="false" />
+                    <element signature="e#4270#5476#0" expanded="false" />
+                    <element signature="e#4413#4644#0" expanded="false" />
+                    <element signature="e#4530#4636#0" expanded="false" />
+                    <element signature="e#4779#4902#0" expanded="false" />
+                    <element signature="e#4908#4996#0" expanded="false" />
+                    <element signature="e#5506#5599#0" expanded="false" />
+                    <element signature="e#5546#5594#0" expanded="false" />
+                    <element signature="e#6922#7269#0" expanded="false" />
+                    <element signature="e#7304#7342#0" expanded="false" />
+                    <element signature="e#7387#7478#0" expanded="false" />
+                    <element signature="e#7528#7619#0" expanded="false" />
+                    <element signature="e#7682#8127#0" expanded="false" />
+                    <element signature="e#7738#7916#0" expanded="false" />
+                    <element signature="e#7780#7909#0" expanded="false" />
+                    <element signature="e#8158#8195#0" expanded="false" />
+                    <element signature="e#9205#9209#0" expanded="false" />
+                    <element signature="e#12345#12445#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="maps.vue" pinned="false" current-in-tab="true">
+          <file leaf-file-name="maps.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/pages/maps.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="645">
-                  <caret line="177" column="36" lean-forward="true" selection-start-line="177" selection-start-column="36" selection-end-line="177" selection-end-column="36" />
+                <state relative-caret-position="481">
+                  <caret line="231" column="21" lean-forward="false" selection-start-line="231" selection-start-column="21" selection-end-line="231" selection-end-column="21" />
                   <folding>
-                    <element signature="e#3607#3632#0" expanded="true" />
-                    <marker date="1516605015893" expanded="false" signature="152:1466" ph="..." />
+                    <element signature="n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="e#2538#2563#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SatelliteSelector.vue" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/components/SatelliteSelector.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-40">
+                  <caret line="6" column="26" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -190,16 +246,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>asyncData</find>
-      <find>all</find>
-      <find>allSatell</find>
-      <find>allSatel</find>
-      <find>/</find>
-      <find>/satel</find>
-      <find>/satell</find>
-      <find>/satellite</find>
-      <find>/satellites</find>
-      <find>fi</find>
       <find>filtered</find>
       <find>Satellite</find>
       <find>satellite</find>
@@ -219,7 +265,17 @@
       <find>a</find>
       <find>async f</find>
       <find>async fet</find>
+      <find>table</find>
       <find>async fetch</find>
+      <find>&lt;</find>
+      <find>&lt;remote</find>
+      <find>&lt;remote-</find>
+      <find>&lt;remote-s</find>
+      <find>&lt;remote-st</find>
+      <find>&lt;remote-sta</find>
+      <find>isRemoteStationImporterModalActive</find>
+      <find>station</find>
+      <find>beam</find>
     </findStrings>
     <replaceStrings>
       <replace>transponder</replace>
@@ -250,6 +306,7 @@
       <replace>Path</replace>
       <replace>path</replace>
       <replace>definedContour</replace>
+      <replace>contour</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -258,7 +315,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/edit/_id.vue" />
         <option value="$PROJECT_DIR$/pages/modems/index.vue" />
         <option value="$PROJECT_DIR$/pages/modems/add.vue" />
         <option value="$PROJECT_DIR$/pages/antennas/edit/_id.vue" />
@@ -300,15 +356,16 @@
         <option value="$PROJECT_DIR$/pages/bucs/index.vue" />
         <option value="$PROJECT_DIR$/components/TheHeading.vue" />
         <option value="$PROJECT_DIR$/components/SatelliteSelectorsContainer.vue" />
-        <option value="$PROJECT_DIR$/components/SatelliteSelector.vue" />
         <option value="$PROJECT_DIR$/components/PathSelector.vue" />
         <option value="$PROJECT_DIR$/components/DefinedContourSelector.vue" />
         <option value="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
-        <option value="$PROJECT_DIR$/plugins/mixins.js" />
         <option value="$PROJECT_DIR$/components/BaseMap.vue" />
         <option value="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
-        <option value="$PROJECT_DIR$/store/map.js" />
+        <option value="$PROJECT_DIR$/components/SatelliteSelector.vue" />
+        <option value="$PROJECT_DIR$/plugins/mixins.js" />
+        <option value="$PROJECT_DIR$/components/ContoursImporterModal.vue" />
         <option value="$PROJECT_DIR$/pages/maps.vue" />
+        <option value="$PROJECT_DIR$/store/map.js" />
       </list>
     </option>
   </component>
@@ -603,7 +660,7 @@
       <workItem from="1513438510251" duration="552000" />
       <workItem from="1513649976445" duration="7281000" />
       <workItem from="1514035684334" duration="63237000" />
-      <workItem from="1515470289728" duration="59636000" />
+      <workItem from="1515470289728" duration="67305000" />
     </task>
     <task id="LOCAL-00001" summary="Add transponder selector">
       <created>1507043872699</created>
@@ -934,11 +991,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516356282298</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Remove form labels and add 'remove all contours lines' function">
+      <created>1516605089288</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1516605089288</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="430933000" />
+    <option name="totallyTimeSpent" value="438602000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="0" width="1920" height="1080" extended-state="0" />
@@ -995,7 +1059,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add beam labels on map" />
     <MESSAGE value="Add modem insert page and component" />
     <MESSAGE value="Complete edit modem form" />
     <MESSAGE value="Add confirm dialogs to add/edit/delete" />
@@ -1020,7 +1083,8 @@
     <MESSAGE value="Fix incorrect date parsing format in saved requests table" />
     <MESSAGE value="Add map page with show defined contours function" />
     <MESSAGE value="Add category legends on MapBase components" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add category legends on MapBase components" />
+    <MESSAGE value="Remove form labels and add 'remove all contours lines' function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove form labels and add 'remove all contours lines' function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1029,16 +1093,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/saved-requests/_id.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#721#746#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/components/ResultsToolsContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -1133,26 +1187,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/RemoteStationsImporterModal.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/components/GatewaySelectorsContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/components/RemoteSelectorsContainer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="79" column="60" lean-forward="false" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="60" />
           <folding />
         </state>
       </provider>
@@ -1359,30 +1397,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/SatelliteSelector.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="41" lean-forward="false" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/components/DefinedContourSelector.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
           <caret line="44" column="13" lean-forward="false" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/mixins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="200" column="29" lean-forward="true" selection-start-line="200" selection-start-column="29" selection-end-line="200" selection-end-column="29" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#30#71#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1420,55 +1439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/store/map.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="233" column="21" lean-forward="false" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
-          <folding>
-            <element signature="e#36#77#0" expanded="false" />
-            <element signature="e#169#189#0" expanded="false" />
-            <element signature="e#959#1037#0" expanded="false" />
-            <element signature="e#1163#1203#0" expanded="false" />
-            <element signature="e#1546#1753#0" expanded="false" />
-            <element signature="e#1583#1751#0" expanded="false" />
-            <element signature="e#1613#1747#0" expanded="false" />
-            <element signature="e#1668#1712#0" expanded="false" />
-            <element signature="e#2096#2298#0" expanded="false" />
-            <element signature="e#2132#2163#0" expanded="false" />
-            <element signature="e#2337#2788#0" expanded="false" />
-            <element signature="e#2519#2727#0" expanded="false" />
-            <element signature="e#2534#2721#0" expanded="false" />
-            <element signature="e#2554#2655#0" expanded="false" />
-            <element signature="e#2823#2854#0" expanded="false" />
-            <element signature="e#2916#3056#0" expanded="false" />
-            <element signature="e#3103#3727#0" expanded="false" />
-            <element signature="e#3273#3723#0" expanded="false" />
-            <element signature="e#3324#3717#0" expanded="false" />
-            <element signature="e#3383#3709#0" expanded="false" />
-            <element signature="e#3427#3698#0" expanded="false" />
-            <element signature="e#3764#4043#0" expanded="false" />
-            <element signature="e#3865#4038#0" expanded="false" />
-            <element signature="e#4088#5294#0" expanded="false" />
-            <element signature="e#4231#4462#0" expanded="false" />
-            <element signature="e#4348#4454#0" expanded="false" />
-            <element signature="e#4597#4720#0" expanded="false" />
-            <element signature="e#4726#4814#0" expanded="false" />
-            <element signature="e#5324#5417#0" expanded="false" />
-            <element signature="e#5364#5412#0" expanded="false" />
-            <element signature="e#6740#7087#0" expanded="false" />
-            <element signature="e#7122#7160#0" expanded="false" />
-            <element signature="e#7205#7296#0" expanded="false" />
-            <element signature="e#7346#7437#0" expanded="false" />
-            <element signature="e#7500#7945#0" expanded="false" />
-            <element signature="e#7556#7734#0" expanded="false" />
-            <element signature="e#7598#7727#0" expanded="false" />
-            <element signature="e#7976#8013#0" expanded="false" />
-            <element signature="e#9023#9027#0" expanded="false" />
-            <element signature="e#12163#12263#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -1491,17 +1461,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/maps.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="177" column="36" lean-forward="true" selection-start-line="177" selection-start-column="36" selection-end-line="177" selection-end-column="36" />
-          <folding>
-            <element signature="e#3607#3632#0" expanded="true" />
-            <marker date="1516605015893" expanded="false" signature="152:1466" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
@@ -1509,6 +1468,109 @@
           <folding>
             <element signature="e#4017#4050#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/SatelliteSelector.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-40">
+          <caret line="6" column="26" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/RemoteSelectorsContainer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-111">
+          <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/RemoteStationsImporterModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="34" column="22" lean-forward="true" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/mixins.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="805">
+          <caret line="220" column="8" lean-forward="true" selection-start-line="220" selection-start-column="8" selection-end-line="220" selection-end-column="8" />
+          <folding>
+            <element signature="e#30#71#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/maps.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="231" column="21" lean-forward="false" selection-start-line="231" selection-start-column="21" selection-end-line="231" selection-end-column="21" />
+          <folding>
+            <element signature="n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="e#2538#2563#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/store/map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="57" column="6" lean-forward="true" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+          <folding>
+            <element signature="e#36#77#0" expanded="false" />
+            <element signature="e#169#189#0" expanded="false" />
+            <element signature="e#959#1037#0" expanded="false" />
+            <element signature="e#1163#1203#0" expanded="false" />
+            <element signature="e#1546#1753#0" expanded="false" />
+            <element signature="e#1583#1751#0" expanded="false" />
+            <element signature="e#1613#1747#0" expanded="false" />
+            <element signature="e#1668#1712#0" expanded="false" />
+            <element signature="e#2278#2480#0" expanded="false" />
+            <element signature="e#2314#2345#0" expanded="false" />
+            <element signature="e#2519#2970#0" expanded="false" />
+            <element signature="e#2701#2909#0" expanded="false" />
+            <element signature="e#2716#2903#0" expanded="false" />
+            <element signature="e#2736#2837#0" expanded="false" />
+            <element signature="e#3005#3036#0" expanded="false" />
+            <element signature="e#3098#3238#0" expanded="false" />
+            <element signature="e#3285#3909#0" expanded="false" />
+            <element signature="e#3455#3905#0" expanded="false" />
+            <element signature="e#3506#3899#0" expanded="false" />
+            <element signature="e#3565#3891#0" expanded="false" />
+            <element signature="e#3609#3880#0" expanded="false" />
+            <element signature="e#3946#4225#0" expanded="false" />
+            <element signature="e#4047#4220#0" expanded="false" />
+            <element signature="e#4270#5476#0" expanded="false" />
+            <element signature="e#4413#4644#0" expanded="false" />
+            <element signature="e#4530#4636#0" expanded="false" />
+            <element signature="e#4779#4902#0" expanded="false" />
+            <element signature="e#4908#4996#0" expanded="false" />
+            <element signature="e#5506#5599#0" expanded="false" />
+            <element signature="e#5546#5594#0" expanded="false" />
+            <element signature="e#6922#7269#0" expanded="false" />
+            <element signature="e#7304#7342#0" expanded="false" />
+            <element signature="e#7387#7478#0" expanded="false" />
+            <element signature="e#7528#7619#0" expanded="false" />
+            <element signature="e#7682#8127#0" expanded="false" />
+            <element signature="e#7738#7916#0" expanded="false" />
+            <element signature="e#7780#7909#0" expanded="false" />
+            <element signature="e#8158#8195#0" expanded="false" />
+            <element signature="e#9205#9209#0" expanded="false" />
+            <element signature="e#12345#12445#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/ContoursImporterModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="40" lean-forward="true" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>

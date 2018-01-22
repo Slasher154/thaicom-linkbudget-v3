@@ -51,7 +51,11 @@ export const getters = {
 export const mutations = {
   SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, {geojsonObjects, path}) {
     console.log(JSON.stringify(geojsonObjects))
-    state[path + 'Contours'] = geojsonObjects.map(x => convertGeojsonContourToVueGoogleMaps(x, path, state.categories))
+    // state[path + 'Contours'] = geojsonObjects.map(x => convertGeojsonContourToVueGoogleMaps(x, path, state.categories))
+    // Push new contours
+    geojsonObjects.map(x => convertGeojsonContourToVueGoogleMaps(x, path, state.categories)).forEach(y => {
+      state[path + 'Contours'].push(y)
+    })
   },
   ADD_GEOJSON_TO_MAP (state, { geojsonObjects, path, color }) {
     geojsonObjects.forEach(obj => {
