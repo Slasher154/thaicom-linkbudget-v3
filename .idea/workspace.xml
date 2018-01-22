@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/BaseMap.vue" afterPath="$PROJECT_DIR$/components/BaseMap.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/ResultsMapLegend.vue" afterPath="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/maps.vue" afterPath="$PROJECT_DIR$/pages/maps.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/map.js" afterPath="$PROJECT_DIR$/store/map.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,7 +19,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5083799">
+    <splitter split-orientation="horizontal" split-proportion="0.38547486">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="SatelliteSelectorsContainer.vue" pinned="false" current-in-tab="false">
@@ -45,12 +44,24 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ResultsMapLegend.vue" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ResultsMapLegend.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/components/ResultsMapLegend.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="432">
-                  <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+                <state relative-caret-position="285">
+                  <caret line="19" column="8" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="386">
+                  <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
+                  <folding>
+                    <element signature="e#4017#4050#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -101,11 +112,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="map.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/store/map.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="409">
-                  <caret line="162" column="27" lean-forward="false" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
+                <state relative-caret-position="398">
+                  <caret line="233" column="21" lean-forward="false" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
                   <folding>
                     <element signature="e#36#77#0" expanded="false" />
                     <element signature="e#169#189#0" expanded="false" />
@@ -137,43 +148,29 @@
                     <element signature="e#4726#4814#0" expanded="false" />
                     <element signature="e#5324#5417#0" expanded="false" />
                     <element signature="e#5364#5412#0" expanded="false" />
-                    <element signature="e#6528#6875#0" expanded="false" />
-                    <element signature="e#6910#6948#0" expanded="false" />
-                    <element signature="e#6993#7084#0" expanded="false" />
-                    <element signature="e#7134#7225#0" expanded="false" />
-                    <element signature="e#7288#7733#0" expanded="false" />
-                    <element signature="e#7344#7522#0" expanded="false" />
-                    <element signature="e#7386#7515#0" expanded="false" />
-                    <element signature="e#7764#7801#0" expanded="false" />
-                    <element signature="e#8671#8675#0" expanded="false" />
-                    <element signature="e#11811#11911#0" expanded="false" />
+                    <element signature="e#6740#7087#0" expanded="false" />
+                    <element signature="e#7122#7160#0" expanded="false" />
+                    <element signature="e#7205#7296#0" expanded="false" />
+                    <element signature="e#7346#7437#0" expanded="false" />
+                    <element signature="e#7500#7945#0" expanded="false" />
+                    <element signature="e#7556#7734#0" expanded="false" />
+                    <element signature="e#7598#7727#0" expanded="false" />
+                    <element signature="e#7976#8013#0" expanded="false" />
+                    <element signature="e#9023#9027#0" expanded="false" />
+                    <element signature="e#12163#12263#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="maps.vue" pinned="false" current-in-tab="false">
+          <file leaf-file-name="maps.vue" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/pages/maps.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-44">
-                  <caret line="188" column="20" lean-forward="false" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="20" />
+                <state relative-caret-position="645">
+                  <caret line="177" column="36" lean-forward="true" selection-start-line="177" selection-start-column="36" selection-end-line="177" selection-end-column="36" />
                   <folding>
-                    <element signature="e#3300#3325#0" expanded="true" />
-                    <marker date="1516272138158" expanded="false" signature="152:1466" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/package.json">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-                  <folding>
-                    <marker date="1516178143879" expanded="true" signature="0:1308" ph="{&quot;name&quot;: &quot;thaicom-linkbudget-v3&quot;...}" />
-                    <marker date="1516178143879" expanded="true" signature="443:963" ph="{&quot;axios&quot;: &quot;^0.16.2&quot;...}" />
-                    <marker date="1516178143879" expanded="true" signature="986:1306" ph="{&quot;babel-eslint&quot;: &quot;^7.2.3&quot;...}" />
+                    <element signature="e#3607#3632#0" expanded="true" />
+                    <marker date="1516605015893" expanded="false" signature="152:1466" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -193,10 +190,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ex</find>
-      <find>colorChoices</find>
-      <find>colo</find>
-      <find>asyncD</find>
       <find>asyncData</find>
       <find>all</find>
       <find>allSatell</find>
@@ -223,6 +216,10 @@
       <find>handler (</find>
       <find>handler (new</find>
       <find>handler (newV</find>
+      <find>a</find>
+      <find>async f</find>
+      <find>async fet</find>
+      <find>async fetch</find>
     </findStrings>
     <replaceStrings>
       <replace>transponder</replace>
@@ -308,10 +305,10 @@
         <option value="$PROJECT_DIR$/components/DefinedContourSelector.vue" />
         <option value="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
         <option value="$PROJECT_DIR$/plugins/mixins.js" />
-        <option value="$PROJECT_DIR$/pages/maps.vue" />
         <option value="$PROJECT_DIR$/components/BaseMap.vue" />
-        <option value="$PROJECT_DIR$/store/map.js" />
         <option value="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
+        <option value="$PROJECT_DIR$/store/map.js" />
+        <option value="$PROJECT_DIR$/pages/maps.vue" />
       </list>
     </option>
   </component>
@@ -606,7 +603,7 @@
       <workItem from="1513438510251" duration="552000" />
       <workItem from="1513649976445" duration="7281000" />
       <workItem from="1514035684334" duration="63237000" />
-      <workItem from="1515470289728" duration="57511000" />
+      <workItem from="1515470289728" duration="59636000" />
     </task>
     <task id="LOCAL-00001" summary="Add transponder selector">
       <created>1507043872699</created>
@@ -930,11 +927,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516272233540</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Add category legends on MapBase components">
+      <created>1516356282298</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1516356282298</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="428808000" />
+    <option name="totallyTimeSpent" value="430933000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="0" width="1920" height="1080" extended-state="0" />
@@ -991,7 +995,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add map legends to the result map" />
     <MESSAGE value="Add beam labels on map" />
     <MESSAGE value="Add modem insert page and component" />
     <MESSAGE value="Complete edit modem form" />
@@ -1016,7 +1019,8 @@
     <MESSAGE value="Fix incorrect date parsing format" />
     <MESSAGE value="Fix incorrect date parsing format in saved requests table" />
     <MESSAGE value="Add map page with show defined contours function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add map page with show defined contours function" />
+    <MESSAGE value="Add category legends on MapBase components" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add category legends on MapBase components" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1251,18 +1255,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding>
-            <marker date="1516178143879" expanded="true" signature="0:1308" ph="{&quot;name&quot;: &quot;thaicom-linkbudget-v3&quot;...}" />
-            <marker date="1516178143879" expanded="true" signature="443:963" ph="{&quot;axios&quot;: &quot;^0.16.2&quot;...}" />
-            <marker date="1516178143879" expanded="true" signature="986:1306" ph="{&quot;babel-eslint&quot;: &quot;^7.2.3&quot;...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/bucs/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -1335,20 +1327,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding>
-            <element signature="e#2033#2066#0" expanded="true" />
-            <element signature="e#5665#19008#0" expanded="false" />
-            <element signature="e#19040#25116#0" expanded="false" />
-            <element signature="e#25157#36134#0" expanded="false" />
-            <element signature="e#36517#38414#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/saved-requests/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -1397,27 +1375,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-129">
-          <caret line="248" column="33" lean-forward="false" selection-start-line="248" selection-start-column="33" selection-end-line="248" selection-end-column="33" />
-          <folding>
-            <element signature="e#4017#4050#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/maps.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44">
-          <caret line="188" column="20" lean-forward="false" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="20" />
-          <folding>
-            <element signature="e#3300#3325#0" expanded="true" />
-            <marker date="1516272138158" expanded="false" signature="152:1466" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/plugins/mixins.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="562">
@@ -1455,10 +1412,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/components/ResultsMapLegend.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="8" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/store/map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="162" column="27" lean-forward="false" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
+        <state relative-caret-position="398">
+          <caret line="233" column="21" lean-forward="false" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
           <folding>
             <element signature="e#36#77#0" expanded="false" />
             <element signature="e#169#189#0" expanded="false" />
@@ -1490,25 +1455,60 @@
             <element signature="e#4726#4814#0" expanded="false" />
             <element signature="e#5324#5417#0" expanded="false" />
             <element signature="e#5364#5412#0" expanded="false" />
-            <element signature="e#6528#6875#0" expanded="false" />
-            <element signature="e#6910#6948#0" expanded="false" />
-            <element signature="e#6993#7084#0" expanded="false" />
-            <element signature="e#7134#7225#0" expanded="false" />
-            <element signature="e#7288#7733#0" expanded="false" />
-            <element signature="e#7344#7522#0" expanded="false" />
-            <element signature="e#7386#7515#0" expanded="false" />
-            <element signature="e#7764#7801#0" expanded="false" />
-            <element signature="e#8671#8675#0" expanded="false" />
-            <element signature="e#11811#11911#0" expanded="false" />
+            <element signature="e#6740#7087#0" expanded="false" />
+            <element signature="e#7122#7160#0" expanded="false" />
+            <element signature="e#7205#7296#0" expanded="false" />
+            <element signature="e#7346#7437#0" expanded="false" />
+            <element signature="e#7500#7945#0" expanded="false" />
+            <element signature="e#7556#7734#0" expanded="false" />
+            <element signature="e#7598#7727#0" expanded="false" />
+            <element signature="e#7976#8013#0" expanded="false" />
+            <element signature="e#9023#9027#0" expanded="false" />
+            <element signature="e#12163#12263#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/ResultsMapLegend.vue">
+    <entry file="file://$PROJECT_DIR$/pages/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+        <state relative-caret-position="578">
+          <caret line="115" column="44" lean-forward="true" selection-start-line="115" selection-start-column="44" selection-end-line="115" selection-end-column="44" />
+          <folding>
+            <element signature="e#2033#2066#0" expanded="true" />
+            <element signature="e#5665#19008#0" expanded="false" />
+            <element signature="e#19040#25116#0" expanded="false" />
+            <element signature="e#25157#36134#0" expanded="false" />
+            <element signature="e#36517#38414#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/maps.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="177" column="36" lean-forward="true" selection-start-line="177" selection-start-column="36" selection-end-line="177" selection-end-column="36" />
+          <folding>
+            <element signature="e#3607#3632#0" expanded="true" />
+            <marker date="1516605015893" expanded="false" signature="152:1466" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
+          <folding>
+            <element signature="e#4017#4050#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

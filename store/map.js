@@ -142,15 +142,18 @@ export const mutations = {
   ADD_NEW_CATEGORY (state, name) {
     let currentMaximumIndex = 0
     let categories = state.categories
-    if (categories.length > 0) {
-      currentMaximumIndex = _.max(categories.map(c => c.index))
-      currentMaximumIndex++
+    // Check if category name is not already existed, we push it to new category
+    if (!categories.find(c => c.name === name)) {
+      if (categories.length > 0) {
+        currentMaximumIndex = _.max(categories.map(c => c.index))
+        currentMaximumIndex++
+      }
+      categories.push({
+        name,
+        color: state.colorChoices[currentMaximumIndex % state.colorChoices.length],
+        index: currentMaximumIndex
+      })
     }
-    categories.push({
-      name,
-      color: state.colorChoices[currentMaximumIndex % state.colorChoices.length],
-      index: currentMaximumIndex
-    })
   },
   // Remove all categories
   REMOVE_ALL_CATEGORIES (state) {
@@ -159,6 +162,9 @@ export const mutations = {
   REMOVE_ALL_CONTOURS (state) {
     state.forwardContours = []
     state.returnContours = []
+  },
+  REMOVE_ALL_PLACES (state) {
+    state.places = []
   },
   SET_CATEGORY_NAME (state, { index, name }) {
     let categoryToEdit = state.categories.find(c => c.index === index)
@@ -223,12 +229,17 @@ export const actions = {
       }
     })
   },
-  resetMap ({commit}) {
+  removeAllContours ({commit}) {
     commit('REMOVE_ALL_CATEGORIES')
     commit('REMOVE_ALL_CONTOURS')
   },
   setCategoryName ({commit}, category) {
     commit('SET_CATEGORY_NAME', category)
+  },
+  resetMap ({commit}) {
+    commit('REMOVE_ALL_CATEGORIES')
+    commit('REMOVE_ALL_CONTOURS')
+    commit('REMOVE_ALL_PLACES')
   }
 }
 

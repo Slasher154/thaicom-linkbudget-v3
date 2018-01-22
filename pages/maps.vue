@@ -54,8 +54,8 @@
       </b-field>
     </b-field>-->
     <div class="columns">
-      <div class="column is-2">
-        <b-field label="Satellite">
+      <div class="column is-3">
+        <b-field>
           <satellite-selector
             :multiple="false"
             :satellite-options="satelliteOptions"
@@ -64,7 +64,9 @@
         </b-field>
       </div>
       <div class="column is-6">
-        <b-field label="Transponders">
+        <b-field
+          v-if="selectedSatellites.length > 0"
+        >
           <satellite-transponder-selector
             :multiple="true"
             :transponder-options="filteredTransponders"
@@ -75,9 +77,13 @@
       <div class="column is-2">
         <b-field
           v-if="showBroadbandOptions"
-          label="Copy from Excel?"
         >
-          <b-checkbox v-model="copyFromExcel"></b-checkbox>
+          <!--<b-checkbox v-model="copyFromExcel"></b-checkbox>-->
+          <p class="control">
+            <button class="button is-success"
+                    @click="launchCopyFromExcelModal"
+            >Copy from Excel</button>
+          </p>
         </b-field>
       </div>
     </div>
@@ -85,7 +91,6 @@
       <div class="column is-3">
         <b-field
           v-if="broadbandManual"
-          label="Path"
         >
           <path-selector
             :multiple="true"
@@ -96,7 +101,6 @@
       <div class="column is-4">
         <b-field
           v-if="broadbandManual"
-          label="Defined Contours"
         >
           <defined-contour-selector
             :multiple="true"
@@ -107,13 +111,20 @@
       <div class="column is-3">
         <b-field
           v-if="readyToSubmit"
-          label="Submit"
+          grouped
+          group-multiline
         >
           <p class="control">
             <button class="button is-primary"
                     @click="submitContours"
-            >Submit</button>
+            >Add Lines</button>
           </p>
+          <p class="control">
+            <button class="button is-danger"
+                    @click="removeAllContours"
+            >Delete All</button>
+          </p>
+
         </b-field>
       </div>
     </div>
@@ -162,6 +173,10 @@
         console.log(e)
       }
     },
+    async fetch ({store}) {
+      // Remove all maps data from the store (which may comes from previous page which calls map store)
+      store.dispatch('map/resetMap')
+    },
     data () {
       return {
         selectedSatellites: [],
@@ -203,7 +218,6 @@
     },
     methods: {
       async submitContours () {
-        this.resetMap()
         // For broadband satellite, select path and beams manually
         if (this.broadbandManual) {
           let query = {
@@ -247,8 +261,8 @@
       updateDefinedContours (value) {
         this.selectedDefinedContours = value.definedContours
       },
-      resetMap () {
-        this.$store.dispatch('map/resetMap')
+      removeAllContours () {
+        this.$store.dispatch('map/removeAllContours')
       }
     }
   }
