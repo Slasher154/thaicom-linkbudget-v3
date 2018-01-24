@@ -579,6 +579,16 @@ export const getters = {
       return []
     }
   },
+  findFieldUnit (state) {
+    return fieldName => {
+      let field = state.fieldNameMappers.find(f => f.name === fieldName)
+      if (field) {
+        return field.unit
+      } else {
+        return ''
+      }
+    }
+  },
   requestObject (state) {
     let object = {
       satellites: state.selectedSatellites,

@@ -229,6 +229,15 @@ Vue.mixin({
     $_round (value, precision) {
       let multiplier = Math.pow(10, precision || 0)
       return Math.round(value * multiplier) / multiplier
+    },
+    $_pathText (path) {
+      if (path === 'forward') {
+        return 'FWD'
+      } else if (path === 'return') {
+        return 'RTN'
+      } else {
+        return ''
+      }
     }
   }
 })

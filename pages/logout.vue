@@ -15,7 +15,6 @@
     computed: {
       logoutUrl () {
         let redirectUrl = process.env.baseUrl
-        console.log(redirectUrl)
         return `https://poseidon.thaicom.net/connect/directlogout?callback_url=${redirectUrl}`
       }
     }

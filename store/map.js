@@ -23,10 +23,12 @@ export const state = () => ({
   beamLabels: [],
   // Forward Filter Fields
   forwardFilterFields: [
-    'mcg', 'antenna', 'linkMargin'
+    'antennaName', 'mcgName', 'requiredMargin', 'dataRate'
   ],
   // Return Filter Fields
-  returnFilterFields: [],
+  returnFilterFields: [
+    'antennaName', 'bucName', 'mcgName', 'requiredMargin', 'dataRate'
+  ],
   // Selected options for forward and return link (MCG, antenna name, link margin, BUC)
   forwardCombinationFilters: {},
   returnCombinationFilters: {},
@@ -34,7 +36,7 @@ export const state = () => ({
   forwardCategories: [],
   returnCategories: [],
   categories: [],
-  strokeWeight: 1,
+  strokeWeight: 2,
   placeLabels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 })
 
@@ -46,12 +48,17 @@ export const getters = {
       })
       return _.uniq(fields)
     }
+  },
+  getFilterFields (state) {
+    return path => {
+      return state[path + 'FilterFields']
+    }
   }
 }
 
 export const mutations = {
   SET_AND_CONVERT_GEOJSON_TO_VUE_GOOGLE_MAPS (state, {geojsonObjects, path}) {
-    console.log(JSON.stringify(geojsonObjects))
+    console.log('Logging from mutations: ' + JSON.stringify(geojsonObjects))
     // state[path + 'Contours'] = geojsonObjects.map(x => convertGeojsonContourToVueGoogleMaps(x, path, state.categories))
     // Push new contours
     geojsonObjects.map(x => convertGeojsonContourToVueGoogleMaps(x, path, state.categories)).forEach(y => {
@@ -193,7 +200,22 @@ export const mutations = {
   },
   SET_CATEGORY_NAME (state, {index, name}) {
     let categoryToEdit = state.categories.find(c => c.index === index)
+    let oldName = categoryToEdit.name
+    let paths = ['forward', 'return']
+    paths.forEach(p => {
+      state[p + 'Contours'].filter(c => c.properties.category === oldName).forEach(f => {
+        f.properties.category = name
+      })
+    })
     categoryToEdit.name = name
+  },
+  REMOVE_CATEGORY (state, {index, name}) {
+    state.categories = state.categories.filter(c => c.index !== index)
+    // Remove contours of that category
+    let paths = ['forward', 'return']
+    paths.forEach(p => {
+      state[p + 'Contours'] = state[p + 'Contours'].filter(c => c.properties.category !== name)
+    })
   }
 }
 
@@ -263,6 +285,9 @@ export const actions = {
     commit('REMOVE_ALL_CATEGORIES')
     commit('REMOVE_ALL_CONTOURS')
     commit('REMOVE_ALL_BEAM_LABELS')
+  },
+  removeCategory ({commit}, category) {
+    commit('REMOVE_CATEGORY', category)
   },
   setCategoryName ({commit}, category) {
     commit('SET_CATEGORY_NAME', category)
@@ -342,7 +367,7 @@ function constructPolygonOptions (color = '#FF0000', path = 'forward') {
     let options = {
       strokeOpacity: 0,
       strokeColor: color,
-      strokeWeight: 1,
+      strokeWeight: 2,
       icons: [{
         icon: lineSymbol,
         offset: '0',

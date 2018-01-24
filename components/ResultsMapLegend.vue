@@ -14,11 +14,17 @@
     </p>
     <p class="control is-expanded">
       <input type="text" class="input"
-             :value="newItem.name"
+             v-model="newItem.name"
              @input="updateName"
              >
     </p>
-
+    <p class="control">
+      <a class="button is-danger"
+        @click="removeLegend"
+      >
+        <b-icon pack="fa" icon="close"></b-icon>
+      </a>
+    </p>
   </div>
 </template>
 
@@ -51,16 +57,19 @@
           this.colors = item.color
         }
       },
-      updateName (e) {
-        this.$store.dispatch('map/setCategoryName', { index: this.newItem.index, name: e.target.value })
+      removeLegend () {
+        this.$store.dispatch('map/removeCategory', this.newItem)
+      },
+      updateName () {
+        this.$store.dispatch('map/setCategoryName', this.newItem)
       }
     },
     mounted () {
-      this.newItem = this.item
+      this.newItem = Object.assign({}, this.item)
     },
     watch: {
       item (newVal) {
-        this.newItem = newVal
+        this.newItem = Object.assign({}, newVal)
       }
     }
   }

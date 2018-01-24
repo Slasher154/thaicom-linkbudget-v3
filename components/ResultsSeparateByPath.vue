@@ -4,6 +4,7 @@
     <!-- Nav tabs -->
     <b-tabs
       v-model="activeTab"
+      @change="tabChanged"
     >
 
       <!-- Forward Link results tab -->
@@ -35,7 +36,7 @@
 
       <b-tab-item label="Maps">
         <br>
-        <results-map-container />
+        <results-map-container ref="mapContainer" />
       </b-tab-item>
 
       <b-tab-item label="Tools">
@@ -81,6 +82,15 @@
       },
       returnLinkResults () {
         return this.$store.state.linkcalc.linkResults.returnLinkResults
+      }
+    },
+    methods: {
+      tabChanged (index) {
+        console.log('TAb changed to ' + index)
+        if (index === 2) {
+          this.$refs.mapContainer.$refs.map.$refs.contourMap.resizePreserveCenter()
+        }
+        // this.$_expandMap(this.$refs.mapContainer.$refs.baseMap.$refs.contourMap)
       }
     }
   }

@@ -1,10 +1,19 @@
 <template>
   <div>
     <!-- Show filter if only it's finding max contour and there are any contour lines -->
-    <results-map-filter-container
+    <!--<results-map-filter-container
       v-if="$store.state.map.forwardContours.length > 0 && $store.state.linkcalc.findMaxCoverage"
-      path="forward" />
+      path="forward" />-->
     <div class="columns">
+      <div class="column is-9">
+        <b-field grouped group-multiline position="is-right">
+          <p class="control">
+            <button class="button is-primary" @click="loadMap">Load map</button>
+          </p>
+        </b-field>
+      </div>
+    </div>
+    <!--<div class="columns">
       <div class="column is-9">
         <gmap-map :center="center" :zoom="zoom" :style="mapStyle" ref="contourMap">
           <gmap-marker
@@ -105,7 +114,8 @@
 
 
       </div>
-    </div>
+    </div>-->
+    <base-map ref="map" />
   </div>
 </template>
 
@@ -115,6 +125,7 @@
   import { mapGetters } from 'vuex'
   import axios from 'axios'
   import _ from 'lodash'
+  import BaseMap from './BaseMap'
   import ResultsMapFilterContainer from './ResultsMapFilterContainer'
   import ResultsMapLegend from './ResultsMapLegend'
   import { Compact } from 'vue-color'
@@ -122,6 +133,7 @@
     components: {
       ResultsMapFilterContainer,
       ResultsMapLegend,
+      BaseMap,
       CompactPicker: Compact
     },
     props: {
@@ -152,13 +164,32 @@
         col: []
       }
     },
+    async mounted () {
+      this.loadMap()
+    },
     methods: {
       async loadMap () {
-        // Fetch contours from database and display on map
-        this.$refs.contourMap.resizePreserveCenter()
-        let contourObjects = this.transformLinkResultsToContourObjectsQuery(this.path)
-        await this.fetchContourFromDatabaseAndSetToStore(contourObjects, this.path)
-        this.expandMapToShowAllContours()
+        // Reset all elements on map
+        this.$store.dispatch('map/resetMap')
+        // Check if there is a link budget result in the store
+        let linkResults = this.$store.state.linkcalc.linkResults
+        console.log('Checking link result')
+        if (linkResults) {
+          console.log('Result found')
+          // Check if it's max contour mode
+          if (linkResults.assumptions.findMaxCoverage) {
+            // Add contours from forward link
+            for (let path of ['forward', 'return']) {
+              let contourObjects = this.transformLinkResultsToContourObjectsQuery(path)
+              await this.fetchContourFromDatabaseAndSetToStore(contourObjects, path)
+            }
+          } else {
+
+          }
+          this.$_expandMap(this.$refs.map.$refs.contourMap)
+        } else {
+          console.log('Result not found')
+        }
       },
       async showEocLinesOfSelectedBeams () {
         // Check if any transponder is selected
@@ -185,7 +216,6 @@
           this.$refs.contourMap.resizePreserveCenter()
           let results = await axios.post('/get-farthest-database-contours', { transponders: transpondersToQuery })
           this.$store.dispatch('map/addFarthestLines', { geojsonObjects: results.data.contours, path: this.path })
-          this.expandMapToShowAllContours()
         } catch (e) {
           this.$_alertError(e)
         }
@@ -196,7 +226,6 @@
           let results = await axios.post('/get-eoc-lines', queryObject)
           console.log('EOC = ' + JSON.stringify(results.data.contours))
           this.$store.dispatch('map/addEocLines', { geojsonObjects: results.data.contours, path: this.path })
-          this.expandMapToShowAllContours()
         } catch (e) {
           this.$_alertError(e)
         }
@@ -222,48 +251,35 @@
             }
           })
           this.$store.dispatch('map/setPlaces', { places })
-          this.expandMapToShowAllContours()
         }
       },
       transformLinkResultsToContourObjectsQuery (path) {
         // Get the link results which is used to show in the results table
         let linkResults = this.linkResultsTableData(path)
-        return linkResults.map(this.convertLinkResultsToQueryObject)
+        return linkResults.map(re => this.convertLinkResultsToQueryObject(re, path))
       },
-      convertLinkResultsToQueryObject (linkResult) {
-        // console.log(JSON.stringify(linkResult, undefined, 2))
+      convertLinkResultsToQueryObject (linkResult, path) {
         let query = {
           name: linkResult.channelClear,
           satellite: linkResult.satelliteName,
-          path: this.path,
-          contourValue: linkResult[this.link + 'ContourClear']
+          path: path,
+          contourValue: linkResult[this.linkText(path) + 'ContourClear']
         }
+        // Add category from the combination of fields
+        let fields = this.getFilterFields(path)
+        console.log('Fields = ' + fields)
+        let category = fields.map(f => {
+          // If the field name in the link result doesn't end with 'Clear' (the assumption fields such as buc/antenna)
+          // Just use that field, otherwise, add the word clear
+          if (_.has(linkResult, f)) {
+            return `${linkResult[f]} ${this.findFieldUnit(f)}`
+          } else {
+            return `${linkResult[f + 'Clear']} ${this.findFieldUnit(f)}`
+          }
+        }).join('-')
         // console.log(JSON.stringify(query))
+        query.category = this.$_pathText(path) + ' - ' + category
         return query
-      },
-      expandMapToShowAllContours () { // Fit the map bounds to all polygons
-        // Obtain the map bounds
-        let bounds = new google.maps.LatLngBounds()
-        // let bounds = this.$refs.contourMap.$mapObject.getBounds()
-        let paths = ['forward']
-        /*paths.forEach(path => {
-          this.$store.state.map[path + 'Contours'].forEach(contour => {
-            contour.paths.forEach(point => {
-              bounds.extend(point)
-            })
-          })
-        })*/
-        paths.forEach(p => {
-          this.$store.state.map[p + 'Contours'].forEach(contour => {
-            contour.paths.forEach(contourPath => {
-              contourPath.forEach(point => {
-                bounds.extend(point)
-              })
-            })
-          })
-        })
-        this.$refs.contourMap.fitBounds(bounds)
-        this.$refs.contourMap.resizePreserveCenter()
       },
       findTranspondersOfSelectedCountries () {
         let transponders = this.$store.state.linkcalc.transponderOptions
@@ -275,6 +291,14 @@
       async fetchContourFromDatabaseAndSetToStore (contourObjects, path) {
         try {
           let results = await axios.post('/get-contour-lines', {contourObjects})
+          let geojsonObjects = results.data.contours
+          // Construct categories from returned results and set to map
+          let categories = _.uniq(geojsonObjects.map(obj => obj.properties.category))
+          this.$store.dispatch('map/addNewCategories', categories)
+          // Set this value to map store
+          this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', { geojsonObjects, path })
+          //this.$store.dispatch('map/setupFiltersAndCategories', path)
+          /*let results = await axios.post('/get-contour-lines', {contourObjects})
           console.log(JSON.stringify(results.data.contours, undefined, 2))
           let geojsonObjects = results.data.contours
           // Loop the link results to re-map the returned contours with link budget results (so we know which contour line belongs to which results
@@ -305,36 +329,27 @@
           })
           // Set this value to map store
           this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', { geojsonObjects: geojsonObjectsWithLinkProperties, path })
-          this.$store.dispatch('map/setupFiltersAndCategories', path)
+          this.$store.dispatch('map/setupFiltersAndCategories', path)*/
         } catch (e) {
           console.log(e)
         }
       },
-      constructGoogleDynamicBeamLabelIcon (beamName) {
-        let googleChartsUrl = 'https://chart.googleapis.com/chart?'
-        let bubbleStyle = 'd_bubble_text_small'
-        let frameStyle = 'bbT' // Balloon frame, no tail
-        let text = beamName.split(' ').join('+') // Text in dynamic icon URL with spaces must be joint by +
-        let fillColor = 'C6EF8C'
-        let textColor = '000000'
-        let chldSyntax = `${frameStyle}|${text}|${fillColor}|${textColor}`
-        return `${googleChartsUrl}chst=${bubbleStyle}&chld=${chldSyntax}`
-      },
-      toggleBeamLabel () {
-        this.$store.dispatch('map/toggleBeamLabel')
-      }
-    },
-    computed: {
-      ...mapGetters('linkcalc', [
-        'linkResultsTableData'
-      ]),
-      link () {
-        if (this.path === 'forward') {
+      linkText (path) {
+        if (path === 'forward') {
           return 'downlink'
         } else {
           return 'uplink'
         }
-      },
+      }
+    },
+    computed: {
+      ...mapGetters('linkcalc', [
+        'linkResultsTableData',
+        'findFieldUnit'
+      ]),
+      ...mapGetters('map', [
+        'getFilterFields'
+      ]),
       mapStyle () {
         return `width: 100%; height: ${this.height}px;`
       }
