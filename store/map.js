@@ -212,9 +212,15 @@ export const mutations = {
   REMOVE_CATEGORY (state, {index, name}) {
     state.categories = state.categories.filter(c => c.index !== index)
     // Remove contours of that category
+    console.log('Remove category ' + name)
     let paths = ['forward', 'return']
     paths.forEach(p => {
       state[p + 'Contours'] = state[p + 'Contours'].filter(c => c.properties.category !== name)
+    })
+  },
+  TOGGLE_CONTOURS (state, path) {
+    state[path + 'Contours'].forEach(contour => {
+      contour.showOnMap = !contour.showOnMap
     })
   }
 }
@@ -300,6 +306,9 @@ export const actions = {
   },
   toggleBeamLabels ({commit}, showLabel) {
     commit('TOGGLE_BEAM_LABELS', showLabel)
+  },
+  toggleContours ({commit}, path) {
+    commit('TOGGLE_CONTOURS', path)
   }
 }
 
