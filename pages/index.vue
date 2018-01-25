@@ -780,8 +780,8 @@
               'location': {
                 'name': 'Bangkok',
                 'country': 'Thailand',
-                'lat': -13.826,
-                'lon': -100.86
+                'lat': 13.826,
+                'lon': 100.86
               },
               'antenna': {
                 '_id': '5nN4bkz6GLNW7csrz',

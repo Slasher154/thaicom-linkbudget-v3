@@ -467,6 +467,21 @@ export const state = () => ({
       'name': 'isThaicom',
       'title': 'Thaicom satellite?',
       'unit': ''
+    },
+    {
+      'name': 'findBestTransponders',
+      'title': 'Find Best Transponders',
+      'unit': ''
+    },
+    {
+      'name': 'findMaxCoverage',
+      'title': 'Find maximum coverage',
+      'unit': ''
+    },
+    {
+      name: 'findMaxLinkAvailability',
+      'title': 'Find maximum link availability',
+      'unit': ''
     }
   ],
 
@@ -873,7 +888,7 @@ export const actions = {
     commit('SET_MAX_COVERAGE', status)
     // Set location to an array of one location element if max contour is selected. This is to prevent zero stations combination since locations are not used when finding max contour
     if (status) {
-      commit('SET_SELECTED_REMOTE_LOCATIONS', { locations: [{ name: 'maxContour', type: 'definedContours' }] })
+      commit('SET_SELECTED_REMOTE_LOCATIONS', { locations: [{ name: 'maxContour', type: 'maxContour' }] })
     } else {
       commit('SET_SELECTED_REMOTE_LOCATIONS', { locations: [] })
     }
@@ -921,6 +936,8 @@ export const actions = {
 
 function flattenLinkResults (linkResults, assumptions) {
   let resultObject = {}
+  // Flatten the assumptions
+  _.assign(resultObject, flattenAssumptions(assumptions))
   // Flatten the remote station
   _.assign(resultObject, flattenRemoteStation(assumptions.remoteStation))
   // Flatten the satellite
@@ -937,6 +954,14 @@ function flattenLinkResults (linkResults, assumptions) {
     // console.log(`Result of rain = ${JSON.stringify(flattenRainFadeLink)}`)
   }
   return resultObject
+}
+
+function flattenAssumptions (assumptions) {
+  return {
+    findMaxCoverage: assumptions.findMaxCoverage,
+    findBestTransponders: assumptions.findBestTransponders,
+    findMaxLinkAvailability: assumptions.findMaxLinkAvailability
+  }
 }
 
 function flattenConditionLink (linkResult, condition) {
@@ -968,7 +993,10 @@ function flattenRemoteStation (remoteStation) {
     bucName: remoteStation.buc.name,
     bucSize: remoteStation.buc.size,
     locationName: remoteStation.location.name,
-    coordinates: _.has(remoteStation.location, 'lat') ? `${remoteStation.location.lat},${remoteStation.location.lon}` : '',
+    locationType: _.has(remoteStation.location, 'type') ? remoteStation.location.type : null,
+    locationLat: _.has(remoteStation.location, 'lat') ? remoteStation.location.lat : null,
+    locationLon: _.has(remoteStation.location, 'lon') ? remoteStation.location.lon : null,
+    coordinates: _.has(remoteStation.location, 'lat') ? `${remoteStation.location.lat},${remoteStation.location.lon}` : null,
     targetedForwardBandwidth: `${remoteStation.bandwidth.forward} ${remoteStation.bandwidth.unit}`,
     targetedReturnBandwidth: `${remoteStation.bandwidth.return} ${remoteStation.bandwidth.unit}`
   }

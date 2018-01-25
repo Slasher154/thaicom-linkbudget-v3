@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="Add ability to remove map legend">
+    <list default="true" id="3e86f77a-8e5f-426c-bac5-32718dfa1f0e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/ResultsMapContainer.vue" afterPath="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/ResultsMapLegend.vue" afterPath="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/ResultsSeparateByPath.vue" afterPath="$PROJECT_DIR$/components/ResultsSeparateByPath.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/logout.vue" afterPath="$PROJECT_DIR$/pages/logout.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/mixins.js" afterPath="$PROJECT_DIR$/plugins/mixins.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/index.vue" afterPath="$PROJECT_DIR$/pages/index.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/linkcalc.js" afterPath="$PROJECT_DIR$/store/linkcalc.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/map.js" afterPath="$PROJECT_DIR$/store/map.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -39,11 +35,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ResultsMapLegend.vue" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ResultsMapLegend.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/components/ResultsMapLegend.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="421">
-                  <caret line="42" column="13" lean-forward="true" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+                <state relative-caret-position="345">
+                  <caret line="23" column="7" lean-forward="true" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
                   <folding />
                 </state>
               </provider>
@@ -125,14 +121,14 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="false">
+          <file leaf-file-name="ResultsMapContainer.vue" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="495">
-                  <caret line="134" column="23" lean-forward="true" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="23" />
+                <state relative-caret-position="279">
+                  <caret line="192" column="13" lean-forward="true" selection-start-line="192" selection-start-column="13" selection-end-line="192" selection-end-column="13" />
                   <folding>
-                    <element signature="e#4347#4380#0" expanded="true" />
-                    <marker date="1516770784343" expanded="false" signature="589:4101" ph="..." />
+                    <element signature="e#4348#4381#0" expanded="true" />
+                    <marker date="1516856969959" expanded="false" signature="591:4103" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -178,11 +174,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="map.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/store/map.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="298">
-                  <caret line="216" column="74" lean-forward="false" selection-start-line="216" selection-start-column="74" selection-end-line="216" selection-end-column="74" />
+                <state relative-caret-position="-937">
+                  <caret line="96" column="28" lean-forward="true" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
                   <folding>
                     <element signature="e#36#77#0" expanded="false" />
                     <element signature="e#169#189#0" expanded="false" />
@@ -210,16 +206,16 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="linkcalc.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="linkcalc.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="276">
-                  <caret line="963" column="9" lean-forward="false" selection-start-line="963" selection-start-column="9" selection-end-line="963" selection-end-column="9" />
+                <state relative-caret-position="337">
+                  <caret line="998" column="124" lean-forward="false" selection-start-line="998" selection-start-column="124" selection-end-line="998" selection-end-column="124" />
                   <folding>
-                    <element signature="e#9348#9639#0" expanded="false" />
-                    <element signature="e#9669#9975#0" expanded="false" />
-                    <element signature="e#10016#10214#0" expanded="false" />
-                    <element signature="e#10254#10470#0" expanded="false" />
+                    <element signature="e#9678#9969#0" expanded="false" />
+                    <element signature="e#9999#10305#0" expanded="false" />
+                    <element signature="e#10346#10544#0" expanded="false" />
+                    <element signature="e#10584#10800#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -256,13 +252,12 @@
           <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/pages/index.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="514">
-                  <caret line="1176" column="36" lean-forward="true" selection-start-line="1176" selection-start-column="36" selection-end-line="1176" selection-end-column="36" />
+                <state relative-caret-position="281">
+                  <caret line="784" column="16" lean-forward="true" selection-start-line="784" selection-start-column="16" selection-end-line="784" selection-end-column="16" />
                   <folding>
                     <element signature="e#2033#2066#0" expanded="true" />
                     <element signature="e#5665#19008#0" expanded="false" />
                     <element signature="e#19040#25116#0" expanded="false" />
-                    <element signature="e#25157#36134#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -282,28 +277,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_.uniq</find>
-      <find>expandMap</find>
-      <find>thi</find>
-      <find>this.$</find>
-      <find>this.$refs</find>
-      <find>fl</find>
-      <find>required</find>
-      <find>map(f =</find>
-      <find>map(f</find>
-      <find>map(f</find>
-      <find>st</find>
-      <find>flatten</find>
-      <find>c</find>
-      <find>class=fa</find>
-      <find>class=f</find>
-      <find>class=</find>
-      <find>p</find>
-      <find>pack</find>
-      <find>pack=&quot;</find>
-      <find>constructPolygonOptions</find>
-      <find>pack=&quot;fa</find>
-      <find>L</find>
       <find>Load Map</find>
       <find>this\.newItem \= this\.item\n      this\.name \= this\.item\.name</find>
       <find>_</find>
@@ -312,6 +285,28 @@
       <find>_.clone</find>
       <find>_.cloneD</find>
       <find>_.cloneDe</find>
+      <find>m</find>
+      <find>ma</find>
+      <find>maxCon</find>
+      <find>maxContour</find>
+      <find>maxContou</find>
+      <find>maxConto</find>
+      <find>t</find>
+      <find>tye:</find>
+      <find>tye:</find>
+      <find>tye</find>
+      <find>ty</find>
+      <find>type</find>
+      <find>type: '</find>
+      <find>type: 'd</find>
+      <find>type: 'de</find>
+      <find>type: 'define</find>
+      <find>type: 'defined</find>
+      <find>required</find>
+      <find>flatten</find>
+      <find>convertLinkResultsToQueryObject</find>
+      <find>addPlace</find>
+      <find>constructPolygonOptions</find>
     </findStrings>
     <replaceStrings>
       <replace>transponder</replace>
@@ -395,13 +390,13 @@
         <option value="$PROJECT_DIR$/pages/maps.vue" />
         <option value="$PROJECT_DIR$/components/ResultsContainer.vue" />
         <option value="$PROJECT_DIR$/pages/logout.vue" />
-        <option value="$PROJECT_DIR$/store/linkcalc.js" />
         <option value="$PROJECT_DIR$/components/ResultsSeparateByPath.vue" />
-        <option value="$PROJECT_DIR$/pages/index.vue" />
         <option value="$PROJECT_DIR$/plugins/mixins.js" />
         <option value="$PROJECT_DIR$/store/map.js" />
-        <option value="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
         <option value="$PROJECT_DIR$/components/ResultsMapLegend.vue" />
+        <option value="$PROJECT_DIR$/pages/index.vue" />
+        <option value="$PROJECT_DIR$/store/linkcalc.js" />
+        <option value="$PROJECT_DIR$/components/ResultsMapContainer.vue" />
       </list>
     </option>
   </component>
@@ -697,14 +692,7 @@
       <workItem from="1513649976445" duration="7281000" />
       <workItem from="1514035684334" duration="63237000" />
       <workItem from="1515470289728" duration="73069000" />
-      <workItem from="1516688897713" duration="11888000" />
-    </task>
-    <task id="LOCAL-00002" summary="Add find best transponder checkbox">
-      <created>1507046776761</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1507046776761</updated>
+      <workItem from="1516688897713" duration="17682000" />
     </task>
     <task id="LOCAL-00003" summary="Add couple of remote station selectors">
       <created>1507719459749</created>
@@ -1042,11 +1030,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516620468615</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Add ability to remove map legend">
+      <created>1516771362939</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1516771362940</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="456254000" />
+    <option name="totallyTimeSpent" value="462048000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="0" width="1920" height="1080" extended-state="0" />
@@ -1103,7 +1098,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add confirm dialogs to add/edit/delete" />
     <MESSAGE value="Add page to create, edit and delete antenna" />
     <MESSAGE value="Add custom gain input to the antenna CRUD" />
     <MESSAGE value="Add page to create,update,delete BUC" />
@@ -1128,7 +1122,8 @@
     <MESSAGE value="Remove form labels and add 'remove all contours lines' function" />
     <MESSAGE value="Add 'import contours from Excel' feature" />
     <MESSAGE value="Add 'add/remove' markers function into the BaseMap component" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add 'add/remove' markers function into the BaseMap component" />
+    <MESSAGE value="Add ability to remove map legend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add ability to remove map legend" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1350,6 +1345,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="28" column="8" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1427,6 +1423,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-40">
           <caret line="6" column="26" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1466,14 +1463,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/BaseMap.vue">
+    <entry file="file://$PROJECT_DIR$/components/ResultsSeparateByPath.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2625">
-          <caret line="175" column="28" lean-forward="false" selection-start-line="175" selection-start-column="28" selection-end-line="175" selection-end-column="28" />
+        <state relative-caret-position="397">
+          <caret line="70" column="21" lean-forward="true" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
           <folding>
-            <element signature="n#style#0;n#h4#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h4#1;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#3756#3805#0" expanded="true" />
+            <element signature="e#866#899#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/mixins.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="730">
+          <caret line="239" column="7" lean-forward="true" selection-start-line="239" selection-start-column="7" selection-end-line="239" selection-end-column="7" />
+          <folding>
+            <element signature="e#30#71#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/bucs/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="49" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/ResultsMapLegend.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="7" lean-forward="true" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="784" column="16" lean-forward="true" selection-start-line="784" selection-start-column="16" selection-end-line="784" selection-end-column="16" />
+          <folding>
+            <element signature="e#2033#2066#0" expanded="true" />
+            <element signature="e#5665#19008#0" expanded="false" />
+            <element signature="e#19040#25116#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1490,64 +1523,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/ResultsSeparateByPath.vue">
+    <entry file="file://$PROJECT_DIR$/components/BaseMap.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="70" column="21" lean-forward="true" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+        <state relative-caret-position="2625">
+          <caret line="175" column="28" lean-forward="false" selection-start-line="175" selection-start-column="28" selection-end-line="175" selection-end-column="28" />
           <folding>
-            <element signature="e#866#899#0" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#1;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#3756#3805#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="963" column="9" lean-forward="false" selection-start-line="963" selection-start-column="9" selection-end-line="963" selection-end-column="9" />
-          <folding>
-            <element signature="e#9348#9639#0" expanded="false" />
-            <element signature="e#9669#9975#0" expanded="false" />
-            <element signature="e#10016#10214#0" expanded="false" />
-            <element signature="e#10254#10470#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/mixins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="730">
-          <caret line="239" column="7" lean-forward="true" selection-start-line="239" selection-start-column="7" selection-end-line="239" selection-end-column="7" />
-          <folding>
-            <element signature="e#30#71#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="1176" column="36" lean-forward="true" selection-start-line="1176" selection-start-column="36" selection-end-line="1176" selection-end-column="36" />
-          <folding>
-            <element signature="e#2033#2066#0" expanded="true" />
-            <element signature="e#5665#19008#0" expanded="false" />
-            <element signature="e#19040#25116#0" expanded="false" />
-            <element signature="e#25157#36134#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/bucs/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="49" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/store/map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="216" column="74" lean-forward="false" selection-start-line="216" selection-start-column="74" selection-end-line="216" selection-end-column="74" />
+        <state relative-caret-position="-937">
+          <caret line="96" column="28" lean-forward="true" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
           <folding>
             <element signature="e#36#77#0" expanded="false" />
             <element signature="e#169#189#0" expanded="false" />
@@ -1574,22 +1565,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
+    <entry file="file://$PROJECT_DIR$/store/linkcalc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="134" column="23" lean-forward="true" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="23" />
+        <state relative-caret-position="337">
+          <caret line="998" column="124" lean-forward="false" selection-start-line="998" selection-start-column="124" selection-end-line="998" selection-end-column="124" />
           <folding>
-            <element signature="e#4347#4380#0" expanded="true" />
-            <marker date="1516770784343" expanded="false" signature="589:4101" ph="..." />
+            <element signature="e#9678#9969#0" expanded="false" />
+            <element signature="e#9999#10305#0" expanded="false" />
+            <element signature="e#10346#10544#0" expanded="false" />
+            <element signature="e#10584#10800#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/ResultsMapLegend.vue">
+    <entry file="file://$PROJECT_DIR$/components/ResultsMapContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="42" column="13" lean-forward="true" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="279">
+          <caret line="192" column="13" lean-forward="true" selection-start-line="192" selection-start-column="13" selection-end-line="192" selection-end-column="13" />
+          <folding>
+            <element signature="e#4348#4381#0" expanded="true" />
+            <marker date="1516856969959" expanded="false" signature="591:4103" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

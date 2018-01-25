@@ -8,7 +8,7 @@
       <div class="column is-9">
         <b-field grouped group-multiline position="is-right">
           <p class="control">
-            <button class="button is-primary" @click="loadMap">Load map</button>
+            <button class="button is-primary" @click="loadMap">Reload map</button>
           </p>
         </b-field>
       </div>
@@ -115,7 +115,7 @@
 
       </div>
     </div>-->
-    <base-map ref="map" />
+    <base-map ref="map"/>
   </div>
 </template>
 
@@ -161,7 +161,8 @@
         colors: {
           hex: '#194d33'
         },
-        col: []
+        col: [],
+        places: []
       }
     },
     async mounted () {
@@ -171,21 +172,25 @@
       async loadMap () {
         // Reset all elements on map
         this.$store.dispatch('map/resetMap')
+        // Clear the places
+        this.places = []
         // Check if there is a link budget result in the store
         let linkResults = this.$store.state.linkcalc.linkResults
         console.log('Checking link result')
         if (linkResults) {
           console.log('Result found')
-          // Check if it's max contour mode
-          if (linkResults.assumptions.findMaxCoverage) {
-            // Add contours from forward link
-            for (let path of ['forward', 'return']) {
-              let contourObjects = this.transformLinkResultsToContourObjectsQuery(path)
+          for (let path of ['forward', 'return']) {
+            let contourObjects = this.transformLinkResultsToContourObjectsQuery(path)
+            if (contourObjects.length > 0) {
               await this.fetchContourFromDatabaseAndSetToStore(contourObjects, path)
             }
-          } else {
-
+            // Add places
+            this.addPlacesFromLinkResults(path)
           }
+          // Add Places to map
+          this.$store.dispatch('map/addNewPlaces', _.uniqBy(this.places, p => {
+            return p.name + ' ' + p.position.lat + ' ' + p.position.lng
+          }))
           this.$_expandMap(this.$refs.map.$refs.contourMap)
         } else {
           console.log('Result not found')
@@ -196,7 +201,7 @@
         if (this.$store.state.linkcalc.selectedTransponders.length === 0) {
           this.$_alertError('Please select at least 1 transponder')
         } else {
-          let queryObject = { transponders: this.$store.state.linkcalc.selectedTransponders }
+          let queryObject = {transponders: this.$store.state.linkcalc.selectedTransponders}
           await this.fetchEocContoursAndSetToStore(queryObject)
         }
       },
@@ -206,7 +211,7 @@
           this.$_alertError('Please select at least 1 country')
         } else {
           let transpondersToQuery = this.findTranspondersOfSelectedCountries()
-          let queryObject = { transponders: transpondersToQuery }
+          let queryObject = {transponders: transpondersToQuery}
           await this.fetchEocContoursAndSetToStore(queryObject)
         }
       },
@@ -214,8 +219,8 @@
         let transpondersToQuery = this.findTranspondersOfSelectedCountries()
         try {
           this.$refs.contourMap.resizePreserveCenter()
-          let results = await axios.post('/get-farthest-database-contours', { transponders: transpondersToQuery })
-          this.$store.dispatch('map/addFarthestLines', { geojsonObjects: results.data.contours, path: this.path })
+          let results = await axios.post('/get-farthest-database-contours', {transponders: transpondersToQuery})
+          this.$store.dispatch('map/addFarthestLines', {geojsonObjects: results.data.contours, path: this.path})
         } catch (e) {
           this.$_alertError(e)
         }
@@ -225,10 +230,35 @@
           this.$refs.contourMap.resizePreserveCenter()
           let results = await axios.post('/get-eoc-lines', queryObject)
           console.log('EOC = ' + JSON.stringify(results.data.contours))
-          this.$store.dispatch('map/addEocLines', { geojsonObjects: results.data.contours, path: this.path })
+          this.$store.dispatch('map/addEocLines', {geojsonObjects: results.data.contours, path: this.path})
         } catch (e) {
           this.$_alertError(e)
         }
+      },
+      addPlace ({name, position}) {
+        this.places.push({
+          name,
+          position,
+          showOnMap: true
+        })
+      },
+      addPlacesFromLinkResults (path) {
+        // Get the link results which is used to show in the results table
+        let linkResults = this.linkResultsTableData(path)
+        // Extract places and push
+        let places = _.uniq(linkResults.filter(re => {
+          return !re.locationType || (re.locationType !== 'findMaxCoverage' && re.locationType !== 'definedContours')
+        }).map(f => {
+          return {
+            name: f.locationName,
+            position: {
+              lat: f.locationLat,
+              lng: f.locationLon
+            }
+          }
+        }))
+        console.log('places = ' + JSON.stringify(places))
+        places.forEach(p => this.addPlace(p))
       },
       toggleLocationMarkers () {
         this.$refs.contourMap.resizePreserveCenter()
@@ -250,13 +280,18 @@
               name: loc.name
             }
           })
-          this.$store.dispatch('map/setPlaces', { places })
+          this.$store.dispatch('map/setPlaces', {places})
         }
       },
       transformLinkResultsToContourObjectsQuery (path) {
         // Get the link results which is used to show in the results table
         let linkResults = this.linkResultsTableData(path)
-        return linkResults.map(re => this.convertLinkResultsToQueryObject(re, path))
+        // return linkResults.map(re => this.convertLinkResultsToQueryObject(re, path))
+        // Transform to query only the link with station that with type maxContour and definedContour
+        // This is basically filtered out location with name since we don't need to show contour of lat/lon locations
+        return linkResults.filter(re => {
+          return re.locationType === 'definedContours' || re.locationType === 'maxContour'
+        }).map(f => this.convertLinkResultsToQueryObject(f, path))
       },
       convertLinkResultsToQueryObject (linkResult, path) {
         let query = {
@@ -265,20 +300,29 @@
           path: path,
           contourValue: linkResult[this.linkText(path) + 'ContourClear']
         }
-        // Add category from the combination of fields
-        let fields = this.getFilterFields(path)
-        console.log('Fields = ' + fields)
-        let category = fields.map(f => {
-          // If the field name in the link result doesn't end with 'Clear' (the assumption fields such as buc/antenna)
-          // Just use that field, otherwise, add the word clear
-          if (_.has(linkResult, f)) {
-            return `${linkResult[f]} ${this.findFieldUnit(f)}`
-          } else {
-            return `${linkResult[f + 'Clear']} ${this.findFieldUnit(f)}`
-          }
-        }).join('-')
-        // console.log(JSON.stringify(query))
-        query.category = this.$_pathText(path) + ' - ' + category
+        // Add category, depending on the link results type.
+        // If it's finding max coverage, it's from the combination of fields
+        // If it's defined contour (50%, EOC, EOC-2), that becomes the category
+        // If the location is lat/lng, there is no category added. (no contour line shown)
+        if (linkResult.findMaxCoverage) {
+          let fields = this.getFilterFields(path)
+          console.log('Fields = ' + fields)
+          let category = fields.map(f => {
+            // If the field name in the link result doesn't end with 'Clear' (the assumption fields such as buc/antenna)
+            // Just use that field, otherwise, add the word clear
+            if (_.has(linkResult, f)) {
+              return `${linkResult[f]} ${this.findFieldUnit(f)}`
+            } else {
+              return `${linkResult[f + 'Clear']} ${this.findFieldUnit(f)}`
+            }
+          }).join('-')
+          // console.log(JSON.stringify(query))
+          query.category = this.$_pathText(path) + ' - ' + category
+        } else if (linkResult.locationType === 'definedContours') {
+          query.category = linkResult.locationName
+        } else {
+          console.log('No category will be added')
+        }
         return query
       },
       findTranspondersOfSelectedCountries () {
@@ -296,40 +340,40 @@
           let categories = _.uniq(geojsonObjects.map(obj => obj.properties.category))
           this.$store.dispatch('map/addNewCategories', categories)
           // Set this value to map store
-          this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', { geojsonObjects, path })
+          this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', {geojsonObjects, path})
           //this.$store.dispatch('map/setupFiltersAndCategories', path)
           /*let results = await axios.post('/get-contour-lines', {contourObjects})
-          console.log(JSON.stringify(results.data.contours, undefined, 2))
-          let geojsonObjects = results.data.contours
-          // Loop the link results to re-map the returned contours with link budget results (so we know which contour line belongs to which results
-          let linkResults = this.linkResultsTableData(path)
-          let geojsonObjectsWithLinkProperties = linkResults.map(g => {
-            // Find the respective contour
-            let matchedContour = geojsonObjects.find(o => {
-              let parameterName = g.satelliteType === 'Broadband' ? 'relativeGain' : 'eirp'
-              return o.properties.name === g.channelClear && o.properties.satellite === g.satelliteName && o.properties.path === path && o.properties[parameterName] === g[this.link + 'ContourClear']
-            })
-            if (matchedContour) {
-              let clonedContour = _.cloneDeep(matchedContour)
-              // Add properties
-              _.assign(clonedContour.properties, {
-                mcg: g.mcgNameClear,
-                antenna: g.antennaName,
-                linkMargin: g.requiredMarginClear,
-                dataRate: g.dataRateClear
-              })
-              if (path === 'return') {
-                _.assign(clonedContour.properties, {
-                  buc: g.bucName
-                })
-              }
-              return clonedContour
-            }
-            return false
-          })
-          // Set this value to map store
-          this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', { geojsonObjects: geojsonObjectsWithLinkProperties, path })
-          this.$store.dispatch('map/setupFiltersAndCategories', path)*/
+           console.log(JSON.stringify(results.data.contours, undefined, 2))
+           let geojsonObjects = results.data.contours
+           // Loop the link results to re-map the returned contours with link budget results (so we know which contour line belongs to which results
+           let linkResults = this.linkResultsTableData(path)
+           let geojsonObjectsWithLinkProperties = linkResults.map(g => {
+           // Find the respective contour
+           let matchedContour = geojsonObjects.find(o => {
+           let parameterName = g.satelliteType === 'Broadband' ? 'relativeGain' : 'eirp'
+           return o.properties.name === g.channelClear && o.properties.satellite === g.satelliteName && o.properties.path === path && o.properties[parameterName] === g[this.link + 'ContourClear']
+           })
+           if (matchedContour) {
+           let clonedContour = _.cloneDeep(matchedContour)
+           // Add properties
+           _.assign(clonedContour.properties, {
+           mcg: g.mcgNameClear,
+           antenna: g.antennaName,
+           linkMargin: g.requiredMarginClear,
+           dataRate: g.dataRateClear
+           })
+           if (path === 'return') {
+           _.assign(clonedContour.properties, {
+           buc: g.bucName
+           })
+           }
+           return clonedContour
+           }
+           return false
+           })
+           // Set this value to map store
+           this.$store.dispatch('map/setAndConvertGeojsonToVueGoogleMaps', { geojsonObjects: geojsonObjectsWithLinkProperties, path })
+           this.$store.dispatch('map/setupFiltersAndCategories', path)*/
         } catch (e) {
           console.log(e)
         }
