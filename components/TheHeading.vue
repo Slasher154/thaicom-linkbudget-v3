@@ -41,7 +41,7 @@
 
         <!--Logo-->
         <nuxt-link class="navbar-item" :to="{ path: '/'}">
-          <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"
+          <img src="~/assets/images/thaicom-logo-640-160.png" alt="Thaicom Link Budget v3"
                width="112" height="28">
         </nuxt-link>
 
