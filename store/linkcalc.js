@@ -170,7 +170,7 @@ export const state = () => ({
     },
     {
       'name': 'uplinkEirp',
-      'title': 'EIRP Uplink',
+      'title': 'EIRP Uplink at Antenna Feed',
       'unit': 'dBW'
     },
     {
@@ -294,7 +294,7 @@ export const state = () => ({
       'unit': 'dB'
     },
     {
-      'name': 'ciUplinkXCells',
+      'name': 'ciUplinkXcells',
       'title': 'C/I Uplink Cross Cells',
       'unit': 'dB'
     },
@@ -479,7 +479,7 @@ export const state = () => ({
       'unit': ''
     },
     {
-      name: 'findMaxLinkAvailability',
+      'name': 'findMaxLinkAvailability',
       'title': 'Find maximum link availability',
       'unit': ''
     }
@@ -592,6 +592,12 @@ export const getters = {
         })
       }
       return []
+    }
+  },
+  findFieldObject (state) {
+    return fieldName => {
+      let field = state.fieldNameMappers.find(f => f.name === fieldName)
+      return field || null
     }
   },
   findFieldUnit (state) {

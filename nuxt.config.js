@@ -21,6 +21,7 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' }, // Font Awesome
+      { rel: 'stylesheet', href: 'https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css' }, // Material
       { rel: 'stylesheet', href: 'https://unpkg.com/vue-multiselect@2.0.0/dist/vue-multiselect.min.css' }
 
     ]

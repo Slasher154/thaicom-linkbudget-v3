@@ -1,8 +1,9 @@
 <template>
   <b-table
-    :data="linkResultsTableData(path)"
+    :data="resultTableData"
     :row-class="(row, index) => row.passedTextClear === 'Yes' ? '' : 'is-danger'"
-    :bordered="true"
+    detailed
+    detail-key="index"
   >
     <template scope="props">
 
@@ -16,12 +17,22 @@
         {{ props.row[column.name] }}
       </b-table-column>
     </template>
+    <template slot="detail" scope="props">
+      <results-detail-by-case
+        :linkResult="props.row"
+        :path="path"
+      />
+    </template>
   </b-table>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import ResultsDetailByCase from './ResultsDetailByCase'
   export default {
+    components: {
+      ResultsDetailByCase
+    },
     props: {
       path: {
         type: String,
@@ -34,6 +45,13 @@
       ]),
       tableFields () {
         return this.$store.state.linkcalc[this.path + 'TableFields']
+      },
+      resultTableData () {
+        let results = this.linkResultsTableData(this.path)
+        results.forEach((re, index) => {
+          re.index = index
+        })
+        return results
       }
     }
   }
