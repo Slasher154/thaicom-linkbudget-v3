@@ -539,7 +539,10 @@ export const state = () => ({
     'dataRateClear',
     'occupiedBandwidthClear',
     'uplinkContourClear'
-  ]
+  ],
+
+  // CSV of result table
+  resultTableCsv: ''
 })
 
 export const getters = {
@@ -797,6 +800,35 @@ export const mutations = {
   },
   SET_SAVED_REQUEST (state, { savedRequest }) {
     state.savedRequest = savedRequest
+  },
+  GENERATE_RESULT_TABLE_CSV (state, { path, dataTable }) {
+    // Filter all fields to obtain only selected fields by user
+    let shownFields = state[path + 'TableFields'].filter(f => f.visible)
+    let shownFieldsName = shownFields.map(f => f.name)
+    console.log('Shown Fields :' + shownFieldsName.join(','))
+    // Filter dataTable to include only shown Fields
+    let filteredDataTable = dataTable.map(row => {
+      return _.pick(row, shownFieldsName)
+    })
+    console.log(JSON.stringify(filteredDataTable, undefined, 2))
+    // Generate CSV text
+    let csvText = ''
+    // Header Row
+    let shownFieldsTitle = shownFields.map(f => f.title)
+    csvText += shownFieldsTitle.join('\t') + '\n'
+    // Data rows
+    filteredDataTable.forEach((row, index) => {
+      let rowTextArray = []
+      for (let prop in row) {
+        rowTextArray.push(row[prop])
+      }
+      csvText += rowTextArray.join('\t')
+      // Add new line if this row is not the last row
+      if (index !== filteredDataTable.length - 1) {
+        csvText += '\n'
+      }
+    })
+    state.resultTableCsv = csvText
   }
 }
 
@@ -937,6 +969,11 @@ export const actions = {
   },
   setSavedRequest ({ commit }, savedRequest) {
     commit('SET_SAVED_REQUEST', savedRequest)
+  },
+  generateResultTableCsv ({ commit, getters }, options) {
+    let dataTable = getters.linkResultsTableData(options.path)
+    options.dataTable = dataTable
+    commit('GENERATE_RESULT_TABLE_CSV', options)
   }
 }
 

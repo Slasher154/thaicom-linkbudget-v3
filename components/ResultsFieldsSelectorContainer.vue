@@ -17,6 +17,18 @@
           </p>
         </b-field>
       </b-field>
+      <b-field>
+        <p class="control">
+          <button
+            class="button is-warning"
+            @click="copyToClipboard"
+          >Copy Table to Clipboard</button>
+        </p>
+      </b-field>
+      <b-field>
+        <!-- Hidden text input for CSV that will be copied to clipboard -->
+        <input type="text" v-model="hiddenCsv" hidden>
+      </b-field>
     </div>
     <div class="column is-9">
       <!-- Draggable list -->
@@ -57,7 +69,8 @@
     data () {
       return {
         fieldsToAdd: [],
-        refreshCounter: 1
+        refreshCounter: 1,
+        hiddenCsv: 'Text to copy'
       }
     },
     computed: {
@@ -85,6 +98,14 @@
       saveFields ({ fields }) {
         console.log(fields)
         this.fieldsToAdd = fields
+      },
+      copyToClipboard () {
+        this.$store.dispatch('linkcalc/generateResultTableCsv', { path: this.path })
+        this.$copyText(this.$store.state.linkcalc.resultTableCsv).then(e => {
+          this.$toast.open('Table is now copied to the clipboard')
+        }).catch(e => {
+          this.$toast.open('Table cannot be copied')
+        })
       }
     }
   }

@@ -55,6 +55,7 @@ module.exports = {
   plugins: [
     '~plugins/axios',
     '~plugins/buefy',
+    '~plugins/clipboard',
     '~plugins/filters',
     '~plugins/googlemaps',
     '~plugins/mixins',
