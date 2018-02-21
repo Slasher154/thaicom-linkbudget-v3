@@ -18,7 +18,11 @@
         <results-table-by-path
           path="forward"
         />
-
+        <br>
+        <results-table-warning-messages
+          v-if="warningMessages('forward').length > 0"
+          :messages="warningMessages('forward')"
+        />
 
      </b-tab-item>
 
@@ -32,6 +36,11 @@
         <results-table-by-path
           path="return"
         />
+        <br>
+        <results-table-warning-messages
+          v-if="warningMessages('return').length > 0"
+          :messages="warningMessages('return')"
+          />
       </b-tab-item>
 
       <b-tab-item label="Maps">
@@ -54,12 +63,14 @@
   import ResultsTableByPath from './ResultsTableByPath.vue'
   import ResultsMapContainer from './ResultsMapContainer'
   import ResultsToolsContainer from './ResultsToolsContainer'
+  import ResultsTableWarningMessages from './ResultsTableWarningMessages'
   export default {
     components: {
       ResultsFieldsSelectorContainer,
       ResultsTableByPath,
       ResultsMapContainer,
-      ResultsToolsContainer
+      ResultsToolsContainer,
+      ResultsTableWarningMessages
     },
     props: {
       linkResults: {
@@ -69,7 +80,7 @@
     data () {
       return {
         activeTab: 0,
-        field: 'cnDonwlink'
+        field: 'cnDownlink'
       }
     },
     computed: {
@@ -91,6 +102,9 @@
           this.$refs.mapContainer.$refs.map.$refs.contourMap.resizePreserveCenter()
         }
         // this.$_expandMap(this.$refs.mapContainer.$refs.baseMap.$refs.contourMap)
+      },
+      warningMessages (path) {
+        return this.$store.state.linkcalc.linkResults[path + 'WarningMessages']
       }
     }
   }

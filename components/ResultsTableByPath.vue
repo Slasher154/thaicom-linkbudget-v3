@@ -24,6 +24,7 @@
       />
     </template>
   </b-table>
+
 </template>
 
 <script>
