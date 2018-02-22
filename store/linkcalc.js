@@ -400,6 +400,11 @@ export const state = () => ({
     },
     {
       'name': 'mcgSpectralEfficiency',
+      'title': 'MBE',
+      'unit': 'bps/Hz'
+    },
+    {
+      'name': 'mcgEbe',
       'title': 'EBE',
       'unit': 'bps/Hz'
     },
@@ -495,11 +500,11 @@ export const state = () => ({
     'locationName',
     'channelClear',
     'mcgNameClear',
-    'mcgSpectralEfficiencyClear',
+    'mcgEbeClear',
     'dataRateClear',
     'occupiedBandwidthClear',
     'mcgNameRain',
-    'mcgSpectralEfficiencyRain',
+    'mcgEbeRain',
     'dataRateRain',
     'linkAvailabilityRain',
     'passedTextClear'
@@ -510,11 +515,11 @@ export const state = () => ({
     'locationName',
     'channelClear',
     'mcgNameClear',
-    'mcgSpectralEfficiencyClear',
+    'mcgEbeClear',
     'dataRateClear',
     'occupiedBandwidthClear',
     'mcgNameRain',
-    'mcgSpectralEfficiencyRain',
+    'mcgEbeRain',
     'dataRateRain',
     'linkAvailabilityRain',
     'passedTextClear'
