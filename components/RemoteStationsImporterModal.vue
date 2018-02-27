@@ -110,6 +110,7 @@
 
 <script>
   import NoSSR from 'vue-no-ssr'
+  import _ from 'lodash'
   /* eslint-disable no-unused-vars */
 
   export default {
@@ -219,10 +220,9 @@
                   buc,
                   bandwidth
                 })
-              } else {
-                this.openValidationMessageToast()
               }
             })
+            this.openValidationMessageToast()
             this.stations = stations
           } else {
             this.validationMessages.push('The copied table is in incorrect format')
@@ -232,7 +232,8 @@
         }
       },
       openValidationMessageToast () {
-        this.$toast.open(this.validationMessages.join(','))
+        this.validationMessages = _.uniq(this.validationMessages)
+        // this.$toast.open(this.validationMessages.join(','))
       }
     },
     props: {

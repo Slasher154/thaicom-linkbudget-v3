@@ -125,7 +125,7 @@ Vue.mixin({
     },
     $_findAntennaObjectFromText (antennaText, antennaOptions) {
       return antennaOptions.find(antenna => {
-        return antenna.name === antennaText || antenna.size === +antennaText
+        return antenna.name.split(' ').join('') === antennaText.split(' ').join('') || antenna.size === +antennaText
       })
     },
     $_findBucObjectFromText (bucText, bucOptions) {
