@@ -14,4 +14,4 @@ dist
 .env
 
 # Webstorm idea
-.idea/vcs.xml
+.idea/
