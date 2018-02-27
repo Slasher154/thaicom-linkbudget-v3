@@ -130,7 +130,7 @@ Vue.mixin({
     },
     $_findBucObjectFromText (bucText, bucOptions) {
       return bucOptions.find(buc => {
-        return buc.name === bucText.toUpperCase() || buc.size === +bucText
+        return buc.name.split(' ').join('') === bucText.toUpperCase().split(' ').join('') || buc.size === +bucText
       })
     },
     $_validateGatewayAntennaText (antennaText) {
