@@ -634,7 +634,7 @@
             {
               'location': {
                 'name': 'maxContour',
-                'type': 'definedContours'
+                'type': 'maxContour'
               },
               'antenna': {
                 '_id': '5nN4bkz6GLNW7csrz',
@@ -683,7 +683,7 @@
           'remoteLocations': [
             {
               'name': 'maxContour',
-              'type': 'definedContours'
+              'type': 'maxContour'
             }
           ],
           'bandwidth': [
