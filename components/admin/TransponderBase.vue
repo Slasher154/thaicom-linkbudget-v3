@@ -101,7 +101,7 @@
       >
         <option
           v-for="pol in polarizationOptions"
-          value="pol">{{pol}}</option>
+          :value="pol">{{pol}}</option>
       </b-select>
     </b-field>
 
@@ -141,7 +141,7 @@
       >
         <option
           v-for="pol in polarizationOptions"
-          value="pol">{{pol}}</option>
+          :value="pol">{{pol}}</option>
       </b-select>
     </b-field>
 
@@ -179,7 +179,7 @@
       >
         <option
           v-for="mode in transponderModeOptions"
-          value="pol">{{mode}}</option>
+          :value="mode">{{mode}}</option>
       </b-select>
     </b-field>
 
@@ -284,7 +284,7 @@
       >
         <option
           v-for="num in currentNumCarrierOptions"
-          value="num">{{num}}</option>
+          :value="num">{{num}}</option>
       </b-select>
     </b-field>
 
@@ -600,14 +600,14 @@
           ci_downlink_adj_sat: 25.0,
           delta_eirp_down: 0.49
         },
-        broadbandForwardAdditionalFields: {
+        forwardAdditionalFields: {
           type: 'forward',
           ci_downlink_adj_cell_50: 26.6,
           ci_downlink_adj_cell_eoc: 23.42,
           ci_uplink_adj_cell: 24.49,
           eirp_density_adjacent_satellite_downlink: -60
         },
-        broadbandReturnAdditionalFields: {
+        returnAdditionalFields: {
           type: 'return',
           designed_deepin: 9,
           ci_uplink_adj_cell_50: 26.6,
@@ -622,9 +622,11 @@
     mounted () {
       if (this.transponder.name) {
         this.newTransponder = Object.assign({}, this.transponder)
+        console.log('TP has name')
       } else { // add new transponder
         if (this.isBroadband) {
-          let newTransponder = Object.assign({}, this.broadbandTransponderTemplate, this['broadband' + this.transponderPath + 'AdditionalFields'])
+          console.log('TP is broadband')
+          let newTransponder = Object.assign({}, this.broadbandTransponderTemplate, this[this.transponderPath + 'AdditionalFields'])
           this.newTransponder = newTransponder
         } else { // conventional
           let newTransponder = Object.assign({}, this.conventionalTransponderTemplate)

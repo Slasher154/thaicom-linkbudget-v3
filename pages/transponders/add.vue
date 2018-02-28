@@ -5,7 +5,9 @@
       label="Select Transponder Type to Add"
     >
       <b-select
-        v-model="selectedNewTransponderType">
+        v-model="selectedNewTransponderType"
+        :disabled="selectedNewTransponderType"
+      >
         <option
           v-for="option in newTransponderTypeOptions"
           :value="option.value">
