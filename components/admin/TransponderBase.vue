@@ -288,12 +288,12 @@
       </b-select>
     </b-field>
 
-    <!-- Backoff Settings  -->
+    <!--&lt;!&ndash; Backoff Settings  &ndash;&gt;
     <backoff-settings-base
       v-for="settings in backoffSettings"
       :settingsObject="settings"
       @settingsUpdate="updateSettings"
-    />
+    />-->
 
     <!-- EIRP Density Adjacent Satellite Uplink -->
     <b-field
@@ -346,6 +346,174 @@
       >
       </b-input>
     </b-field>
+
+    <!-- Broadband Forward Additional Fields -->
+    <template
+      v-if="isBroadband && transponderPath === 'forward'">
+
+      <!-- Type -->
+      <b-field
+        horizontal
+        label="Path"
+      >
+        <b-input
+          v-model="newTransponder.type"
+          name="transponderType"
+          disabled
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Downlink Adjacent Cell 50% -->
+      <b-field
+        horizontal
+        label="C/I Downlink Adjacent Cell 50% (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_downlink_adj_cell_50"
+          name="transponderCiDownlinkAdjCell50"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Downlink Adjacent Cell EOC -->
+      <b-field
+        horizontal
+        label="C/I Downlink Adjacent Cell EOC (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_downlink_adj_cell_eoc"
+          name="transponderCiDownlinkAdjCellEoc"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Uplink Adjacent Cell -->
+      <b-field
+        horizontal
+        label="C/I Downlink Adjacent Cell EOC (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_uplink_adj_cell"
+          name="transponderCiUplinkAdjCell"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- EIRP Density Adjacent Satellite Downlink -->
+      <b-field
+        horizontal
+        label="EIRP Density Adjacent Satellite Downlink (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.eirp_density_adjacent_satellite_downlink"
+          name="transponderEirpDensityAdjacentSatelliteDownlink"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+    </template>
+
+    <!-- Broadband Return Additional Fields -->
+    <template
+      v-if="isBroadband && transponderPath === 'return'">
+      <!-- Type -->
+      <b-field
+        horizontal
+        label="Path"
+      >
+        <b-input
+          v-model="newTransponder.type"
+          name="transponderType"
+          disabled
+        >
+        </b-input>
+      </b-field>
+
+      <!-- Designed Deepin -->
+      <b-field
+        horizontal
+        label="Designed Deepin (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.designed_deepin"
+          placeholder="Positive Number"
+          name="transponderDeepin"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Uplink Adjacent Cell 50% -->
+      <b-field
+        horizontal
+        label="C/I Uplink Adjacent Cell 50% (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_uplink_adj_cell_50"
+          name="transponderCiUplinkAdjCell50"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Uplink Adjacent Cell EOC -->
+      <b-field
+        horizontal
+        label="C/I Uplink Adjacent Cell EOC (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_uplink_adj_cell_eoc"
+          name="transponderCiUplinkAdjCellEoc"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Uplink Adjacent Satellite -->
+      <b-field
+        horizontal
+        label="C/I Uplink Adjacent Satellite (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_uplink_adj_sat"
+          name="transponderCiUplinkAdjSat"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- C/I Downlink Adjacent Cell -->
+      <b-field
+        horizontal
+        label="C/I Downlink Adjacent Cell (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.ci_downlink_adj_cell"
+          name="transponderCiDownlinkAdjCell"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+      <!-- EIRP Density Adjacent Satellite Uplink -->
+      <b-field
+        horizontal
+        label="EIRP Density Adjacent Satellite Uplink (dB)"
+      >
+        <b-input
+          v-model.number="newTransponder.eirp_density_adjacent_satellite_uplink"
+          name="transponderEirpDensityAdjacentSatelliteUplink"
+          step="0.1"
+        >
+        </b-input>
+      </b-field>
+
+    </template>
   </div>
 </template>
 
@@ -353,7 +521,7 @@
   import _ from 'lodash'
   import axios from 'axios'
   import SatelliteSelector from '@/components/SatelliteSelector'
-  import BackoffSettingsBase from './BackoffSettingssBase'
+  import BackoffSettingsBase from './BackoffSettingsBase'
   export default {
     components: {
       SatelliteSelector,
@@ -438,7 +606,6 @@
           type: 'forward',
           ci_downlink_adj_cell_50: 26.6,
           ci_downlink_adj_cell_eoc: 23.42,
-          ci_downlink_adj_sat: 25,
           ci_uplink_adj_cell: 24.49,
           eirp_density_adjacent_satellite_downlink: -60
         },

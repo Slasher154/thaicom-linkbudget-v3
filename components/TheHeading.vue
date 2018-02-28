@@ -69,6 +69,8 @@
               <nuxt-link class="navbar-item" :to="{ name: 'constants'}">Constants</nuxt-link>
               <nuxt-link class="navbar-item" :to="{ name: 'gateways'}">Gateways</nuxt-link>
               <nuxt-link class="navbar-item" :to="{ name: 'modems'}">Modems</nuxt-link>
+              <nuxt-link class="navbar-item" :to="{ name: 'transponders'}">Transponders</nuxt-link>
+
 
             </div>
 
