@@ -518,7 +518,6 @@
 </template>
 
 <script>
-  import _ from 'lodash'
   import axios from 'axios'
   import SatelliteSelector from '@/components/SatelliteSelector'
   import BackoffSettingsBase from './BackoffSettingsBase'
@@ -554,7 +553,6 @@
         currentNumCarrierOptions: ['one', 'two', 'multi'],
         newTransponder: {},
         broadbandTransponderTemplate: {
-          _id: 'eoG98MfKxAMxaGEeE',
           name: '',
           satellite: 'Thaicom 4',
           uplink_cf: 14.2855,
@@ -637,6 +635,10 @@
     methods: {
       updateSettings (value) {
         console.log('Settings updated')
+      },
+      updateSatellites (value) {
+        console.log(JSON.stringify(value))
+        this.newTransponder.satellite = value.satellites.name
       },
       emitTransponder (newTransponder) {
         // construct transponder object
