@@ -54,7 +54,29 @@
           { value: 'broadbandReturn', text: 'Broadband Return', tpType: 'broadband', path: 'return' }
         ],
         selectedNewTransponderType: null,
-        transponder: {},
+        transponder: {
+          // Add this object to generate default value for backoff settings in TransponderBase component
+          backoff_settings: [
+            {
+              num_carriers: 'single',
+              ibo: 0,
+              obo: 0,
+              intermod: 0
+            },
+            {
+              num_carriers: 'two',
+              ibo: 0,
+              obo: 0,
+              intermod: 0
+            },
+            {
+              num_carriers: 'multi',
+              ibo: 0,
+              obo: 0,
+              intermod: 0
+            }
+          ]
+        },
         newTransponder: {}
       }
     },
