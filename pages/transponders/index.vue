@@ -37,7 +37,7 @@
           field="country"
           sortable
         >
-          {{props.row.satellite}}
+          {{props.row.country}}
         </b-table-column>
         <b-table-column
           label="Path"
