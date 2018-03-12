@@ -8,15 +8,16 @@
         disabled
       ></b-input>
     </b-field>
-    <b-field label="IBO (dB)">
+    <b-field label="IBO (dB) (less than 0)">
       <b-input
         v-model.number="newSettingsObject.ibo"
         step="0.1"
       ></b-input>
     </b-field>
-    <b-field label="OBO (dB)">
+    <b-field label="OBO (dB) (less than 0)">
       <b-input
         v-model.number="newSettingsObject.obo"
+        max="0"
         step="0.1"
       ></b-input>
     </b-field>
