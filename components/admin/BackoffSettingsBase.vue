@@ -49,7 +49,7 @@
     methods: {
       updateSettings (val) {
         // Push the update back to parent
-        this.emit('settingsUpdated', { settingsObject: Object.assign({}, val) })
+        this.$emit('settingsUpdated', { settingsObject: Object.assign({}, val) })
       }
     },
     watch: {

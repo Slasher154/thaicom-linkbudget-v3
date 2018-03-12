@@ -17,11 +17,15 @@
       horizontal
       label="Satellite"
     >
-      <satellite-selector
-        :multiple="false"
-        :satellite-options="satelliteOptions"
-        @satellites-changed="updateSatellites"
-      />
+      <b-select
+        v-model="newTransponder.satellite"
+      >
+        <option
+          v-for="satellite in satelliteOptions"
+          :value="satellite.name">
+          {{satellite.name}}
+        </option>
+      </b-select>
     </b-field>
 
     <!-- Uplink CF -->
@@ -288,25 +292,12 @@
       </b-select>
     </b-field>
 
-    <!--&lt;!&ndash; Backoff Settings  &ndash;&gt;
+    <!-- Backoff Settings  -->
     <backoff-settings-base
-      v-for="settings in backoffSettings"
+      v-for="settings in transponder.backoff_settings"
       :settingsObject="settings"
-      @settingsUpdate="updateSettings"
-    />-->
-
-    <!-- EIRP Density Adjacent Satellite Uplink -->
-    <b-field
-      horizontal
-      label="EIRP Density Adjacent Satellite Uplink (dBW/Hz)"
-    >
-      <b-input
-        v-model.number="newTransponder.eirp_density_adjacent_satellite_uplink"
-        name="transponderEirpDensityAdjacentSatelliteUplink"
-        step="0.01"
-      >
-      </b-input>
-    </b-field>
+      @settingsUpdated="updateSettings"
+    />
 
     <!-- Adjacent Satellite Orbital Slot -->
     <b-field
@@ -519,11 +510,9 @@
 
 <script>
   import axios from 'axios'
-  import SatelliteSelector from '@/components/SatelliteSelector'
   import BackoffSettingsBase from './BackoffSettingsBase'
   export default {
     components: {
-      SatelliteSelector,
       BackoffSettingsBase
     },
     props: {
@@ -595,7 +584,6 @@
               intermod: 0
             }
           ],
-          eirp_density_adjacent_satellite_uplink: -60,
           adjacent_satellite_orbital_slot: 122.2,
           ci_downlink_adj_sat: 25.0,
           delta_eirp_down: 0.49
@@ -636,7 +624,12 @@
     },
     methods: {
       updateSettings (value) {
-        console.log('Settings updated')
+        let newBackoffSettings = value.settingsObject
+        let currentBackoffSettings = this.newTransponder.backoff_settings
+        // remove the current backoff settings with the same num_carriers (one, two, multi)
+        currentBackoffSettings = currentBackoffSettings.filter(s => s.num_carriers !== newBackoffSettings.num_carriers)
+        currentBackoffSettings.push(newBackoffSettings)
+        this.newTransponder.backoff_settings = currentBackoffSettings
       },
       updateSatellites (value) {
         console.log(JSON.stringify(value))
