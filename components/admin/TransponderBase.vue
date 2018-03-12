@@ -21,7 +21,8 @@
         v-model="newTransponder.satellite"
       >
         <option
-          v-for="satellite in satelliteOptions"
+          v-for="(satellite, index) in satelliteOptions"
+          :key="index"
           :value="satellite.name">
           {{satellite.name}}
         </option>
@@ -294,7 +295,8 @@
 
     <!-- Backoff Settings  -->
     <backoff-settings-base
-      v-for="settings in transponder.backoff_settings"
+      v-for="(settings, index) in transponder.backoff_settings"
+      :key="index"
       :settingsObject="settings"
       @settingsUpdated="updateSettings"
     />

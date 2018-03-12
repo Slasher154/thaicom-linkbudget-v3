@@ -5,6 +5,7 @@
     <b-field label="Backoff Settings">
       <b-input
         v-model="newSettingsObject.num_carriers"
+        disabled
       ></b-input>
     </b-field>
     <b-field label="IBO (dB)">
