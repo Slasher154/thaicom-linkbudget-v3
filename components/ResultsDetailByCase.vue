@@ -172,9 +172,15 @@
           if (fieldObject.unit !== '') {
             title += ` (${fieldObject.unit})`
           }
+          // Set condition to paramter
+          let conditionToReturn = this.condition
+          // If this parameter is link availability, change condition to rain instead. (no link avail at clear sky)
+          if (f === 'linkAvailability') {
+            conditionToReturn = 'Rain'
+          }
           return {
             title,
-            name: `${f}${this.condition}`
+            name: `${f}${conditionToReturn}`
           }
         })
         return assumptionsTableData
