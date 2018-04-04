@@ -88,16 +88,14 @@ Vue.mixin({
         }
 
         if (data.length !== columnHeaders.length) {
-          objects = null
-          break
+          continue
+        } else {
+          // Loop through all the data
+          for (let cellNr = 0; cellNr < data.length; cellNr++) {
+            o[columnHeaders[cellNr]] = data[cellNr]
+          }
+          objects.push(o)
         }
-
-        // Loop through all the data
-        for (let cellNr = 0; cellNr < data.length; cellNr++) {
-          o[columnHeaders[cellNr]] = data[cellNr]
-        }
-
-        objects.push(o)
       }
       return objects
     },
