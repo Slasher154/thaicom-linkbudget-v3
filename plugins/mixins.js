@@ -67,6 +67,7 @@ Vue.mixin({
       let objects = []
       // split into rows
       let rows = stringData.split('\n')
+      console.log('All data = ' + JSON.stringify(stringData, undefined, 2))
 
       // Note how we start at rowNr = 1, because 0 is the column row
       for (let rowNr = 0; rowNr < rows.length; rowNr++) {
@@ -74,6 +75,13 @@ Vue.mixin({
         let data = rows[rowNr].split('\t')
 
         // Check if number of columns is equal to column headers, if not, return null
+        console.log('Data length = ' + data.length)
+        console.log('Columns length = ' + columnHeaders.length)
+        // Loop through all the data
+        for (let cellNr = 0; cellNr < data.length; cellNr++) {
+          console.log('Data = ' + data[cellNr])
+        }
+
         if (data.length !== columnHeaders.length) {
           objects = null
           break
