@@ -66,6 +66,11 @@ Vue.mixin({
       // StringData is data copied from Excel, columnHeaders are fields
       let objects = []
       // split into rows
+      // If stringData ends with \n, removes it (when copy into text box sometimes the newline at the end comes automatically)
+      console.log('All data before = ' + JSON.stringify(stringData, undefined, 2))
+      if (stringData.endsWith('\\n')) {
+        stringData = stringData.substring(0, stringData.length - 2)
+      }
       let rows = stringData.split('\n')
       console.log('All data = ' + JSON.stringify(stringData, undefined, 2))
 
