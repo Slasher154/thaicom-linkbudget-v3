@@ -72,15 +72,17 @@
     methods: {
       generatePattern () {
         // Construct pattern object
-        let arrayOfPatternValues = this.$_transformExcelTableToObjects(this.patternDataText, this.columnHeaders)
-        if (arrayOfPatternValues) {
-          arrayOfPatternValues.forEach(v => {
-            v.degree = +v.degree
-            v.value = +v.value
-          })
-          this.patternData = arrayOfPatternValues // Assign to component data to show in the graph
-          let pattern = Object.assign({}, this.newPattern, {index: this.index, data: arrayOfPatternValues})
-          this.$emit('patternChanged', pattern)
+        if (this.patternDataText !== '') {
+          let arrayOfPatternValues = this.$_transformExcelTableToObjects(this.patternDataText, this.columnHeaders)
+          if (arrayOfPatternValues) {
+            arrayOfPatternValues.forEach(v => {
+              v.degree = +v.degree
+              v.value = +v.value
+            })
+            this.patternData = arrayOfPatternValues // Assign to component data to show in the graph
+            let pattern = Object.assign({}, this.newPattern, {index: this.index, data: arrayOfPatternValues})
+            this.$emit('patternChanged', pattern)
+          }
         }
       }
     },

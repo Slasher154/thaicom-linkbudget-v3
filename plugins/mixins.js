@@ -76,6 +76,7 @@ Vue.mixin({
 
       // Note how we start at rowNr = 1, because 0 is the column row
       for (let rowNr = 0; rowNr < rows.length; rowNr++) {
+        console.log(`Row length = ${rows.length}`)
         let o = {}
         let data = rows[rowNr].split('\t')
 
@@ -88,7 +89,7 @@ Vue.mixin({
         }
 
         if (data.length !== columnHeaders.length) {
-          continue
+          console.log(`Data length not equal to col headers length (${data.length} =/=  ${columnHeaders.length})`)
         } else {
           // Loop through all the data
           for (let cellNr = 0; cellNr < data.length; cellNr++) {
