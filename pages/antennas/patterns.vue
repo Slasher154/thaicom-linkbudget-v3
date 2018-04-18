@@ -106,8 +106,7 @@
         selectedAntenna: {},
         txPatterns: [],
         rxPatterns: [],
-        remarks: '',
-        currentIndex: 0
+        remarks: ''
       }
     },
     computed: {
@@ -126,7 +125,7 @@
         this.selectedAntenna[path + '_patterns'].push({
           frequency: 0,
           data: [],
-          index: this.currentIndex++
+          index: this.selectedAntenna[path + '_patterns'].length
         })
       },
       updatePattern (path, value) {
