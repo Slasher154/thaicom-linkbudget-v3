@@ -121,7 +121,7 @@ Vue.mixin({
       return coordsObj
     },
     $_validateBandwidthText (bandwidthText) {
-      let bandwidthRegex = /^\d{1,5}\/\d{1,5}$/
+      let bandwidthRegex = /^\d*\.?\d*\/\d*\.?\d*$/
       return bandwidthRegex.test(bandwidthText)
     },
     $_transformBandwidthTextToObject (bandwidthText, unit) {
