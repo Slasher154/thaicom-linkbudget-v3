@@ -487,6 +487,11 @@ export const state = () => ({
       'name': 'findMaxLinkAvailability',
       'title': 'Find maximum link availability',
       'unit': ''
+    },
+    {
+      'name': 'applicationName',
+      'title': 'Platform',
+      'unit': ''
     }
   ],
 

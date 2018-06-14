@@ -118,7 +118,7 @@
       },
       emitChange (app) {
         let newApp = _.cloneDeep(app)
-        newApp.mcgs = this.mcgs
+        newApp.mcgs = app.mcgs
         newApp.index = this.index
         this.$emit('applicationChanged', newApp)
       }

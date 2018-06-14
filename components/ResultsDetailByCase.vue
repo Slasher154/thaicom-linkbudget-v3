@@ -154,6 +154,7 @@
           'ciDownlinkIntermod',
           'ciDownlinkXpol',
           'ciDownlinkXcells',
+          'ciDownlink',
           'cnTotal',
           'requiredMargin',
           'linkMargin'

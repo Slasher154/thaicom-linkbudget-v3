@@ -66,6 +66,7 @@
     },
     methods: {
       updateModem (value) {
+        console.log('modem in id updated')
         this.newModem = value
       },
       saveChanges () {

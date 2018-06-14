@@ -112,6 +112,7 @@
         this.newModem.applications.push(_.cloneDeep(this.dummyApplication))
       },
       updateApplication (value) {
+        console.log(JSON.stringify(value, undefined, 2))
         let index = _.findIndex(this.applications, { index: value.index })
         if (index > -1) {
           this.applications.splice(index, 1, value)
