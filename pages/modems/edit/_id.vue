@@ -68,6 +68,7 @@
       updateModem (value) {
         console.log('modem in id updated')
         this.newModem = value
+        console.log('new modem = ' + JSON.stringify(value))
       },
       saveChanges () {
         this.newModem._id = this.modem._id

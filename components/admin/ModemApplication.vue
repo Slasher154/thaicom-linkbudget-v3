@@ -114,7 +114,9 @@
       },
       updateMcgs (value) {
         this.mcgs = value
-        this.emitChange(this.newApplication)
+        let newApp = _.cloneDeep(this.newApplication)
+        newApp.mcgs = value
+        this.emitChange(newApp)
       },
       emitChange (app) {
         let newApp = _.cloneDeep(app)
