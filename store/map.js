@@ -209,6 +209,19 @@ export const mutations = {
     })
     categoryToEdit.name = name
   },
+  SET_CATEGORY_COLOR (state, {index, name, color}) {
+    let categoryToEdit = state.categories.find(c => c.index === index)
+    // Update color of this category
+    categoryToEdit.color = color
+    // Update color of all contour lines
+    let paths = ['forward', 'return']
+    paths.forEach(p => {
+      // Filter only contour line with the given name and changes its color
+      state[p + 'Contours'].filter(c => c.properties.category === name).forEach(f => {
+        f.options.strokeColor = color
+      })
+    })
+  },
   REMOVE_CATEGORY (state, {index, name}) {
     state.categories = state.categories.filter(c => c.index !== index)
     // Remove contours of that category
@@ -297,6 +310,9 @@ export const actions = {
   },
   setCategoryName ({commit}, category) {
     commit('SET_CATEGORY_NAME', category)
+  },
+  setCategoryColor ({commit}, category) {
+    commit('SET_CATEGORY_COLOR', category)
   },
   resetMap ({commit}) {
     commit('REMOVE_ALL_CATEGORIES')

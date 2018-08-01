@@ -1,31 +1,39 @@
 <template>
-  <div class="field has-addons">
-    <p class="control">
-      <a class="button is-static">
+  <div>
+    <div class="field has-addons">
+      <p class="control"
+         @click="showPicker"
+      >
+        <a class="button is-static"
+        >
         <span class="current-color"
               :style="'background-color: ' + newItem.color"
-              @click="showPicker(newItem)"
         ></span>
-
-        <!--<compact-picker :value="colors"-->
-                        <!--@input="updateFromPicker"-->
-                        <!--v-if="picker === 'compact' && displayPicker"></compact-picker>-->
-      </a>
-    </p>
-    <p class="control is-expanded">
-      <input type="text" class="input"
-             v-model="newItem.name"
-             @input="updateName"
-             >
-    </p>
-    <p class="control">
-      <a class="button is-danger"
-        @click="removeLegend"
-      >
-        <b-icon pack="fa" icon="close"></b-icon>
-      </a>
-    </p>
+        </a>
+      </p>
+      <p class="control is-expanded">
+        <input type="text" class="input"
+               v-model="newItem.name"
+               @input="updateName"
+        >
+      </p>
+      <p class="control">
+        <a class="button is-danger"
+           @click="removeLegend"
+        >
+          <b-icon pack="fa" icon="close"></b-icon>
+        </a>
+      </p>
+    </div>
+    <compact-picker
+      :value="newItem.color"
+      @input="updateColor"
+      v-if="displayPicker"
+    >
+    </compact-picker>
   </div>
+
+
 </template>
 
 <script>
@@ -42,7 +50,7 @@
     },
     data () {
       return {
-        colors: {},
+        colors: { r: 25, g: 77, b: 51, a: 1 },
         displayPicker: false,
         newItem: {
           index: 0,
@@ -52,16 +60,21 @@
       }
     },
     methods: {
-      showPicker (item) {
-        if (item.color) {
-          this.colors = item.color
-        }
+      showPicker () {
+        console.log('color picked')
+        this.displayPicker = true
       },
       removeLegend () {
         this.$store.dispatch('map/removeCategory', this.newItem)
       },
       updateName () {
         this.$store.dispatch('map/setCategoryName', this.newItem)
+      },
+      updateColor (color) {
+        console.log('New color is ' + color.hex)
+        this.newItem.color = color.hex
+        this.displayPicker = false
+        this.$store.dispatch('map/setCategoryColor', this.newItem)
       }
     },
     mounted () {

@@ -45,10 +45,13 @@
       <!-- Map Legends / places column -->
       <div class="column is-3">
         <h4 class="title is-4" style="text-decoration: underline">Map Legends</h4>
-        <results-map-legend
-          v-for="category in $store.state.map.categories"
-          :item="category"
-          :key="category.index" />
+        <div class="map-legends">
+          <results-map-legend
+            v-for="category in $store.state.map.categories"
+            :item="category"
+            :key="category.index" />
+        </div>
+
         <p v-if="$store.state.map.categories.length == 0">There is no legend yet. It will appear when contours are added.
         </p>
         <br>
@@ -206,4 +209,8 @@
     /*width: 500px;*/
     /*height: 300px;*/
   /*}*/
+  .map-legends {
+    display: grid;
+    grid-row-gap: .5rem;
+  }
 </style>
